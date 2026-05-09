@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Impacto - Estaciones Saludables GCBA</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; }
+
+  #header {
+    background: linear-gradient(135deg, #1a5276, #2980b9);
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    position: relative;
+  }
+  #header h1 { font-size: 18px; font-weight: 700; }
+  #header p { font-size: 13px; opacity: 0.85; }
+
+  #main { display: flex; height: calc(100vh - 60px); }
+
+  #sidebar {
+    width: 320px;
+    background: white;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #map { flex: 1; }
+
+  .sidebar-section {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e8ecef;
+  }
+  .sidebar-section h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .legend-item:hover { background: #f5f7fa; }
+  .legend-item.disabled { opacity: 0.4; }
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  .legend-label { font-size: 13px; color: #2c3e50; }
+  .legend-count {
+    margin-left: auto;
+    font-size: 11px;
+    background: #eaf0fb;
+    color: #2980b9;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .toggle-label { font-size: 13px; color: #2c3e50; }
+  .toggle-switch {
+    position: relative;
+    width: 36px; height: 20px;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #ccc; border-radius: 20px;
+    transition: 0.3s;
+  }
+  .toggle-slider:before {
+    position: absolute; content: '';
+    height: 14px; width: 14px;
+    left: 3px; bottom: 3px;
+    background: white; border-radius: 50%;
+    transition: 0.3s;
+  }
+  input:checked + .toggle-slider { background: #2980b9; }
+  input:checked + .toggle-slider:before { transform: translateX(16px); }
+
+  #info-panel {
+    padding: 14px 16px;
+    flex: 1;
+  }
+  #info-panel h3 {
+    font-size: 13px;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  #info-content {
+    font-size: 13px;
+    color: #5d6d7e;
+    line-height: 1.5;
+  }
+  .info-placeholder {
+    font-style: italic;
+    color: #aab;
+    font-size: 13px;
+  }
+
+  .estacion-card {
+    background: #f8fafd;
+    border: 1px solid #dce6f0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .estacion-card h4 {
+    font-size: 14px;
+    color: #1a5276;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .estacion-card .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .badge-fija { background: #d4efdf; color: #1e8449; }
+  .badge-itinerante { background: #fef9e7; color: #b7950b; }
+
+  .nearby-section {
+    margin-top: 10px;
+  }
+  .nearby-section h5 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #7f8c8d;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .nearby-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 5px 0;
+    border-bottom: 1px solid #eaecee;
+  }
+  .nearby-item:last-child { border-bottom: none; }
+  .nearby-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .nearby-text { font-size: 12px; color: #2c3e50; line-height: 1.4; }
+  .nearby-dist {
+    margin-left: auto;
+    font-size: 10px;
+    color: #95a5a6;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .impact-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .impact-box {
+    background: white;
+    border: 1px solid #dce6f0;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .impact-number {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a5276;
+    line-height: 1;
+  }
+  .impact-label {
+    font-size: 10px;
+    color: #7f8c8d;
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .popup-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #1a5276;
+    margin-bottom: 4px;
+  }
+  .popup-body { font-size: 12px; color: #5d6d7e; line-height: 1.5; }
+
+  #stats-bar {
+    background: #1a5276;
+    color: white;
+    padding: 8px 20px;
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+    justify-content: center;
+  }
+  #stats-bar span { opacity: 0.85; }
+  #stats-bar strong { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>🗺️ Mapa de Impacto — Estaciones Saludables GCBA</h1>
+    <p>Efectores de salud en radio de 1.000 metros de cada Estación Saludable</p>
+  </div>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+
+    <div class="sidebar-section">
+      <h3>Capas del mapa</h3>
+      <div class="legend-item" onclick="toggleLayer('fijas')">
+        <div class="legend-dot" style="background:#1e8449;"></div>
+        <span class="legend-label">Estaciones Fijas</span>
+        <span class="legend-count" id="cnt-fijas">18</span>
+      </div>
+      <div class="legend-item" onclick="toggleLayer('itinerantes')">
+        <div class="legend-dot" style="background:#b7950b;"></div>
+        <span class="legend-label">Estaciones Itinerantes</span>
+        <span class="legend-count" id="cnt-iter">7</span>
+      </div>
+      <div class="legend-item" onclick="toggleLayer('cesac')">
+        <div class="legend-dot" style="background:#2980b9;"></div>
+        <span class="legend-label">CeSAC (Centros de Salud)</span>
+        <span class="legend-count" id="cnt-cesac">45</span>
+      </div>
+      <div class="legend-item" onclick="toggleLayer('hospitales')">
+        <div class="legend-dot" style="background:#c0392b;"></div>
+        <span class="legend-label">Hospitales GCBA</span>
+        <span class="legend-count" id="cnt-hosp">36</span>
+      </div>
+      <div class="legend-item" onclick="toggleLayer('otros')">
+        <div class="legend-dot" style="background:#8e44ad;"></div>
+        <span class="legend-label">CMB / CEMAR / CCI / CSM / COI</span>
+        <span class="legend-count" id="cnt-otros">20</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Opciones</h3>
+      <div class="toggle-row">
+        <span class="toggle-label">Mostrar círculos 1km</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-circles" checked onchange="toggleCircles(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Solo estaciones fijas</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-only-fijas" onchange="toggleOnlyFijas(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="info-panel">
+      <h3>📍 Seleccioná una estación</h3>
+      <div id="info-content">
+        <p class="info-placeholder">Hacé clic en cualquier Estación Saludable (verde o amarillo) para ver qué efectores de salud tiene en un radio de 1km.</p>
+      </div>
+    </div>
+
+  </div>
+  <div id="map"></div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const ESTACIONES_FIJAS = [
+  { name: "Estación Rubén Darío", address: "Av. del Libertador y Dr. Luis Agote", comuna: "2", lat: -34.583528, lng: -58.393686 },
+  { name: "Estación Plaza Houssay", address: "Paraguay y Uriburu", comuna: "2", lat: -34.599815, lng: -58.397076 },
+  { name: "Estación Plaza Manzana 66", address: "Moreno entre Catamarca y Av. Jujuy", comuna: "3", lat: -34.614120, lng: -58.405702 },
+  { name: "Estación Martín Fierro", address: "Barcala e/ La Rioja y Gral. Urquiza", comuna: "3", lat: -34.626092, lng: -58.407376 },
+  { name: "Estación Parque Patricios", address: "Patagones y Monteagudo", comuna: "4", lat: -34.638026, lng: -58.406358 },
+  { name: "Estación Plaza Almagro", address: "Perón entre Bulnes y Salguero", comuna: "5", lat: -34.605820, lng: -58.419135 },
+  { name: "Estación Parque Centenario", address: "Antonio Machado y Leopoldo Marechal", comuna: "6", lat: -34.606244, lng: -58.438017 },
+  { name: "Estación Parque Rivadavia", address: "Av. Rivadavia y Pas. Florencio Balcarce", comuna: "6", lat: -34.617793, lng: -58.434455 },
+  { name: "Estación Parque Chacabuco", address: "Av. Asamblea y Emilio Mitre", comuna: "7", lat: -34.634673, lng: -58.440549 },
+  { name: "Estación Plaza Flores", address: "Av. Rivadavia y Fray Cayetano Rodríguez", comuna: "7", lat: -34.628697, lng: -58.463044 },
+  { name: "Estación Parque de la Ciudad", address: "Calle 23 de Junio y Alberto Zorilla", comuna: "8", lat: -34.674000, lng: -58.478000 },
+  { name: "Plaza Sudamérica", address: "Av. Piedrabuena y F. de la Cruz", comuna: "8", lat: -34.688362, lng: -58.475085 },
+  { name: "Estación Parque Avellaneda", address: "Av. Lacarra y Av. Bilbao", comuna: "9", lat: -34.647000, lng: -58.497000 },
+  { name: "Estación Aristóbulo del Valle", address: "Cuenca entre Baigorria y Marcos Sastre", comuna: "11", lat: -34.604712, lng: -58.492668 },
+  { name: "Estación Parque Saavedra", address: "Roque Pérez y Paroissien", comuna: "12", lat: -34.550804, lng: -58.479517 },
+  { name: "Estación Lagos de Palermo", address: "Andrés Bello casi Tornquist", comuna: "14", lat: -34.555364, lng: -58.435228 },
+  { name: "Estación Rosedal", address: "Iraola y Sarmiento", comuna: "14", lat: -34.571514, lng: -58.412955 },
+  { name: "Estación Parque Los Andes", address: "Av. Dorrego y Av. Corrientes", comuna: "15", lat: -34.591763, lng: -58.448187 },
+];
+
+const ESTACIONES_ITINERANTES = [
+  { name: "Parque Lezama (Itinerante Lunes)", address: "Irala y Av. Martín García", comuna: "1", lat: -34.626716, lng: -58.369574, dias: "Lunes 9:30–13:30" },
+  { name: "Parque Ferroviario (Itinerante Lunes)", address: "Moldes y Av. Federico Lacroze", comuna: "15", lat: -34.572944, lng: -58.447649, dias: "Lunes 9–13" },
+  { name: "Corralón de Floresta (Itinerante Mar/Vie)", address: "Av. Gaona 4600", comuna: "10", lat: -34.626969, lng: -58.488448, dias: "Martes y Viernes 9–13" },
+  { name: "Plaza La Redonda (Itinerante Miércoles)", address: "Av. Juramento 2251", comuna: "13", lat: -34.561690, lng: -58.454754, dias: "Miércoles 9:30–13:30" },
+  { name: "Plaza Irlanda (Itinerante Miércoles)", address: "Neuquén 1710, esq. Moleros", comuna: "10", lat: -34.614603, lng: -58.457816, dias: "Miércoles 9–13" },
+  { name: "Plaza Echeverría (Itinerante Jueves)", address: "Bauness 2758", comuna: "12", lat: -34.572022, lng: -58.489327, dias: "Jueves 9:30–13:30" },
+  { name: "Plaza Democracia (Itinerante Jueves)", address: "Lisandro de la Torre y Berón de Astrada", comuna: "8", lat: -34.690445, lng: -58.463724, dias: "Jueves 9–13" },
+];
+
+const CESAC_DATA = [
+  { name: "CeSAC Nº 48 - Flores 5", address: "Fernández de la Cruz 1753", barrio: "Flores", comuna: "7", lat: -34.6500, lng: -58.4311 },
+  { name: "CeSAC Nº 47 - Retiro 3", address: "Walsh, Rodolfo y Perette, Carlos H.", barrio: "Retiro", comuna: "1", lat: -34.5846, lng: -58.3795 },
+  { name: "CeSAC Nº 43 - Villa Lugano 6", address: "Fonrouge 4377, CMV ex-Villa 20", barrio: "Villa Lugano", comuna: "8", lat: -34.6778, lng: -58.4666 },
+  { name: "CeSAC Nº 44 - Villa Lugano 7", address: "Saraza 4202", barrio: "Villa Lugano", comuna: "8", lat: -34.6607, lng: -58.4674 },
+  { name: "CeSAC Nº 38 - Almagro", address: "Medrano Av. 350", barrio: "Almagro", comuna: "5", lat: -34.6066, lng: -58.4216 },
+  { name: "CeSAC Nº 1 - Barracas 1", address: "Velez Sarsfield Av. 1271, Barrio 21-24", barrio: "Barracas", comuna: "4", lat: -34.6493, lng: -58.3894 },
+  { name: "CeSAC Nº 2 - Villa Pueyrredón", address: "Terrada 5850, Barrio Albarellos", barrio: "Villa Pueyrredon", comuna: "12", lat: -34.5766, lng: -58.5095 },
+  { name: "CeSAC Nº 3 - Villa Lugano 9", address: "Soldado De La Frontera Av. 5144", barrio: "Villa Lugano", comuna: "8", lat: -34.6846, lng: -58.4643 },
+  { name: "CeSAC Nº 4 - Mataderos 1", address: "Alberdi, Juan Bautista Av. y Pilar", barrio: "Mataderos", comuna: "9", lat: -34.6559, lng: -58.5067 },
+  { name: "CeSAC Nº 5 - Villa Lugano 1", address: "Piedra Buena Av. 3140", barrio: "Villa Lugano", comuna: "8", lat: -34.6705, lng: -58.4951 },
+  { name: "CeSAC Nº 6 - Villa Soldati 1", address: "Acosta, Mariano 3673", barrio: "Villa Soldati", comuna: "8", lat: -34.6668, lng: -58.4414 },
+  { name: "CeSAC Nº 7 - Villa Lugano 2", address: "2 De Abril De 1982 y Montiel, Barrio Piedrabuena", barrio: "Villa Lugano", comuna: "8", lat: -34.6788, lng: -58.4919 },
+  { name: "CeSAC Nº 8 - Barracas 2", address: "Cruz, Osvaldo y Luna, Barrio 21-24", barrio: "Barracas", comuna: "4", lat: -34.6560, lng: -58.3974 },
+  { name: "CeSAC Nº 9 - La Boca 1", address: "Irala 1254", barrio: "La Boca", comuna: "4", lat: -34.6401, lng: -58.3659 },
+  { name: "CeSAC Nº 10 - Parque Patricios 1", address: "Alcorta, Amancio Av. 1402", barrio: "Barracas", comuna: "4", lat: -34.6334, lng: -58.3835 },
+  { name: "CeSAC Nº 11 - Balvanera", address: "Aguero 940", barrio: "Balvanera", comuna: "3", lat: -34.5988, lng: -58.4107 },
+  { name: "CeSAC Nº 12 - Villa Urquiza", address: "Olazabal Av. 3960", barrio: "Villa Urquiza", comuna: "12", lat: -34.5699, lng: -58.4742 },
+  { name: "CeSAC Nº 13 - Parque Avellaneda", address: "Directorio Av. 4210", barrio: "Parque Avellaneda", comuna: "9", lat: -34.6435, lng: -58.4820 },
+  { name: "CeSAC Nº 14 - Villa Lugano 3", address: "Casco, Horacio, Dr. 4446", barrio: "Parque Avellaneda", comuna: "9", lat: -34.6603, lng: -58.4743 },
+  { name: "CeSAC Nº 15 - San Telmo", address: "Humberto 1° 470, Rodrigo Bueno", barrio: "San Telmo", comuna: "1", lat: -34.6208, lng: -58.3725 },
+  { name: "CeSAC Nº 16 - Barracas 3", address: "Cruz, Osvaldo Av. 2055", barrio: "Barracas", comuna: "4", lat: -34.6519, lng: -58.3747 },
+  { name: "CeSAC Nº 17 - Palermo 1", address: "El Salvador 4087", barrio: "Palermo", comuna: "14", lat: -34.5927, lng: -58.4205 },
+  { name: "CeSAC Nº 18 - Villa Lugano 4", address: "Corvalan y Fernandez De La Cruz", barrio: "Villa Lugano", comuna: "8", lat: -34.6747, lng: -58.4629 },
+  { name: "CeSAC Nº 19 - Flores 1", address: "Curapaligue 1905", barrio: "Flores", comuna: "7", lat: -34.6432, lng: -58.4422 },
+  { name: "CeSAC Nº 20 - Flores 2", address: "Charrua y Janer, Ana Maria, Villa 1-11-14", barrio: "Flores", comuna: "7", lat: -34.6495, lng: -58.4381 },
+  { name: "CeSAC Nº 21 - Retiro 1", address: "Gendarmeria Nacional Av. y Ulla Ulla, Padre Mugica", barrio: "Retiro", comuna: "1", lat: -34.5830, lng: -58.3758 },
+  { name: "CeSAC Nº 22 - La Paternal 2", address: "Fragata Pres. Sarmiento 2152", barrio: "Paternal", comuna: "15", lat: -34.6009, lng: -58.4591 },
+  { name: "CeSAC Nº 23 - Villa Luro", address: "Bacacay 5640", barrio: "Villa Luro", comuna: "10", lat: -34.6358, lng: -58.5059 },
+  { name: "CeSAC Nº 24 - Villa Soldati 2", address: "Pasaje L y Martinez Castro", barrio: "Villa Soldati", comuna: "8", lat: -34.6578, lng: -58.4554 },
+  { name: "CeSAC Nº 25 - Retiro 2", address: "Palo Santo y Vicuña, Padre Mugica", barrio: "Retiro", comuna: "1", lat: -34.5815, lng: -58.3844 },
+  { name: "CeSAC Nº 26 - Palermo 2", address: "Gurruchaga 1939", barrio: "Palermo", comuna: "14", lat: -34.5872, lng: -58.4256 },
+  { name: "CeSAC Nº 27 - Saavedra", address: "Arias 3781", barrio: "Saavedra", comuna: "12", lat: -34.5477, lng: -58.4867 },
+  { name: "CeSAC Nº 28 - Villa Lugano 10", address: "Santander 5955, Barrio 15", barrio: "Villa Lugano", comuna: "8", lat: -34.6731, lng: -58.4863 },
+  { name: "CeSAC Nº 29 - Villa Lugano 5", address: "Los Alamos y Paz, Gral. Av., Barrio INTA", barrio: "Villa Lugano", comuna: "8", lat: -34.6848, lng: -58.4867 },
+  { name: "CeSAC Nº 30 - Barracas 4", address: "Alcorta, Amancio Av. y Iguazu, Barrio 21-24", barrio: "Barracas", comuna: "4", lat: -34.6499, lng: -58.4046 },
+  { name: "CeSAC Nº 31 - Flores 3", address: "Vedia, Agustin De y Janer, Ana Maria", barrio: "Flores", comuna: "7", lat: -34.6467, lng: -58.4345 },
+  { name: "CeSAC Nº 32 - Nueva Pompeya", address: "Charrua 2900, Barrio Charrúa", barrio: "Nueva Pompeya", comuna: "4", lat: -34.6541, lng: -58.4311 },
+  { name: "CeSAC Nº 33 - Palermo 3", address: "Cordoba Av. 5741", barrio: "Palermo", comuna: "14", lat: -34.5864, lng: -58.4416 },
+  { name: "CeSAC Nº 34 - La Paternal 1", address: "Artigas, Jose Gervasio, Gral. 2262", barrio: "Villa Del Parque", comuna: "11", lat: -34.6066, lng: -58.4782 },
+  { name: "CeSAC Nº 35 - Barracas 6", address: "Zavaleta y Cruz, Osvaldo, Barrio 21-24", barrio: "Barracas", comuna: "4", lat: -34.6563, lng: -58.3997 },
+  { name: "CeSAC Nº 36 - Floresta", address: "Mercedes 1371", barrio: "Floresta", comuna: "10", lat: -34.6218, lng: -58.4918 },
+  { name: "CeSAC Nº 37 - Mataderos 2", address: "De Los Corrales Av. 6999", barrio: "Mataderos", comuna: "9", lat: -34.6657, lng: -58.5042 },
+  { name: "CeSAC Nº 39 - Parque Patricios 2", address: "24 De Noviembre 1679", barrio: "Parque Patricios", comuna: "4", lat: -34.6310, lng: -58.4099 },
+  { name: "CeSAC Nº 40 - Flores 4", address: "Bonorino, Esteban, Cnel. Av. 1729", barrio: "Flores", comuna: "7", lat: -34.6449, lng: -58.4459 },
+  { name: "CeSAC Nº 41 - La Boca 2", address: "Brin, Ministro 843", barrio: "La Boca", comuna: "4", lat: -34.6313, lng: -58.3579 },
+  { name: "CeSAC Nº 45 - San Cristóbal", address: "Cochabamba 2622", barrio: "San Cristobal", comuna: "3", lat: -34.6254, lng: -58.4023 },
+  { name: "CeSAC Nº 46 - La Boca 3", address: "Regimiento De Patricios Av. 1941", barrio: "Barracas", comuna: "4", lat: -34.6488, lng: -58.3680 },
+  { name: "CeSAC Nº 49 - Barracas 5", address: "Orma y Magaldi, Agustin", barrio: "Barracas", comuna: "4", lat: -34.6619, lng: -58.3931 },
+  { name: "CeSAC Nº 50 - Devoto", address: "Lastra Av. 4180", barrio: "Villa Devoto", comuna: "11", lat: -34.6058, lng: -58.5239 },
+  { name: "CeSAC Nº 42 - Boedo", address: "La Plata Av. 2241", barrio: "Nueva Pompeya", comuna: "4", lat: -34.6407, lng: -58.4235 },
+];
+
+const HOSPITALES_DATA = [
+  { name: "Hospital de Pediatría Dr. J. Garrahan", address: "Combate De Los Pozos 1881", barrio: "Parque Patricios", type: "Hospital de Niños", lat: -34.6299, lng: -58.3919 },
+  { name: "Hospital Torcuato de Alvear", address: "Warnes Av. 2630", barrio: "Paternal", type: "Salud Mental", lat: -34.5972, lng: -58.4753 },
+  { name: "Hospital Gastroenterologia B. Udaondo", address: "Caseros Av. 2061", barrio: "Parque Patricios", type: "Hospitalizado", lat: -34.6342, lng: -58.3913 },
+  { name: "Hospital Infecciosas F. Muñiz", address: "Uspallata 2272", barrio: "Parque Patricios", type: "Infectología", lat: -34.6375, lng: -58.3937 },
+  { name: "Hospital Odontología J. Dueñas", address: "Muñiz 15", barrio: "Almagro", type: "Odontología", lat: -34.6146, lng: -58.4277 },
+  { name: "Hospital Odontología Infantil Don Benito Quinquela Martín", address: "Pedro de Mendoza 3922", barrio: "La Boca", type: "Odontología Infantil", lat: -34.6389, lng: -58.3601 },
+  { name: "Hospital Oftalmología Santa Lucía", address: "San Juan 2021", barrio: "San Cristóbal", type: "Oftalmología", lat: -34.6228, lng: -58.3945 },
+  { name: "Hospital Quemados Dr. Arturo Umberto Illia", address: "Pedro Goyena 369", barrio: "Caballito", type: "Quemados", lat: -34.6255, lng: -58.4324 },
+  { name: "Hospital Rehabilitación M. Rocca", address: "Ramón Freire 183", barrio: "Monte Castro", type: "Rehabilitación", lat: -34.6180, lng: -58.5021 },
+  { name: "Hospital Rehabilitación Respiratoria María Ferrer", address: "Finochietto 849", barrio: "Barracas", type: "Respiratorio", lat: -34.6302, lng: -58.3758 },
+  { name: "Hospital Salud Mental Braulio Moyano", address: "Brandsen 2570", barrio: "Barracas", type: "Salud Mental", lat: -34.6394, lng: -58.3852 },
+  { name: "Hospital Salud Mental J. Borda", address: "Ramón Carrillo 375", barrio: "Barracas", type: "Salud Mental", lat: -34.6364, lng: -58.3821 },
+  { name: "Hospital Infanto Juvenil C. Tobar García", address: "Ramón Carrillo 315", barrio: "Barracas", type: "Infanto Juvenil", lat: -34.6357, lng: -58.3823 },
+  { name: "Hospital Materno Infantil R. Sarda", address: "Esteban de Luca 2151", barrio: "Parque Patricios", type: "Maternidad", lat: -34.6349, lng: -58.4028 },
+  { name: "Hospital Odontológico Dr. R. Carrillo", address: "Tucumán 3325", barrio: "Balvanera", type: "Odontología", lat: -34.5845, lng: -58.4027 },
+  { name: "Hospital Oftalmológico Dr. P. Lagleyze", address: "J. E. Uriburu 823", barrio: "Recoleta", type: "Oftalmología", lat: -34.6054, lng: -58.4602 },
+  { name: "Hospital General de Agudos A. Zubizarreta", address: "Av. Chiclana 3930", barrio: "Villa Devoto", type: "General de Agudos", lat: -34.6000, lng: -58.5111 },
+  { name: "Hospital General de Agudos B. Rivadavia", address: "Las Heras 2670", barrio: "Recoleta", type: "General de Agudos", lat: -34.5848, lng: -58.4005 },
+  { name: "Hospital General de Agudos Cecilia Grierson", address: "Av. Fernández de la Cruz 3280", barrio: "Villa Lugano", type: "General de Agudos", lat: -34.6718, lng: -58.4568 },
+  { name: "Hospital General de Agudos D. Vélez Sarsfield", address: "Av. Gaona 840", barrio: "Flores", type: "General de Agudos", lat: -34.6253, lng: -58.5076 },
+  { name: "Hospital General de Agudos Donación F. Santojanni", address: "Pilar 950", barrio: "Mataderos", type: "General de Agudos", lat: -34.6492, lng: -58.5156 },
+  { name: "Hospital General de Agudos Dr C. Argerich", address: "Almte. Brown 240", barrio: "La Boca", type: "General de Agudos", lat: -34.6278, lng: -58.3659 },
+  { name: "Hospital General de Agudos Dr. C. Durand", address: "Av. Díaz Vélez 5044", barrio: "Almagro", type: "General de Agudos", lat: -34.6090, lng: -58.4380 },
+  { name: "Hospital General de Agudos Dr. E. Tornu", address: "Combatientes de Malvinas 3002", barrio: "Palermo", type: "General de Agudos", lat: -34.5874, lng: -58.4711 },
+  { name: "Hospital General de Agudos Dr. I. Pirovano", address: "Monroe 3555", barrio: "Villa Urquiza", type: "General de Agudos", lat: -34.5651, lng: -58.4711 },
+  { name: "Hospital General de Agudos Dr. J. A. Fernandez", address: "Cerviño 3356", barrio: "Palermo", type: "General de Agudos", lat: -34.5811, lng: -58.4069 },
+  { name: "Hospital General de Agudos Dr. T. Alvarez", address: "Av. Juan B. Justo 4151", barrio: "Villa Santa Rita", type: "General de Agudos", lat: -34.6242, lng: -58.4695 },
+  { name: "Hospital General de Agudos J. A. Penna", address: "Av. Caseros 2600", barrio: "Barracas", type: "General de Agudos", lat: -34.6431, lng: -58.4109 },
+  { name: "Hospital General de Agudos J. M. Ramos Mejia", address: "Av. Urquiza 609", barrio: "Balvanera", type: "General de Agudos", lat: -34.6177, lng: -58.4096 },
+  { name: "Hospital General de Agudos P. Piñero", address: "Varela 1307", barrio: "Flores", type: "General de Agudos", lat: -34.6439, lng: -58.4541 },
+  { name: "Hospital General de Niños P. de Elizalde", address: "Av. Montes de Oca 40", barrio: "San Telmo", type: "Hospital de Niños", lat: -34.6289, lng: -58.3776 },
+  { name: "Hospital General de Niños R. Gutierrez", address: "Gallo 1330", barrio: "Recoleta", type: "Hospital de Niños", lat: -34.5942, lng: -58.4121 },
+  { name: "Hospital Municipal de Oncología M. Curie", address: "Av. Patricias Argentinas 750", barrio: "Almagro", type: "Oncología", lat: -34.6071, lng: -58.4331 },
+  { name: "Inst. de Zoonosis L. Pasteur", address: "Av. Díaz Vélez 4821", barrio: "Almagro", type: "Especializado", lat: -34.6085, lng: -58.4349 },
+  { name: "IREP - Inst. Rehabilitación Psicofísica", address: "Echeverría 955", barrio: "Belgrano", type: "Rehabilitación", lat: -34.5539, lng: -58.4410 },
+  { name: "Talleres Protegidos de Rehabilitación Psiquiátrica", address: "Brandsen 2840", barrio: "Barracas", type: "Salud Mental", lat: -34.6423, lng: -58.3831 },
+];
+
+const OTROS_DATA = [
+  // CEMAR
+  { name: "CEMAR Nº 1", address: "Fragata Pres. Sarmiento 2152", barrio: "La Paternal", tipo: "CEMAR", lat: -34.6009, lng: -58.4591 },
+  { name: "CEMAR Nº 2", address: "Av. Gral. Tomás de Iriarte 3501", barrio: "Barracas", tipo: "CEMAR", lat: -34.6569, lng: -58.3648 },
+  { name: "CEMAR Nº 3", address: "Galván 3463", barrio: "Saavedra", tipo: "CEMAR", lat: -34.5577, lng: -58.4944 },
+  // CCI
+  { name: "CCI Rodrigo Bueno", address: "Bartolina Sisa y Delia Deglioumini", barrio: "Puerto Madero", tipo: "CCI", lat: -34.6179, lng: -58.3511 },
+  { name: "CCI Fraga", address: "Av. Triunvirato 2491", barrio: "Chacarita", tipo: "CCI", lat: -34.5851, lng: -58.4604 },
+  // CMB
+  { name: "CMB Nº 1", address: "Las Palmas 2479", barrio: "Nueva Pompeya", tipo: "CMB", lat: -34.6459, lng: -58.4246 },
+  { name: "CMB Nº 2", address: "Emilio Lamarca 1022", barrio: "Villa Santa Rita", tipo: "CMB", lat: -34.6221, lng: -58.4830 },
+  { name: "CMB Nº 4", address: "Av. Carabobo 801", barrio: "Flores", tipo: "CMB", lat: -34.6357, lng: -58.4525 },
+  { name: "CMB Nº 5", address: "Nogoyá 4302", barrio: "Monte Castro", tipo: "CMB", lat: -34.6083, lng: -58.5043 },
+  { name: "CMB Nº 6", address: "Estados Unidos 1936", barrio: "San Cristóbal", tipo: "CMB", lat: -34.6196, lng: -58.3936 },
+  { name: "CMB Nº 12", address: "Paez 2283", barrio: "Flores", tipo: "CMB", lat: -34.6191, lng: -58.4652 },
+  { name: "CMB Nº 19", address: "Virgilio 2502", barrio: "Villa Real", tipo: "CMB", lat: -34.6181, lng: -58.5223 },
+  { name: "CMB Nº 24", address: "Brasil 2867", barrio: "Parque Patricios", tipo: "CMB", lat: -34.6327, lng: -58.4040 },
+  { name: "CMB Nº 25", address: "Martínez Castro 1375", barrio: "Parque Avellaneda", tipo: "CMB", lat: -34.6463, lng: -58.4693 },
+  { name: "CMB Nº 27", address: "Antezana 340", barrio: "Villa Crespo", tipo: "CMB", lat: -34.6053, lng: -58.4448 },
+  { name: "CMB Nº 28", address: "Echeandia 5567", barrio: "Villa Lugano", tipo: "CMB", lat: -34.6658, lng: -58.4849 },
+  { name: "CMB Nº 29", address: "Saavedra 205", barrio: "Balvanera", tipo: "CMB", lat: -34.6124, lng: -58.4033 },
+  { name: "CMB Nº 30", address: "Arzobispo Espinosa 1211", barrio: "Barracas", tipo: "CMB", lat: -34.6339, lng: -58.3722 },
+  { name: "CMB Nº 33", address: "Cramer 4354", barrio: "Saavedra", tipo: "CMB", lat: -34.5447, lng: -58.4766 },
+  // CSM
+  { name: "C.S.M. Nº 1", address: "Manuela Pedraza 1558", barrio: "Núñez", tipo: "CSM", lat: -34.5474, lng: -58.4580 },
+  { name: "C.S.M. Nº 3", address: "Córdoba 3120", barrio: "Balvanera", tipo: "CSM", lat: -34.5982, lng: -58.4107 },
+  // COI
+  { name: "COI Nº 1", address: "De los Corrales y Carhue", barrio: "Mataderos", tipo: "COI", lat: -34.6620, lng: -58.5050 },
+  { name: "COI Nº 4", address: "Amancio Alcorta 1402", barrio: "Parque Patricios", tipo: "COI", lat: -34.6334, lng: -58.3835 },
+];
+
+// ============================================================
+// MAP SETUP
+// ============================================================
+
+const map = L.map('map', {
+  center: [-34.620, -58.440],
+  zoom: 12,
+  zoomControl: true
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+
+// ============================================================
+// ICONS
+// ============================================================
+
+function makeIcon(color, symbol, size = 22) {
+  return L.divIcon({
+    html: `<div style="
+      width:${size}px;height:${size}px;
+      background:${color};
+      border:2.5px solid rgba(255,255,255,0.9);
+      border-radius:50%;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:${size*0.55}px;line-height:1;
+    ">${symbol}</div>`,
+    className: '',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2]
+  });
+}
+
+const icons = {
+  fija:        makeIcon('#1e8449', '🏥', 26),
+  itinerante:  makeIcon('#b7950b', '🚐', 24),
+  cesac:       makeIcon('#2980b9', '➕', 20),
+  hospital:    makeIcon('#c0392b', '🏨', 22),
+  otros:       makeIcon('#8e44ad', '🏠', 20),
+};
+
+// ============================================================
+// LAYER GROUPS
+// ============================================================
+
+const layerGroups = {
+  fijas:        L.layerGroup().addTo(map),
+  itinerantes:  L.layerGroup().addTo(map),
+  cesac:        L.layerGroup().addTo(map),
+  hospitales:   L.layerGroup().addTo(map),
+  otros:        L.layerGroup().addTo(map),
+};
+
+const circleGroup = L.layerGroup().addTo(map);
+let layerState = { fijas: true, itinerantes: true, cesac: true, hospitales: true, otros: true };
+
+// ============================================================
+// UTILS
+// ============================================================
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function getNearby(estLat, estLng, radius = 1.0) {
+  const result = { cesac: [], hospitales: [], otros: [] };
+  CESAC_DATA.forEach(c => {
+    const d = haversineKm(estLat, estLng, c.lat, c.lng);
+    if (d <= radius) result.cesac.push({ ...c, dist: d });
+  });
+  HOSPITALES_DATA.forEach(h => {
+    const d = haversineKm(estLat, estLng, h.lat, h.lng);
+    if (d <= radius) result.hospitales.push({ ...h, dist: d });
+  });
+  OTROS_DATA.forEach(o => {
+    const d = haversineKm(estLat, estLng, o.lat, o.lng);
+    if (d <= radius) result.otros.push({ ...o, dist: d });
+  });
+  result.cesac.sort((a,b) => a.dist - b.dist);
+  result.hospitales.sort((a,b) => a.dist - b.dist);
+  result.otros.sort((a,b) => a.dist - b.dist);
+  return result;
+}
+
+// ============================================================
+// ADD MARKERS
+// ============================================================
+
+function addEstacionMarker(est, isFija) {
+  const group = isFija ? layerGroups.fijas : layerGroups.itinerantes;
+  const icon = isFija ? icons.fija : icons.itinerante;
+
+  const marker = L.marker([est.lat, est.lng], { icon }).addTo(group);
+  marker.on('click', () => showEstacionInfo(est, isFija));
+
+  // Add circle (1km radius)
+  const circle = L.circle([est.lat, est.lng], {
+    radius: 1000,
+    color: isFija ? '#1e8449' : '#b7950b',
+    fillColor: isFija ? '#1e8449' : '#b7950b',
+    fillOpacity: 0.06,
+    weight: 1.5,
+    dashArray: '5 5'
+  }).addTo(circleGroup);
+
+  circle.on('click', () => showEstacionInfo(est, isFija));
+  marker._circle = circle;
+}
+
+ESTACIONES_FIJAS.forEach(est => addEstacionMarker(est, true));
+ESTACIONES_ITINERANTES.forEach(est => addEstacionMarker(est, false));
+
+CESAC_DATA.forEach(c => {
+  const marker = L.marker([c.lat, c.lng], { icon: icons.cesac }).addTo(layerGroups.cesac);
+  marker.bindPopup(`<div class="popup-title">${c.name}</div><div class="popup-body">📍 ${c.address}<br>🏘️ ${c.barrio} | Comuna ${c.comuna}</div>`);
+});
+
+HOSPITALES_DATA.forEach(h => {
+  const marker = L.marker([h.lat, h.lng], { icon: icons.hospital }).addTo(layerGroups.hospitales);
+  marker.bindPopup(`<div class="popup-title">${h.name}</div><div class="popup-body">📍 ${h.address}<br>🏘️ ${h.barrio}<br>🏷️ ${h.type}</div>`);
+});
+
+OTROS_DATA.forEach(o => {
+  const marker = L.marker([o.lat, o.lng], { icon: icons.otros }).addTo(layerGroups.otros);
+  marker.bindPopup(`<div class="popup-title">${o.name}</div><div class="popup-body">📍 ${o.address}<br>🏘️ ${o.barrio}<br>🏷️ ${o.tipo}</div>`);
+});
+
+// ============================================================
+// INFO PANEL
+// ============================================================
+
+let activeCircle = null;
+
+function showEstacionInfo(est, isFija) {
+  const nearby = getNearby(est.lat, est.lng, 1.0);
+  const totalEfectores = nearby.cesac.length + nearby.hospitales.length + nearby.otros.length;
+
+  // Highlight circle
+  if (activeCircle) {
+    activeCircle.setStyle({ fillOpacity: 0.06, weight: 1.5 });
+  }
+
+  // Build HTML
+  let html = `<div class="estacion-card">
+    <h4>${est.name}</h4>
+    <span class="badge ${isFija ? 'badge-fija' : 'badge-itinerante'}">${isFija ? '📍 Fija' : '🚐 Itinerante'}</span>
+    <div style="font-size:12px;color:#5d6d7e;margin-bottom:4px;">📍 ${est.address}</div>
+    <div style="font-size:12px;color:#5d6d7e;">🏘️ Comuna ${est.comuna}</div>
+    ${est.dias ? `<div style="font-size:11px;color:#7f8c8d;margin-top:4px;">🕐 ${est.dias}</div>` : ''}
+    <div class="impact-summary">
+      <div class="impact-box">
+        <div class="impact-number" style="color:${totalEfectores === 0 ? '#c0392b' : '#1e8449'}">${totalEfectores}</div>
+        <div class="impact-label">efectores en 1km</div>
+      </div>
+      <div class="impact-box">
+        <div class="impact-number" style="color:#2980b9">${nearby.cesac.length}</div>
+        <div class="impact-label">CeSAC cercanos</div>
+      </div>
+    </div>
+  </div>`;
+
+  if (nearby.hospitales.length > 0) {
+    html += `<div class="nearby-section"><h5>🏨 Hospitales GCBA en 1km</h5>`;
+    nearby.hospitales.forEach(h => {
+      html += `<div class="nearby-item">
+        <div class="nearby-dot" style="background:#c0392b;"></div>
+        <span class="nearby-text"><strong>${h.name}</strong><br><span style="color:#7f8c8d">${h.type}</span></span>
+        <span class="nearby-dist">${(h.dist*1000).toFixed(0)}m</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (nearby.cesac.length > 0) {
+    html += `<div class="nearby-section"><h5>➕ CeSAC en 1km</h5>`;
+    nearby.cesac.forEach(c => {
+      html += `<div class="nearby-item">
+        <div class="nearby-dot" style="background:#2980b9;"></div>
+        <span class="nearby-text"><strong>${c.name}</strong><br><span style="color:#7f8c8d">${c.barrio}</span></span>
+        <span class="nearby-dist">${(c.dist*1000).toFixed(0)}m</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (nearby.otros.length > 0) {
+    html += `<div class="nearby-section"><h5>🏠 CMB / CEMAR / CCI / CSM / COI en 1km</h5>`;
+    nearby.otros.forEach(o => {
+      html += `<div class="nearby-item">
+        <div class="nearby-dot" style="background:#8e44ad;"></div>
+        <span class="nearby-text"><strong>${o.name}</strong><br><span style="color:#7f8c8d">${o.barrio} · ${o.tipo}</span></span>
+        <span class="nearby-dist">${(o.dist*1000).toFixed(0)}m</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (totalEfectores === 0) {
+    html += `<div style="margin-top:10px;padding:10px;background:#fdf2f2;border:1px solid #f5b7b1;border-radius:8px;font-size:12px;color:#c0392b;">
+      ⚠️ <strong>Sin efectores de salud en el radio de 1km.</strong> Esta estación actúa como único acceso sanitario de proximidad en su área de influencia.
+    </div>`;
+  }
+
+  document.getElementById('info-content').innerHTML = html;
+
+  // Fly to location
+  map.flyTo([est.lat, est.lng], 14, { duration: 0.8 });
+}
+
+// ============================================================
+// LAYER TOGGLES
+// ============================================================
+
+function toggleLayer(name) {
+  layerState[name] = !layerState[name];
+  const els = document.querySelectorAll('.legend-item');
+  const idx = ['fijas', 'itinerantes', 'cesac', 'hospitales'].indexOf(name);
+  if (layerState[name]) {
+    map.addLayer(layerGroups[name]);
+    els[idx].classList.remove('disabled');
+  } else {
+    map.removeLayer(layerGroups[name]);
+    els[idx].classList.add('disabled');
+  }
+}
+
+function toggleCircles(show) {
+  if (show) map.addLayer(circleGroup);
+  else map.removeLayer(circleGroup);
+}
+
+function toggleOnlyFijas(onlyFijas) {
+  if (onlyFijas) {
+    map.removeLayer(layerGroups.itinerantes);
+  } else if (layerState.itinerantes) {
+    map.addLayer(layerGroups.itinerantes);
+  }
+}
+
+// ============================================================
+// SUMMARY STATS
+// ============================================================
+(function printStats() {
+  const allEstaciones = [...ESTACIONES_FIJAS, ...ESTACIONES_ITINERANTES];
+  let totalCoverage = 0;
+  let zonesWithNoEfectores = 0;
+  allEstaciones.forEach(est => {
+    const n = getNearby(est.lat, est.lng, 1.0);
+    totalCoverage += n.cesac.length + n.hospitales.length;
+    if (n.cesac.length + n.hospitales.length === 0) zonesWithNoEfectores++;
+  });
+  console.log(`Total estaciones: ${allEstaciones.length}`);
+  console.log(`Promedio efectores/estación: ${(totalCoverage/allEstaciones.length).toFixed(1)}`);
+  console.log(`Estaciones sin efectores en 1km: ${zonesWithNoEfectores}`);
+})();
+</script>
+
+</body>
+</html>

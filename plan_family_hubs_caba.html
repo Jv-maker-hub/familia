@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red de Family Hubs CABA — Reconversión de Estaciones</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+#header {
+  background: linear-gradient(135deg, #0d3b6e, #1a6bb5);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  z-index: 1000;
+  flex-shrink: 0;
+}
+#header h1 { font-size: 17px; font-weight: 700; }
+#header p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+.header-right { display: flex; gap: 8px; align-items: center; }
+.badge {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge.hub { background: rgba(255,180,0,0.3); border-color: rgba(255,200,0,0.5); }
+.badge.net { background: rgba(80,200,120,0.2); border-color: rgba(80,200,120,0.4); }
+.badge.mob { background: rgba(255,140,60,0.2); border-color: rgba(255,140,60,0.4); }
+
+#main { display: flex; flex: 1; overflow: hidden; }
+
+#sidebar {
+  width: 290px;
+  background: white;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+#map { flex: 1; }
+
+.panel { padding: 14px 16px; border-bottom: 1px solid #eef0f4; }
+.panel-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: #9aabbc; margin-bottom: 12px;
+}
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.stat-box {
+  background: #f7f9fc; border-radius: 8px; padding: 10px 6px;
+  text-align: center; border: 1px solid #e8edf5;
+}
+.stat-num { font-size: 24px; font-weight: 800; line-height: 1; }
+.stat-num.hub { color: #c8960a; }
+.stat-num.net { color: #27ae60; }
+.stat-num.mob { color: #d4700a; }
+.stat-lbl { font-size: 9px; color: #9aabbc; margin-top: 3px; line-height: 1.4; font-weight: 600; text-transform: uppercase; }
+
+/* CONCEPTO */
+.concepto {
+  background: #f0f6ff;
+  border-left: 3px solid #1a6bb5;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: #2c4a6e;
+  line-height: 1.6;
+}
+.concepto strong { display: block; margin-bottom: 4px; color: #0d3b6e; font-size: 12px; }
+
+/* LEGEND */
+.legend-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 4px; cursor: pointer; border-radius: 6px;
+  transition: background 0.15s;
+}
+.legend-row:hover { background: #f5f7fa; }
+.legend-row.inactive { opacity: 0.3; }
+
+.dot-hub {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: #f5c518; border: 3px solid #c8960a;
+  box-shadow: 0 0 0 2px rgba(200,150,10,0.2);
+}
+.dot-net {
+  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  background: #27ae60; border: 2px solid #1e8449;
+}
+.dot-mob {
+  width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  background: #e67e22; border: 2px solid #ca6f1e;
+}
+.legend-label { font-size: 13px; color: #2c3e50; font-weight: 500; flex: 1; }
+.legend-sub { font-size: 10px; color: #9aabbc; margin-top: 1px; }
+.legend-count {
+  font-size: 11px; background: #eaf0fb; color: #2980b9;
+  padding: 2px 7px; border-radius: 10px; font-weight: 700;
+}
+
+/* FASES */
+.fase {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 4px; border-bottom: 1px solid #f0f2f5;
+}
+.fase:last-child { border-bottom: none; }
+.fase-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #0d3b6e; color: white;
+  font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.fase-text { font-size: 12px; color: #2c3e50; line-height: 1.5; }
+.fase-text strong { color: #0d3b6e; }
+
+/* LISTA */
+.list-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 4px; cursor: pointer; border-radius: 6px;
+  transition: background 0.15s;
+}
+.list-item:hover { background: #f5f8ff; }
+.list-icon { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.list-icon.hub { background: #f5c518; border: 2px solid #c8960a; width: 18px; height: 18px; }
+.list-icon.net { background: #27ae60; border: 2px solid #1e8449; }
+.list-icon.mob { background: #e67e22; border: 2px solid #ca6f1e; }
+.list-info { flex: 1; min-width: 0; }
+.list-name { font-size: 12px; font-weight: 600; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list-meta { font-size: 10px; color: #9aabbc; margin-top: 1px; }
+.list-commune {
+  font-size: 10px; font-weight: 700; color: white;
+  background: #0d3b6e; padding: 2px 6px; border-radius: 10px; flex-shrink: 0;
+}
+
+/* INFO PANEL */
+#info-panel { flex: 1; padding: 14px 16px; }
+#info-panel h3 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9aabbc; margin-bottom: 10px; }
+.info-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 10px; margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.tag-hub { background: #fff8d6; color: #7a5500; }
+.tag-net { background: #d4f5e2; color: #155724; }
+.tag-mob { background: #ffe8d0; color: #7a3300; }
+.info-title { font-size: 14px; font-weight: 700; color: #0d3b6e; margin-bottom: 6px; }
+.info-row { font-size: 12px; color: #5d6d7e; margin-bottom: 4px; line-height: 1.5; }
+.info-row strong { color: #2c3e50; }
+.info-note { margin-top: 10px; font-size: 11px; color: #9aabbc; line-height: 1.5; font-style: italic; }
+.placeholder { color: #c0ccd8; font-size: 12px; font-style: italic; }
+
+/* POPUP */
+.leaflet-popup-content-wrapper { border-radius: 10px !important; box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important; }
+.pw { font-family: 'Segoe UI', Arial, sans-serif; max-width: 230px; }
+.pw .ptag { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; margin-bottom: 7px; text-transform: uppercase; }
+.pw .ptitle { font-size: 14px; font-weight: 700; color: #0d3b6e; margin-bottom: 3px; }
+.pw .psub { font-size: 11px; color: #9aabbc; margin-bottom: 8px; }
+.pw .pbody { font-size: 12px; color: #2c3e50; line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>🏙️ Red de Family Hubs — Ciudad de Buenos Aires</h1>
+    <p>Reconversión de Estaciones Saludables · Modelo inspirado en UK Best Start</p>
+  </div>
+  <div class="header-right">
+    <span class="badge hub">★ 7 Hubs potenciales</span>
+    <span class="badge net">● 11 Network Sites</span>
+    <span class="badge mob">◌ 7 Móviles</span>
+  </div>
+</div>
+
+<div id="main">
+<div id="sidebar">
+
+  <div class="panel">
+    <div class="panel-title">La red actual reconvertida</div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-num hub">7</div>
+        <div class="stat-lbl">Hubs potenciales (fijas grandes)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num net">11</div>
+        <div class="stat-lbl">Network sites fijos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num mob">7</div>
+        <div class="stat-lbl">Sites móviles</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="concepto">
+      <strong>Principio del modelo UK</strong>
+      "Los Family Hubs no son edificios. Son la transformación del sistema local de apoyo a familias."<br><br>
+      Una Estación Saludable reconvertida con los servicios correctos <em>es</em> un Family Hub.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Capas del mapa</div>
+    <div class="legend-row" id="leg-hub" onclick="toggleLayer('hub')">
+      <div class="dot-hub"></div>
+      <div>
+        <div class="legend-label">Hub potencial</div>
+        <div class="legend-sub">Estación grande → reconvertir como hub</div>
+      </div>
+      <span class="legend-count">7</span>
+    </div>
+    <div class="legend-row" id="leg-net" onclick="toggleLayer('net')">
+      <div class="dot-net"></div>
+      <div>
+        <div class="legend-label">Network site fijo</div>
+        <div class="legend-sub">Estación fija → mantener como site</div>
+      </div>
+      <span class="legend-count">11</span>
+    </div>
+    <div class="legend-row" id="leg-mob" onclick="toggleLayer('mob')">
+      <div class="dot-mob"></div>
+      <div>
+        <div class="legend-label">Network site móvil</div>
+        <div class="legend-sub">Itinerante → mantener y ampliar</div>
+      </div>
+      <span class="legend-count">7</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Fases de implementación</div>
+    <div class="fase">
+      <div class="fase-num">1</div>
+      <div class="fase-text"><strong>MVP — Reconversión digital</strong> Levantar todos los servicios GCBA en un portal de familias. Sin obra, sin inversión física.</div>
+    </div>
+    <div class="fase">
+      <div class="fase-num">2</div>
+      <div class="fase-text"><strong>Network — Reconvertir estaciones</strong> Agregar foco familiar, navigator, y articulación con CeSACs y jardines en cada estación existente.</div>
+    </div>
+    <div class="fase">
+      <div class="fase-num">3</div>
+      <div class="fase-text"><strong>Hubs — Ampliar las 7 grandes</strong> Estaciones en parques grandes con infraestructura para sumar talleres, salud perinatal, apoyo económico.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Estaciones — clic para ver en mapa</div>
+    <div id="station-list"></div>
+  </div>
+
+  <div id="info-panel">
+    <h3>📍 Detalle</h3>
+    <div id="info-content">
+      <p class="placeholder">Hacé clic en cualquier estación para ver su información.</p>
+    </div>
+  </div>
+
+</div>
+<div id="map"></div>
+</div>
+
+<script>
+// =================================================================
+// DATOS — Estaciones clasificadas por potencial
+// Criterio hub: parque grande, infraestructura amplia, alta afluencia
+// =================================================================
+
+const HUBS_POTENCIALES = [
+  {
+    name: "Parque Chacabuco", address: "Av. Asamblea y Emilio Mitre", comuna: 7,
+    lat: -34.634673, lng: -58.440549,
+    parque: "23 ha", motivo: "Uno de los parques más grandes de la ciudad. Gran paso de familias, infraestructura existente para ampliar servicios.",
+    comunas_cubre: "7 — Flores / Parque Chacabuco"
+  },
+  {
+    name: "Parque Centenario", address: "Antonio Machado y Leopoldo Marechal", comuna: 6,
+    lat: -34.606244, lng: -58.438017,
+    parque: "12 ha", motivo: "Nodo central de Caballito, uno de los parques más frecuentados de CABA. Excelente acceso en transporte.",
+    comunas_cubre: "6 — Caballito"
+  },
+  {
+    name: "Parque Avellaneda", address: "Av. Lacarra y Av. Bilbao", comuna: 9,
+    lat: -34.647000, lng: -58.497000,
+    parque: "78 ha", motivo: "El parque más grande del oeste. Hub natural para Mataderos y Liniers, zona con alta concentración de familias jóvenes.",
+    comunas_cubre: "9 — Mataderos / Liniers"
+  },
+  {
+    name: "Parque de la Ciudad", address: "Calle 23 de Junio y Alberto Zorilla", comuna: 8,
+    lat: -34.674000, lng: -58.478000,
+    parque: "100+ ha", motivo: "La comuna 8 (Villa Lugano/Soldati) es la de mayor vulnerabilidad de CABA. Este parque tiene escala para convertirse en el hub más importante.",
+    comunas_cubre: "8 — Villa Lugano / Villa Soldati"
+  },
+  {
+    name: "Parque Saavedra", address: "Roque Pérez y Paroissien", comuna: 12,
+    lat: -34.550804, lng: -58.479517,
+    parque: "Grande", motivo: "Parque consolidado del norte, hub natural para la franja norte de la ciudad: Saavedra, Villa Urquiza, Coghlan.",
+    comunas_cubre: "12 — Saavedra / Villa Urquiza"
+  },
+  {
+    name: "Estación Rosedal", address: "Iraola y Sarmiento", comuna: 14,
+    lat: -34.571514, lng: -58.412955,
+    parque: "Bosques de Palermo", motivo: "Palermo concentra muchas familias jóvenes. El Rosedal, dentro de los Bosques, tiene la escala y la ubicación para ser hub de la comuna 14.",
+    comunas_cubre: "14 — Palermo"
+  },
+  {
+    name: "Estación Parque Los Andes", address: "Av. Dorrego y Av. Corrientes", comuna: 15,
+    lat: -34.591763, lng: -58.448187,
+    parque: "Parque Los Andes", motivo: "Chacarita y Villa Crespo tienen densidad de familias jóvenes en crecimiento. Los Andes es el espacio verde de referencia de la zona.",
+    comunas_cubre: "15 — Chacarita / Villa Crespo"
+  },
+];
+
+const NETWORK_SITES = [
+  { name: "Estación Rubén Darío", address: "Av. del Libertador y Dr. Luis Agote", comuna: 2, lat: -34.583528, lng: -58.393686 },
+  { name: "Estación Plaza Houssay", address: "Paraguay y Uriburu", comuna: 2, lat: -34.599815, lng: -58.397076 },
+  { name: "Estación Plaza Manzana 66", address: "Moreno entre Catamarca y Av. Jujuy", comuna: 3, lat: -34.614120, lng: -58.405702 },
+  { name: "Estación Martín Fierro", address: "Barcala e/ La Rioja y Gral. Urquiza", comuna: 3, lat: -34.626092, lng: -58.407376 },
+  { name: "Estación Parque Patricios", address: "Patagones y Monteagudo", comuna: 4, lat: -34.638026, lng: -58.406358 },
+  { name: "Estación Plaza Almagro", address: "Perón entre Bulnes y Salguero", comuna: 5, lat: -34.605820, lng: -58.419135 },
+  { name: "Estación Parque Rivadavia", address: "Av. Rivadavia y Pas. Florencio Balcarce", comuna: 6, lat: -34.617793, lng: -58.434455 },
+  { name: "Estación Plaza Flores", address: "Av. Rivadavia y Fray Cayetano Rodríguez", comuna: 7, lat: -34.628697, lng: -58.463044 },
+  { name: "Plaza Sudamérica", address: "Av. Piedrabuena y F. de la Cruz", comuna: 8, lat: -34.688362, lng: -58.475085 },
+  { name: "Estación Aristóbulo del Valle", address: "Cuenca entre Baigorria y Marcos Sastre", comuna: 11, lat: -34.604712, lng: -58.492668 },
+  { name: "Estación Lagos de Palermo", address: "Andrés Bello casi Tornquist", comuna: 14, lat: -34.555364, lng: -58.435228 },
+];
+
+const MOBILE_SITES = [
+  { name: "Parque Lezama", address: "Irala y Av. Martín García", comuna: 1, lat: -34.626716, lng: -58.369574, dias: "Lunes 9:30–13:30" },
+  { name: "Parque Ferroviario", address: "Moldes y Av. Federico Lacroze", comuna: 15, lat: -34.572944, lng: -58.447649, dias: "Lunes 9–13" },
+  { name: "Corralón de Floresta", address: "Av. Gaona 4600", comuna: 10, lat: -34.626969, lng: -58.488448, dias: "Martes y Viernes 9–13" },
+  { name: "Plaza La Redonda", address: "Av. Juramento 2251", comuna: 13, lat: -34.561690, lng: -58.454754, dias: "Miércoles 9:30–13:30" },
+  { name: "Plaza Irlanda", address: "Neuquén 1710 esq. Moleros", comuna: 10, lat: -34.614603, lng: -58.457816, dias: "Miércoles 9–13" },
+  { name: "Plaza Echeverría", address: "Bauness 2758", comuna: 12, lat: -34.572022, lng: -58.489327, dias: "Jueves 9:30–13:30" },
+  { name: "Plaza Democracia", address: "Lisandro de la Torre y Berón de Astrada", comuna: 8, lat: -34.690445, lng: -58.463724, dias: "Jueves 9–13" },
+];
+
+// =================================================================
+// MAPA
+// =================================================================
+
+const map = L.map('map', { center: [-34.618, -58.450], zoom: 12 });
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap contributors © CARTO', maxZoom: 19
+}).addTo(map);
+
+const layers = { hub: L.layerGroup(), net: L.layerGroup(), mob: L.layerGroup() };
+Object.values(layers).forEach(l => l.addTo(map));
+
+// Iconos
+function makeHubIcon() {
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:28px;height:28px;background:#f5c518;border:3px solid #c8960a;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;">★</div>`,
+    iconSize: [28, 28], iconAnchor: [14, 14]
+  });
+}
+const netIcon = L.divIcon({
+  className: '',
+  html: `<div style="width:14px;height:14px;background:#27ae60;border:2px solid #1e8449;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.25)"></div>`,
+  iconSize: [14, 14], iconAnchor: [7, 7]
+});
+const mobIcon = L.divIcon({
+  className: '',
+  html: `<div style="width:12px;height:12px;background:#e67e22;border:2px solid #ca6f1e;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.25)"></div>`,
+  iconSize: [12, 12], iconAnchor: [6, 6]
+});
+
+// Hubs potenciales
+HUBS_POTENCIALES.forEach(h => {
+  const m = L.marker([h.lat, h.lng], { icon: makeHubIcon(), zIndexOffset: 1000 });
+  m.bindPopup(`<div class="pw">
+    <span class="ptag" style="background:#fff8d6;color:#7a5500;">★ HUB POTENCIAL · C${h.comuna}</span>
+    <div class="ptitle">${h.name}</div>
+    <div class="psub">📍 ${h.address}</div>
+    <div class="pbody">
+      <strong>Parque:</strong> ${h.parque}<br>
+      <strong>Cubre:</strong> ${h.comunas_cubre}<br><br>
+      ${h.motivo}
+    </div>
+  </div>`, { maxWidth: 250 });
+  m.on('click', () => showInfo('hub', h));
+  layers.hub.addLayer(m);
+});
+
+// Network sites
+NETWORK_SITES.forEach(e => {
+  const m = L.marker([e.lat, e.lng], { icon: netIcon });
+  m.bindPopup(`<div class="pw">
+    <span class="ptag" style="background:#d4f5e2;color:#155724;">● NETWORK SITE FIJO · C${e.comuna}</span>
+    <div class="ptitle">${e.name}</div>
+    <div class="psub">📍 ${e.address}</div>
+    <div class="pbody">Estación Saludable existente reconvertida como punto de la red de familias. Mantiene su operación actual y suma articulación con CeSAC, jardines y programas sociales.</div>
+  </div>`, { maxWidth: 230 });
+  m.on('click', () => showInfo('net', e));
+  layers.net.addLayer(m);
+});
+
+// Móviles
+MOBILE_SITES.forEach(e => {
+  const m = L.marker([e.lat, e.lng], { icon: mobIcon });
+  m.bindPopup(`<div class="pw">
+    <span class="ptag" style="background:#ffe8d0;color:#7a3300;">◌ SITE MÓVIL · C${e.comuna}</span>
+    <div class="ptitle">${e.name}</div>
+    <div class="psub">📍 ${e.address}</div>
+    <div class="pbody"><strong>Días:</strong> ${e.dias}<br><br>Estación itinerante existente. Modelo móvil que alcanza zonas sin site fijo. Continúa y potencialmente amplía su horario.</div>
+  </div>`, { maxWidth: 230 });
+  m.on('click', () => showInfo('mob', e));
+  layers.mob.addLayer(m);
+});
+
+// =================================================================
+// SIDEBAR — Lista
+// =================================================================
+
+const list = document.getElementById('station-list');
+
+function addListItem(type, data, label) {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <div class="list-icon ${type}"></div>
+    <div class="list-info">
+      <div class="list-name">${data.name}</div>
+      <div class="list-meta">${label}</div>
+    </div>
+    <span class="list-commune">C${data.comuna}</span>
+  `;
+  div.addEventListener('click', () => {
+    map.setView([data.lat, data.lng], 15, { animate: true });
+    showInfo(type, data);
+  });
+  list.appendChild(div);
+}
+
+HUBS_POTENCIALES.forEach(h => addListItem('hub', h, `★ Hub potencial · ${h.parque}`));
+NETWORK_SITES.forEach(e => addListItem('net', e, '● Network site fijo'));
+MOBILE_SITES.forEach(e => addListItem('mob', e, `◌ Móvil · ${e.dias}`));
+
+// =================================================================
+// INFO PANEL
+// =================================================================
+
+function showInfo(type, data) {
+  const el = document.getElementById('info-content');
+  if (type === 'hub') {
+    el.innerHTML = `
+      <span class="info-tag tag-hub">★ Hub potencial · Comuna ${data.comuna}</span>
+      <div class="info-title">${data.name}</div>
+      <div class="info-row">📍 ${data.address}</div>
+      <div class="info-row"><strong>Parque:</strong> ${data.parque}</div>
+      <div class="info-row"><strong>Cobertura:</strong> ${data.comunas_cubre}</div>
+      <div class="info-note">${data.motivo}</div>
+      <div style="margin-top:12px;background:#fff8d6;border-radius:6px;padding:8px 10px;font-size:11px;color:#7a5500;line-height:1.5;">
+        <strong>Fase 3</strong> — Ampliar con: talleres de crianza, consejería en lactancia, salud mental perinatal, articulación con CeSAC y jardines.
+      </div>
+    `;
+  } else if (type === 'net') {
+    el.innerHTML = `
+      <span class="info-tag tag-net">● Network site fijo · Comuna ${data.comuna}</span>
+      <div class="info-title">${data.name}</div>
+      <div class="info-row">📍 ${data.address}</div>
+      <div class="info-note">Estación Saludable existente. Sin inversión adicional en infraestructura.</div>
+      <div style="margin-top:12px;background:#d4f5e2;border-radius:6px;padding:8px 10px;font-size:11px;color:#155724;line-height:1.5;">
+        <strong>Fase 2</strong> — Agregar: family navigator, cartelería del sistema, articulación con servicios GCBA para familias.
+      </div>
+    `;
+  } else {
+    el.innerHTML = `
+      <span class="info-tag tag-mob">◌ Site móvil · Comuna ${data.comuna}</span>
+      <div class="info-title">${data.name}</div>
+      <div class="info-row">📍 ${data.address}</div>
+      <div class="info-row"><strong>Días:</strong> ${data.dias}</div>
+      <div class="info-note">Estación itinerante existente. Mantiene su operación y se integra a la red de familia.</div>
+      <div style="margin-top:12px;background:#ffe8d0;border-radius:6px;padding:8px 10px;font-size:11px;color:#7a3300;line-height:1.5;">
+        <strong>Fase 2</strong> — Sumar horarios en comunas sin site fijo (1, 10, 13).
+      </div>
+    `;
+  }
+}
+
+// =================================================================
+// TOGGLE
+// =================================================================
+
+const states = { hub: true, net: true, mob: true };
+function toggleLayer(name) {
+  states[name] = !states[name];
+  document.getElementById('leg-' + name).classList.toggle('inactive', !states[name]);
+  states[name] ? layers[name].addTo(map) : map.removeLayer(layers[name]);
+}
+</script>
+</body>
+</html>

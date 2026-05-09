@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 a 18 años · Familias Buenos Aires</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color: #1a1a2e; background: #faf8f5; font-size: 16px; line-height: 1.5; }
+a { color: #2f54b8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+#header { background: #0d1829; padding: 0 32px; display: flex; align-items: center; height: 58px; gap: 36px; position: sticky; top: 0; z-index: 100; }
+.ba-logo { display: flex; align-items: center; gap: 9px; flex-shrink: 0; text-decoration: none; }
+.ba-logo:hover { text-decoration: none; }
+.ba-logo-box { background: #2f54b8; border-radius: 4px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 15px; color: #fff; letter-spacing: -1px; }
+.ba-logo-text { color: #fff; font-size: 13px; font-weight: 600; opacity: 0.9; }
+.gcba-nav { display: flex; }
+.gcba-nav a { color: rgba(255,255,255,0.68); font-size: 13px; font-weight: 500; padding: 0 14px; height: 58px; display: flex; align-items: center; border-bottom: 3px solid transparent; transition: all 0.15s; text-decoration: none; }
+.gcba-nav a:hover { color: #fff; text-decoration: none; }
+.gcba-nav-right { margin-left: auto; }
+.btn-gcba-site { border: 1.5px solid rgba(255,255,255,0.3) !important; border-radius: 4px; color: rgba(255,255,255,0.75) !important; font-size: 13px !important; padding: 6px 14px !important; height: auto !important; border-bottom: 1.5px solid rgba(255,255,255,0.3) !important; }
+.btn-gcba-site:hover { background: rgba(255,255,255,0.08) !important; text-decoration: none !important; }
+.breadcrumb { background: #fef9e7; padding: 12px 32px; font-size: 13px; color: #888; border-bottom: 1px solid rgba(160,120,0,0.1); }
+.breadcrumb a { color: #a07800; }
+.breadcrumb span { margin: 0 6px; opacity: 0.4; }
+.stage-hero { background: #7c5c00; color: white; overflow: hidden; position: relative; }
+.stage-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 340px; max-width: 1160px; margin: 0 auto; padding: 0 24px; align-items: center; gap: 48px; position: relative; z-index: 2; }
+.stage-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1400&q=70'); background-size: cover; background-position: center top; opacity: 0.22; }
+.stage-hero-left { padding: 52px 0; }
+.stage-hero-badge { display: inline-block; background: rgba(255,255,255,0.22); border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 5px 16px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+.stage-hero-left h1 { font-size: 46px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 14px; }
+.stage-hero-left p { font-size: 17px; opacity: 0.85; line-height: 1.65; max-width: 480px; }
+.stage-hero-img { height: 340px; background-image: url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=500&q=72'); background-size: cover; background-position: center top; border-radius: 12px 12px 0 0; align-self: flex-end; }
+.quick-links { background: #fff; border-bottom: 1px solid #eee; padding: 0 32px; display: flex; gap: 0; overflow-x: auto; }
+.quick-link-item { padding: 16px 22px; font-size: 14px; font-weight: 600; color: #555; border-bottom: 3px solid transparent; white-space: nowrap; text-decoration: none; transition: all 0.15s; }
+.quick-link-item:hover { color: #a07800; text-decoration: none; }
+.quick-link-item.active { color: #a07800; border-bottom-color: #a07800; }
+.main-wrap { max-width: 1160px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 300px; gap: 52px; align-items: start; }
+.section-block { margin-bottom: 48px; }
+.section-block h2 { font-size: 22px; font-weight: 900; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid #fef9e7; letter-spacing: -0.3px; }
+.service-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.service-card { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+.service-card:hover { border-color: #a07800; box-shadow: 0 4px 18px rgba(160,120,0,0.1); transform: translateY(-2px); text-decoration: none; }
+.service-icon { font-size: 28px; }
+.service-title { font-size: 15px; font-weight: 800; color: #1a1a2e; line-height: 1.3; }
+.service-desc { font-size: 13px; color: #666; line-height: 1.6; }
+.service-link { font-size: 13px; font-weight: 700; color: #a07800; margin-top: 6px; }
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px; }
+.sidebar-card.accent { background: #fef9e7; border-color: #e8c84a; }
+.sidebar-card h4 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 14px; }
+.sidebar-card.accent h4 { color: #a07800; }
+.sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 14px; font-weight: 600; color: #1a1a2e; text-decoration: none; transition: color 0.15s; }
+.sidebar-link:last-child { border-bottom: none; padding-bottom: 0; }
+.sidebar-link:hover { color: #a07800; text-decoration: none; }
+.sidebar-link-icon { font-size: 20px; flex-shrink: 0; }
+.sidebar-alert { background: #fef9e7; border: 1.5px solid #e8c84a; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #7c5c00; line-height: 1.6; }
+.telefono-num { font-size: 22px; font-weight: 900; color: #a07800; }
+.telefono-item { display: flex; flex-direction: column; margin-bottom: 12px; }
+.telefono-label { font-size: 13px; color: #666; }
+.stage-nav { background: #fff; border-top: 1px solid #eee; padding: 32px 24px; }
+.stage-nav-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.stage-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 10px; background: #f5f3f0; border: 1.5px solid #e8e4df; text-decoration: none; color: #1a1a2e; transition: all 0.15s; flex: 1; max-width: 260px; }
+.stage-nav-btn:hover { background: #fef9e7; border-color: #e8c84a; text-decoration: none; }
+.stage-nav-btn-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #999; font-weight: 700; margin-bottom: 2px; }
+.stage-nav-btn-title { font-size: 15px; font-weight: 800; }
+.stage-nav-btn-icon { font-size: 28px; }
+#footer { background: #0d1829; color: rgba(255,255,255,0.6); padding: 44px 32px; font-size: 13px; }
+.footer-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+.footer-brand { font-size: 17px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+#footer .col strong { color: #fff; display: block; margin-bottom: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+#footer .col a { color: rgba(255,255,255,0.58); display: block; margin-bottom: 7px; }
+#footer .col a:hover { color: #fff; }
+@media (max-width: 900px) { .stage-hero-inner { grid-template-columns: 1fr; } .stage-hero-img { display: none; } .main-wrap { grid-template-columns: 1fr; } .service-cards { grid-template-columns: 1fr; } .stage-nav-inner { flex-direction: column; } .stage-nav-btn { max-width: 100%; } }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a class="ba-logo" href="index.html"><div class="ba-logo-box">BA</div><span class="ba-logo-text">Buenos Aires Ciudad</span></a>
+  <nav class="gcba-nav">
+    <a href="index.html">Familias</a>
+    <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+    <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+    <a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a>
+  </nav>
+  <nav class="gcba-nav gcba-nav-right"><a href="https://buenosaires.gob.ar" target="_blank" class="btn-gcba-site">buenosaires.gob.ar ↗</a></nav>
+</header>
+
+<div class="breadcrumb"><a href="index.html">Familias</a><span>›</span>6 a 18 años</div>
+
+<section class="stage-hero">
+  <div class="stage-hero-bg"></div>
+  <div class="stage-hero-inner">
+    <div class="stage-hero-left">
+      <div class="stage-hero-badge">👦 6 a 18 años</div>
+      <h1>6 a 18<br>años</h1>
+      <p>Escuela pública, comedores, becas, actividades culturales y deportivas, salud adolescente y derechos de niñez para chicos y familias porteñas.</p>
+    </div>
+    <div class="stage-hero-img"></div>
+  </div>
+</section>
+
+<div class="quick-links">
+  <a class="quick-link-item active" href="#educacion">Escuela y becas</a>
+  <a class="quick-link-item" href="#salud">Salud adolescente</a>
+  <a class="quick-link-item" href="#deporte">Deporte y cultura</a>
+  <a class="quick-link-item" href="#derechos">Derechos y protección</a>
+</div>
+
+<div class="main-wrap">
+  <div class="content">
+
+    <div class="section-block" id="educacion">
+      <h2>📚 Escuela y becas</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
+          <div class="service-icon">🏫</div>
+          <div class="service-title">Inscripción escolar</div>
+          <div class="service-desc">Primaria y secundaria pública. Portal de inscripciones de CABA. Inscripción anticipada en noviembre.</div>
+          <div class="service-link">Inscribirse →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/becas-escolares" target="_blank">
+          <div class="service-icon">🎓</div>
+          <div class="service-title">Becas escolares</div>
+          <div class="service-desc">Becas de retención escolar para estudiantes en riesgo de abandono. Apoyo económico mensual para secundaria.</div>
+          <div class="service-link">Ver becas →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/comedores" target="_blank">
+          <div class="service-icon">🍽️</div>
+          <div class="service-title">Comedores escolares</div>
+          <div class="service-desc">Almuerzo gratuito en escuelas primarias públicas de jornada completa. Sin trámite, se recibe automáticamente.</div>
+          <div class="service-link">Ver escuelas →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/utiles-libros" target="_blank">
+          <div class="service-icon">📖</div>
+          <div class="service-title">Útiles y libros gratuitos</div>
+          <div class="service-desc">Entrega de materiales escolares y libros de texto para alumnos de escuelas públicas. Se tramita en la institución.</div>
+          <div class="service-link">Consultar →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/escuela-nocturna" target="_blank">
+          <div class="service-icon">🌙</div>
+          <div class="service-title">Terminar el secundario</div>
+          <div class="service-desc">Bachilleratos populares, CENS y escuelas nocturnas para jóvenes que no completaron la secundaria. Gratuitos.</div>
+          <div class="service-link">Ver opciones →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/formacion-profesional" target="_blank">
+          <div class="service-icon">🔧</div>
+          <div class="service-title">Formación profesional</div>
+          <div class="service-desc">Cursos y tecnicaturas gratuitas en los Centros de Formación Profesional de CABA. Desde los 16 años.</div>
+          <div class="service-link">Ver cursos →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="salud">
+      <h2>🩺 Salud adolescente</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/salud-adolescente" target="_blank">
+          <div class="service-icon">👩‍⚕️</div>
+          <div class="service-title">Consultorio adolescente</div>
+          <div class="service-desc">Atención médica confidencial para adolescentes sin necesidad de acompañante adulto. En hospitales y CESAC.</div>
+          <div class="service-link">Ver atención →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/salud-sexual" target="_blank">
+          <div class="service-icon">❤️</div>
+          <div class="service-title">Salud sexual y reproductiva</div>
+          <div class="service-desc">Anticonceptivos gratuitos para adolescentes en hospitales y CESAC. Confidencial y sin restricciones de edad.</div>
+          <div class="service-link">Ver servicios →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
+          <div class="service-icon">💉</div>
+          <div class="service-title">Vacunas adolescentes</div>
+          <div class="service-desc">Doble bacteriana, VPH (11 años), Hepatitis A, Meningococo. Gratuitas y obligatorias en vacunatorios de CABA.</div>
+          <div class="service-link">Ver calendario →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/salud-mental-adolescente" target="_blank">
+          <div class="service-icon">💜</div>
+          <div class="service-title">Salud mental</div>
+          <div class="service-desc">Atención psicológica y psiquiátrica gratuita para adolescentes. Urgencias, seguimiento y grupos de apoyo.</div>
+          <div class="service-link">Consultar →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="deporte">
+      <h2>⚽ Deporte y cultura</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/deportes/clubes-barrio" target="_blank">
+          <div class="service-icon">🏆</div>
+          <div class="service-title">Clubes de Barrio</div>
+          <div class="service-desc">Red de clubes con actividades deportivas gratuitas o a bajo costo para jóvenes. Fútbol, básquet, natación, tenis y más.</div>
+          <div class="service-link">Ver clubes →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/cultura/centros-culturales" target="_blank">
+          <div class="service-icon">🎭</div>
+          <div class="service-title">Centros culturales</div>
+          <div class="service-desc">Talleres de teatro, música, fotografía, cine y más en centros culturales de toda CABA. Gratuitos o con cuota mínima.</div>
+          <div class="service-link">Ver talleres →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/museos-educacion" target="_blank">
+          <div class="service-icon">🏛️</div>
+          <div class="service-title">Museos y ciencia</div>
+          <div class="service-desc">Museos municipales con entrada gratuita para menores. Planetario, Museo de Ciencias Naturales y más.</div>
+          <div class="service-link">Ver museos →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/voluntariado" target="_blank">
+          <div class="service-icon">🤝</div>
+          <div class="service-title">Voluntariado joven</div>
+          <div class="service-desc">Programa de voluntariado para adolescentes mayores de 14 años. Participación comunitaria certificada.</div>
+          <div class="service-link">Ver programa →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="derechos">
+      <h2>⚖️ Derechos y protección</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/consejo-derechos" target="_blank">
+          <div class="service-icon">🛡️</div>
+          <div class="service-title">Consejo de Derechos NNyA</div>
+          <div class="service-desc">Organismo de protección de niñas, niños y adolescentes de CABA. Atención de situaciones de vulneración de derechos.</div>
+          <div class="service-link">Ver servicios →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/defensoria" target="_blank">
+          <div class="service-icon">⚖️</div>
+          <div class="service-title">Defensoría del pueblo</div>
+          <div class="service-desc">Para reclamar derechos educativos, de salud o sociales. Atención gratuita para todos los vecinos de CABA.</div>
+          <div class="service-link">Consultar →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/violencia-familiar" target="_blank">
+          <div class="service-icon">🏠</div>
+          <div class="service-title">Violencia familiar</div>
+          <div class="service-desc">Asistencia integral ante situaciones de violencia doméstica. Atención en OVD y centros de la mujer de CABA.</div>
+          <div class="service-link">Pedir ayuda →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/bullying" target="_blank">
+          <div class="service-icon">🤜</div>
+          <div class="service-title">Bullying y convivencia</div>
+          <div class="service-desc">Protocolo de acción ante situaciones de violencia escolar. Equipo de orientación escolar en todas las escuelas.</div>
+          <div class="service-link">Ver protocolo →</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-card accent">
+      <h4>📞 Líneas urgentes</h4>
+      <div class="telefono-item"><span class="telefono-num">102</span><span class="telefono-label">Niñez y Adolescencia (24hs)</span></div>
+      <div class="telefono-item"><span class="telefono-num">144</span><span class="telefono-label">Violencia de género (24hs)</span></div>
+      <div class="telefono-item" style="margin-bottom:0"><span class="telefono-num">147</span><span class="telefono-label">Atención al vecino</span></div>
+    </div>
+    <div class="sidebar-card">
+      <h4>📅 Calendario escolar</h4>
+      <a class="sidebar-link" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
+        <span class="sidebar-link-icon">📝</span> Inscripción: noviembre
+      </a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/educacion/becas-escolares" target="_blank">
+        <span class="sidebar-link-icon">🎓</span> Becas: febrero-marzo
+      </a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
+        <span class="sidebar-link-icon">💉</span> Vacuna VPH: 11 años
+      </a>
+    </div>
+    <div class="sidebar-alert">
+      ⚠️ <strong>Abandono escolar:</strong> Si tu hijo dejó la secundaria, hay opciones gratuitas para retomar. Llamá al 147 para orientación.
+    </div>
+    <div class="sidebar-card">
+      <h4>📍 Estaciones Familiares</h4>
+      <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6">Orientación gratuita en parques y plazas de CABA. Becas, deporte, salud y más.</p>
+      <a href="plan_family_hubs_caba.html" style="display:block;background:#7c5c00;color:#fff;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:800;text-decoration:none">Ver mapa →</a>
+    </div>
+  </aside>
+</div>
+
+<div class="stage-nav">
+  <div class="stage-nav-inner">
+    <a href="tres-seis.html" class="stage-nav-btn">
+      <span class="stage-nav-btn-icon">←</span>
+      <div><div class="stage-nav-btn-label">Etapa anterior</div><div class="stage-nav-btn-title">3 a 6 años</div></div>
+    </a>
+    <a href="index.html" class="stage-nav-btn" style="margin-left:auto">
+      <div><div class="stage-nav-btn-label">Volver a</div><div class="stage-nav-btn-title">Todas las etapas</div></div>
+      <span class="stage-nav-btn-icon">🏠</span>
+    </a>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="col"><div class="footer-brand">Familias · Buenos Aires</div><p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025</p></div>
+    <div class="col">
+      <strong>Emergencias</strong>
+      <a href="tel:102">102 · Niñez y Adolescencia (24hs)</a>
+      <a href="tel:144">144 · Violencia de género (24hs)</a>
+      <a href="tel:137">137 · Emergencias domésticas</a>
+      <a href="tel:147">147 · Atención al vecino</a>
+    </div>
+    <div class="col">
+      <strong>Servicios GCBA</strong>
+      <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+      <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">Ciudadanía Porteña</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

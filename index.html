@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familias · Buenos Aires Ciudad</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #1a1a2e;
+  background: #faf8f5;
+  font-size: 16px;
+  line-height: 1.5;
+}
+a { color: #2f54b8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── HEADER ─────────────────────────────────── */
+#header {
+  background: #0d1829;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  height: 58px;
+  gap: 36px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.ba-logo {
+  display: flex; align-items: center; gap: 9px;
+  flex-shrink: 0; text-decoration: none;
+}
+.ba-logo:hover { text-decoration: none; }
+.ba-logo-box {
+  background: #2f54b8;
+  border-radius: 4px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 15px; color: #fff;
+  letter-spacing: -1px;
+}
+.ba-logo-text { color: #fff; font-size: 13px; font-weight: 600; opacity: 0.9; }
+.gcba-nav { display: flex; }
+.gcba-nav a {
+  color: rgba(255,255,255,0.68);
+  font-size: 13px; font-weight: 500;
+  padding: 0 14px; height: 58px;
+  display: flex; align-items: center;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s; text-decoration: none;
+}
+.gcba-nav a:hover { color: #fff; text-decoration: none; }
+.gcba-nav a.active { color: #fff; border-bottom-color: #f0a500; }
+.gcba-nav-right { margin-left: auto; }
+.btn-gcba-site {
+  border: 1.5px solid rgba(255,255,255,0.3) !important;
+  border-radius: 4px;
+  color: rgba(255,255,255,0.75) !important;
+  font-size: 13px !important;
+  padding: 6px 14px !important;
+  height: auto !important;
+  border-bottom: 1.5px solid rgba(255,255,255,0.3) !important;
+}
+.btn-gcba-site:hover {
+  background: rgba(255,255,255,0.08) !important;
+  text-decoration: none !important;
+}
+
+/* ── HERO ────────────────────────────────────── */
+#hero {
+  background: #0d1829;
+  color: white;
+  overflow: hidden;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 440px;
+}
+.hero-left {
+  padding: 60px 48px 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.hero-left h1 {
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+}
+.hero-left h1 em {
+  color: #f0a500;
+  font-style: normal;
+}
+.hero-left p {
+  font-size: 17px;
+  opacity: 0.78;
+  line-height: 1.65;
+  max-width: 400px;
+}
+.hero-search {
+  display: flex;
+  max-width: 460px;
+  margin-top: 6px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.hero-search input {
+  flex: 1;
+  padding: 16px 18px;
+  border: none;
+  font-size: 15px;
+  color: #1a1a2e;
+  outline: none;
+  background: #fff;
+}
+.hero-search input::placeholder { color: #aaa; }
+.hero-search button {
+  background: #f0a500;
+  color: #1a1a2e;
+  border: none;
+  padding: 16px 22px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.hero-search button:hover { background: #d9940a; }
+.hero-right {
+  position: relative;
+  background: #1a3a5c;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-right img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.72;
+}
+.hero-right-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13,24,41,0.25) 0%, rgba(13,24,41,0.55) 100%);
+}
+.hero-bubbles {
+  position: relative;
+  z-index: 2;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+.bubble {
+  background: rgba(255,255,255,0.97);
+  border-radius: 16px 16px 16px 4px;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  max-width: 340px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.4;
+}
+.bubble-icon { font-size: 22px; flex-shrink: 0; }
+
+/* ── ETAPAS ──────────────────────────────────── */
+.section-etapas {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px 20px;
+}
+.section-etapas h2 {
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: #1a1a2e;
+  letter-spacing: -0.5px;
+}
+.section-etapas > p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 36px;
+  max-width: 580px;
+}
+
+/* 6-column grid → 3 cards span 2 each, last 2 span 3 each (centered) */
+.etapas-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+}
+.etapa-card {
+  grid-column: span 2;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg, #f0f0f0);
+  border: 2px solid rgba(0,0,0,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.etapa-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.13);
+  text-decoration: none;
+}
+/* Center last 2 cards on second row */
+.etapa-card:nth-child(4) { grid-column: 2 / span 2; }
+.etapa-card:nth-child(5) { grid-column: 4 / span 2; }
+
+.etapa-body {
+  padding: 28px 28px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.etapa-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+  width: fit-content;
+}
+.etapa-card h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1a1a2e;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+}
+.etapa-range {
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+}
+.etapa-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.65;
+  flex: 1;
+  margin-top: 4px;
+}
+.etapa-cta {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.etapa-cta::after { content: ' →'; }
+.etapa-photo {
+  height: 210px;
+  background-size: cover;
+  background-position: center;
+  background-color: #c8d5e8;
+  flex-shrink: 0;
+}
+
+/* ── MAPA CTA ─────────────────────────────────── */
+.mapa-cta-wrap {
+  max-width: 1160px;
+  margin: 56px auto 64px;
+  padding: 0 24px;
+}
+.mapa-cta {
+  background: #0d1829;
+  color: white;
+  border-radius: 16px;
+  padding: 44px 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.mapa-cta h3 {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.mapa-cta p {
+  font-size: 15px;
+  opacity: 0.72;
+  max-width: 480px;
+  line-height: 1.6;
+}
+.mapa-cta-btn {
+  background: #f0a500;
+  color: #1a1a2e;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.mapa-cta-btn:hover {
+  background: #d9940a;
+  text-decoration: none;
+  color: #1a1a2e;
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+#footer {
+  background: #0d1829;
+  color: rgba(255,255,255,0.6);
+  padding: 44px 32px;
+  font-size: 13px;
+}
+.footer-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+.footer-brand {
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 6px;
+}
+#footer .col strong {
+  color: #fff;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+#footer .col a {
+  color: rgba(255,255,255,0.58);
+  display: block;
+  margin-bottom: 7px;
+}
+#footer .col a:hover { color: #fff; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 44px 28px; }
+  .hero-left h1 { font-size: 38px; }
+  .etapas-grid { grid-template-columns: 1fr 1fr; }
+  .etapa-card,
+  .etapa-card:nth-child(4),
+  .etapa-card:nth-child(5) { grid-column: span 1; }
+  .mapa-cta { flex-direction: column; align-items: flex-start; padding: 36px 32px; }
+}
+@media (max-width: 540px) {
+  .etapas-grid { grid-template-columns: 1fr; }
+  .hero-left h1 { font-size: 32px; }
+  .hero-left { padding: 36px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <a class="ba-logo" href="index.html">
+    <div class="ba-logo-box">BA</div>
+    <span class="ba-logo-text">Buenos Aires Ciudad</span>
+  </a>
+  <nav class="gcba-nav">
+    <a href="index.html" class="active">Familias</a>
+    <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+    <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+    <a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a>
+  </nav>
+  <nav class="gcba-nav gcba-nav-right">
+    <a href="https://buenosaires.gob.ar" target="_blank" class="btn-gcba-site">buenosaires.gob.ar ↗</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1>Todo para tu<br><em>familia</em> en<br>Buenos Aires</h1>
+      <p>Del embarazo a los 18 años — salud, educación, apoyo económico y actividades gratuitas para familias porteñas.</p>
+      <div class="hero-search">
+        <input type="text" id="buscador" placeholder="Ej: jardín maternal, vacunas, Ciudadanía Porteña..."
+          onkeydown="if(event.key==='Enter') buscar(this.value)">
+        <button onclick="buscar(document.getElementById('buscador').value)">Buscar</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=900&q=75"
+        alt="Familia en Buenos Aires" loading="lazy">
+      <div class="hero-right-overlay"></div>
+      <div class="hero-bubbles">
+        <div class="bubble">
+          <span class="bubble-icon">🤰</span>
+          ¿Cómo hago el control prenatal gratis en la Ciudad?
+        </div>
+        <div class="bubble">
+          <span class="bubble-icon">📋</span>
+          ¿Cuándo y cómo inscribo a mi hijo al jardín?
+        </div>
+        <div class="bubble">
+          <span class="bubble-icon">💳</span>
+          ¿Qué es la Ciudadanía Porteña y cómo la pido?
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETAPAS DE VIDA -->
+<div class="section-etapas">
+  <h2>¿En qué etapa está tu familia?</h2>
+  <p>Seleccioná el momento de vida de tu hijo para ver todos los servicios gratuitos de la Ciudad que te corresponden.</p>
+
+  <div class="etapas-grid">
+
+    <!-- EMBARAZO -->
+    <a class="etapa-card" href="embarazo.html" style="--card-bg:#fde8ee">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#c9184a">Embarazo</span>
+        <h3>Embarazo</h3>
+        <div class="etapa-range">Antes del nacimiento</div>
+        <div class="etapa-desc">Control prenatal gratuito, maternidades públicas, apoyo económico y preparación para el nacimiento.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1531983412531-1f49a365ffed?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
+    <!-- BEBÉ -->
+    <a class="etapa-card" href="bebe.html" style="--card-bg:#e6f4ea">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#2d6a4f">Bebé</span>
+        <h3>Bebé 0 a 1 año</h3>
+        <div class="etapa-range">0 a 12 meses</div>
+        <div class="etapa-desc">Inscripción de nacimiento, primer DNI, vacunas, control del niño sano y jardines maternales.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
+    <!-- 1 A 3 -->
+    <a class="etapa-card" href="uno-tres.html" style="--card-bg:#fef3e2">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#c05400">1 a 3 años</span>
+        <h3>1 a 3 años</h3>
+        <div class="etapa-range">12 meses a 3 años</div>
+        <div class="etapa-desc">Jardines maternales, Centros de Primera Infancia, estimulación temprana, juegotecas y vacunas.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
+    <!-- 3 A 6 -->
+    <a class="etapa-card" href="tres-seis.html" style="--card-bg:#e3f2fd">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#1565c0">3 a 6 años</span>
+        <h3>3 a 6 años</h3>
+        <div class="etapa-range">3 a 6 años</div>
+        <div class="etapa-desc">Jardín de infantes, inscripción escolar, salud dental, actividades gratuitas en plazas y parques.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1526634332515-d56c5fd16991?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
+    <!-- 6 A 18 -->
+    <a class="etapa-card" href="seis-dieciocho.html" style="--card-bg:#fef9e7">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#a07800">6 a 18 años</span>
+        <h3>6 a 18 años</h3>
+        <div class="etapa-range">6 a 18 años</div>
+        <div class="etapa-desc">Escuela pública, comedores, becas, actividades culturales y deportivas, vacunas y derechos de niñez.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
+  </div>
+</div>
+
+<!-- MAPA CTA -->
+<div class="mapa-cta-wrap">
+  <div class="mapa-cta">
+    <div>
+      <h3>📍 Encontrá tu Estación Familiar</h3>
+      <p>25 Estaciones Familiares distribuidas en parques y plazas de toda la Ciudad — salud, información y orientación gratuita para tu familia cerca de tu casa.</p>
+    </div>
+    <a href="plan_family_hubs_caba.html" class="mapa-cta-btn">Ver mapa →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="footer-brand">Familias · Buenos Aires</div>
+      <p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">
+        Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025
+      </p>
+    </div>
+    <div class="col">
+      <strong>Emergencias</strong>
+      <a href="tel:102">102 · Niñez y Adolescencia (24hs)</a>
+      <a href="tel:144">144 · Violencia de género (24hs)</a>
+      <a href="tel:137">137 · Emergencias domésticas</a>
+      <a href="tel:147">147 · Atención al vecino</a>
+    </div>
+    <div class="col">
+      <strong>Servicios GCBA</strong>
+      <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+      <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">Ciudadanía Porteña</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function buscar(q) {
+  if (!q || !q.trim()) return;
+  window.open('https://buenosaires.gob.ar/buscar?q=' + encodeURIComponent(q.trim()), '_blank');
+}
+</script>
+
+</body>
+</html>

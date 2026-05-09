@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 a 3 años · Familias Buenos Aires</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color: #1a1a2e; background: #faf8f5; font-size: 16px; line-height: 1.5; }
+a { color: #2f54b8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+#header { background: #0d1829; padding: 0 32px; display: flex; align-items: center; height: 58px; gap: 36px; position: sticky; top: 0; z-index: 100; }
+.ba-logo { display: flex; align-items: center; gap: 9px; flex-shrink: 0; text-decoration: none; }
+.ba-logo:hover { text-decoration: none; }
+.ba-logo-box { background: #2f54b8; border-radius: 4px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 15px; color: #fff; letter-spacing: -1px; }
+.ba-logo-text { color: #fff; font-size: 13px; font-weight: 600; opacity: 0.9; }
+.gcba-nav { display: flex; }
+.gcba-nav a { color: rgba(255,255,255,0.68); font-size: 13px; font-weight: 500; padding: 0 14px; height: 58px; display: flex; align-items: center; border-bottom: 3px solid transparent; transition: all 0.15s; text-decoration: none; }
+.gcba-nav a:hover { color: #fff; text-decoration: none; }
+.gcba-nav-right { margin-left: auto; }
+.btn-gcba-site { border: 1.5px solid rgba(255,255,255,0.3) !important; border-radius: 4px; color: rgba(255,255,255,0.75) !important; font-size: 13px !important; padding: 6px 14px !important; height: auto !important; border-bottom: 1.5px solid rgba(255,255,255,0.3) !important; }
+.btn-gcba-site:hover { background: rgba(255,255,255,0.08) !important; text-decoration: none !important; }
+.breadcrumb { background: #fef3e2; padding: 12px 32px; font-size: 13px; color: #888; border-bottom: 1px solid rgba(192,84,0,0.1); }
+.breadcrumb a { color: #c05400; }
+.breadcrumb span { margin: 0 6px; opacity: 0.4; }
+.stage-hero { background: #c05400; color: white; overflow: hidden; position: relative; }
+.stage-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 340px; max-width: 1160px; margin: 0 auto; padding: 0 24px; align-items: center; gap: 48px; position: relative; z-index: 2; }
+.stage-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1400&q=70'); background-size: cover; background-position: center; opacity: 0.18; }
+.stage-hero-left { padding: 52px 0; }
+.stage-hero-badge { display: inline-block; background: rgba(255,255,255,0.22); border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 5px 16px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+.stage-hero-left h1 { font-size: 46px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 14px; }
+.stage-hero-left p { font-size: 17px; opacity: 0.85; line-height: 1.65; max-width: 480px; }
+.stage-hero-img { height: 340px; background-image: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=500&q=72'); background-size: cover; background-position: center top; border-radius: 12px 12px 0 0; align-self: flex-end; }
+.quick-links { background: #fff; border-bottom: 1px solid #eee; padding: 0 32px; display: flex; gap: 0; overflow-x: auto; }
+.quick-link-item { padding: 16px 22px; font-size: 14px; font-weight: 600; color: #555; border-bottom: 3px solid transparent; white-space: nowrap; text-decoration: none; transition: all 0.15s; }
+.quick-link-item:hover { color: #c05400; text-decoration: none; }
+.quick-link-item.active { color: #c05400; border-bottom-color: #c05400; }
+.main-wrap { max-width: 1160px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 300px; gap: 52px; align-items: start; }
+.section-block { margin-bottom: 48px; }
+.section-block h2 { font-size: 22px; font-weight: 900; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid #fef3e2; letter-spacing: -0.3px; }
+.service-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.service-card { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+.service-card:hover { border-color: #c05400; box-shadow: 0 4px 18px rgba(192,84,0,0.1); transform: translateY(-2px); text-decoration: none; }
+.service-icon { font-size: 28px; }
+.service-title { font-size: 15px; font-weight: 800; color: #1a1a2e; line-height: 1.3; }
+.service-desc { font-size: 13px; color: #666; line-height: 1.6; }
+.service-link { font-size: 13px; font-weight: 700; color: #c05400; margin-top: 6px; }
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px; }
+.sidebar-card.accent { background: #fef3e2; border-color: #f5c89a; }
+.sidebar-card h4 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 14px; }
+.sidebar-card.accent h4 { color: #c05400; }
+.sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 14px; font-weight: 600; color: #1a1a2e; text-decoration: none; transition: color 0.15s; }
+.sidebar-link:last-child { border-bottom: none; padding-bottom: 0; }
+.sidebar-link:hover { color: #c05400; text-decoration: none; }
+.sidebar-link-icon { font-size: 20px; flex-shrink: 0; }
+.sidebar-alert { background: #fff3cd; border: 1.5px solid #f0c040; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #856404; line-height: 1.6; }
+.telefono-num { font-size: 22px; font-weight: 900; color: #c05400; }
+.telefono-item { display: flex; flex-direction: column; margin-bottom: 12px; }
+.telefono-label { font-size: 13px; color: #666; }
+.stage-nav { background: #fff; border-top: 1px solid #eee; padding: 32px 24px; }
+.stage-nav-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.stage-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 10px; background: #f5f3f0; border: 1.5px solid #e8e4df; text-decoration: none; color: #1a1a2e; transition: all 0.15s; flex: 1; max-width: 260px; }
+.stage-nav-btn:hover { background: #fef3e2; border-color: #f5c89a; text-decoration: none; }
+.stage-nav-btn.next { margin-left: auto; }
+.stage-nav-btn-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #999; font-weight: 700; margin-bottom: 2px; }
+.stage-nav-btn-title { font-size: 15px; font-weight: 800; }
+.stage-nav-btn-icon { font-size: 28px; }
+#footer { background: #0d1829; color: rgba(255,255,255,0.6); padding: 44px 32px; font-size: 13px; }
+.footer-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+.footer-brand { font-size: 17px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+#footer .col strong { color: #fff; display: block; margin-bottom: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+#footer .col a { color: rgba(255,255,255,0.58); display: block; margin-bottom: 7px; }
+#footer .col a:hover { color: #fff; }
+@media (max-width: 900px) { .stage-hero-inner { grid-template-columns: 1fr; } .stage-hero-img { display: none; } .main-wrap { grid-template-columns: 1fr; } .service-cards { grid-template-columns: 1fr; } .stage-nav-inner { flex-direction: column; } .stage-nav-btn { max-width: 100%; } }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a class="ba-logo" href="index.html"><div class="ba-logo-box">BA</div><span class="ba-logo-text">Buenos Aires Ciudad</span></a>
+  <nav class="gcba-nav">
+    <a href="index.html">Familias</a>
+    <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+    <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+    <a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a>
+  </nav>
+  <nav class="gcba-nav gcba-nav-right"><a href="https://buenosaires.gob.ar" target="_blank" class="btn-gcba-site">buenosaires.gob.ar ↗</a></nav>
+</header>
+
+<div class="breadcrumb"><a href="index.html">Familias</a><span>›</span>1 a 3 años</div>
+
+<section class="stage-hero">
+  <div class="stage-hero-bg"></div>
+  <div class="stage-hero-inner">
+    <div class="stage-hero-left">
+      <div class="stage-hero-badge">🧒 12 meses a 3 años</div>
+      <h1>1 a 3<br>años</h1>
+      <p>Jardines maternales, Centros de Primera Infancia, estimulación temprana, juegotecas y vacunas. La etapa del juego y el lenguaje.</p>
+    </div>
+    <div class="stage-hero-img"></div>
+  </div>
+</section>
+
+<div class="quick-links">
+  <a class="quick-link-item active" href="#educacion">Educación</a>
+  <a class="quick-link-item" href="#salud">Salud</a>
+  <a class="quick-link-item" href="#juego">Juego y cultura</a>
+  <a class="quick-link-item" href="#economia">Apoyo económico</a>
+</div>
+
+<div class="main-wrap">
+  <div class="content">
+
+    <div class="section-block" id="educacion">
+      <h2>📚 Educación y primera infancia</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
+          <div class="service-icon">🏫</div>
+          <div class="service-title">Jardín maternal público</div>
+          <div class="service-desc">Para niños de 45 días a 2 años. Jornada completa o simple. Inscripción en noviembre para el ciclo siguiente.</div>
+          <div class="service-link">Inscribirse →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/centros-de-primera-infancia" target="_blank">
+          <div class="service-icon">🌱</div>
+          <div class="service-title">Centros de Primera Infancia</div>
+          <div class="service-desc">CPI: atención integral gratuita para niños de 45 días a 4 años. Incluye alimentación, salud y estimulación.</div>
+          <div class="service-link">Ver CPI →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/jardin-infantes-sala-3" target="_blank">
+          <div class="service-icon">🎒</div>
+          <div class="service-title">Sala de 3 años</div>
+          <div class="service-desc">El jardín de infantes comienza a los 3 años. Obligatorio a partir de los 4. Inscripción anticipada en los jardines públicos de CABA.</div>
+          <div class="service-link">Inscribirse →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/estimulacion-temprana" target="_blank">
+          <div class="service-icon">🧠</div>
+          <div class="service-title">Estimulación temprana</div>
+          <div class="service-desc">Talleres de desarrollo motor, cognitivo y del lenguaje en hospitales y CPI de toda CABA. Gratuitos.</div>
+          <div class="service-link">Ver talleres →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="salud">
+      <h2>🩺 Salud y vacunas</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/control-nino-sano" target="_blank">
+          <div class="service-icon">🩺</div>
+          <div class="service-title">Control del niño sano</div>
+          <div class="service-desc">Controles a los 15, 18 meses, 2 y 3 años. Evaluación del habla, desarrollo motor y crecimiento. Gratuito.</div>
+          <div class="service-link">Pedir turno →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
+          <div class="service-icon">💉</div>
+          <div class="service-title">Vacunas 1 a 3 años</div>
+          <div class="service-desc">Varicela (12 meses), Triple viral refuerzo (18 meses), Neumococo refuerzo. Todas gratuitas en vacunatorios CABA.</div>
+          <div class="service-link">Ver calendario →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/odontologia-infantil" target="_blank">
+          <div class="service-icon">🦷</div>
+          <div class="service-title">Salud dental</div>
+          <div class="service-desc">Primer control dental a los 12-18 meses. Odontología pediátrica gratuita en hospitales y CESAC de CABA.</div>
+          <div class="service-link">Pedir turno →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/fonoaudiologia" target="_blank">
+          <div class="service-icon">🗣️</div>
+          <div class="service-title">Fonoaudiología</div>
+          <div class="service-desc">Si el bebé no habla a los 2 años, hay atención fonoaudiológica gratuita en hospitales públicos de CABA.</div>
+          <div class="service-link">Consultar →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="juego">
+      <h2>🎨 Juego y cultura gratuita</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/juegotecas" target="_blank">
+          <div class="service-icon">🎮</div>
+          <div class="service-title">Juegotecas</div>
+          <div class="service-desc">Espacios de juego libre en parques, plazas y centros culturales. Sin inscripción. Todos los barrios de CABA.</div>
+          <div class="service-link">Ver mapa →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/cultura/teatros" target="_blank">
+          <div class="service-icon">🎭</div>
+          <div class="service-title">Teatro y espectáculos</div>
+          <div class="service-desc">Funciones gratuitas para niños en teatros y centros culturales de CABA. Agenda cultural semanal.</div>
+          <div class="service-link">Ver agenda →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/cultura/museos" target="_blank">
+          <div class="service-icon">🏛️</div>
+          <div class="service-title">Museos para chicos</div>
+          <div class="service-desc">Entrada gratuita para menores en museos municipales. Visitas guiadas y talleres de arte para toda la familia.</div>
+          <div class="service-link">Ver museos →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/educacion/biblioteca-bebetecas" target="_blank">
+          <div class="service-icon">📚</div>
+          <div class="service-title">Bibliotecas infantiles</div>
+          <div class="service-desc">Cuentacuentos, talleres de lectura y préstamo de libros infantiles. Red de bibliotecas en todos los barrios.</div>
+          <div class="service-link">Ver biblioteca cercana →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-block" id="economia">
+      <h2>💳 Apoyo económico</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://www.anses.gob.ar/asignacion-universal" target="_blank">
+          <div class="service-icon">💳</div>
+          <div class="service-title">Asignación Universal por Hijo</div>
+          <div class="service-desc">Mensual para familias sin empleo formal. Requiere DNI del niño, controles de salud y certificado de escolaridad.</div>
+          <div class="service-link">Ver en ANSES →</div>
+        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">
+          <div class="service-icon">🛒</div>
+          <div class="service-title">Ciudadanía Porteña</div>
+          <div class="service-desc">Tarjeta mensual para alimentos. Para familias con niños en situación de vulnerabilidad social en CABA.</div>
+          <div class="service-link">Solicitar →</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-card accent">
+      <h4>✅ Checklist 1-3 años</h4>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/control-nino-sano" target="_blank">
+        <span class="sidebar-link-icon">✅</span> Controles de salud periódicos
+      </a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
+        <span class="sidebar-link-icon">✅</span> Vacunas al día
+      </a>
+      <a class="sidebar-link" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
+        <span class="sidebar-link-icon">✅</span> Inscripción jardín (noviembre)
+      </a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/odontologia-infantil" target="_blank">
+        <span class="sidebar-link-icon">✅</span> Primer control dental
+      </a>
+    </div>
+    <div class="sidebar-card">
+      <h4>📞 Contacto</h4>
+      <div class="telefono-item">
+        <span class="telefono-num">147</span>
+        <span class="telefono-label">Atención al vecino</span>
+      </div>
+      <div class="telefono-item" style="margin-bottom:0">
+        <span class="telefono-num">102</span>
+        <span class="telefono-label">Niñez y Adolescencia</span>
+      </div>
+    </div>
+    <div class="sidebar-alert">
+      💡 ¿El niño aún no camina a los 18 meses o no dice palabras a los 2 años? Consultá en tu CESAC o hospital más cercano.
+    </div>
+    <div class="sidebar-card">
+      <h4>📍 Estaciones Familiares</h4>
+      <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6">En parques y plazas de CABA. Orientación gratuita sobre jardines, salud y actividades.</p>
+      <a href="plan_family_hubs_caba.html" style="display:block;background:#c05400;color:#fff;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:800;text-decoration:none">Ver mapa →</a>
+    </div>
+  </aside>
+</div>
+
+<div class="stage-nav">
+  <div class="stage-nav-inner">
+    <a href="bebe.html" class="stage-nav-btn">
+      <span class="stage-nav-btn-icon">←</span>
+      <div><div class="stage-nav-btn-label">Etapa anterior</div><div class="stage-nav-btn-title">Bebé 0 a 1 año</div></div>
+    </a>
+    <a href="tres-seis.html" class="stage-nav-btn next">
+      <div><div class="stage-nav-btn-label">Siguiente etapa</div><div class="stage-nav-btn-title">3 a 6 años</div></div>
+      <span class="stage-nav-btn-icon">→</span>
+    </a>
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="col"><div class="footer-brand">Familias · Buenos Aires</div><p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025</p></div>
+    <div class="col">
+      <strong>Emergencias</strong>
+      <a href="tel:102">102 · Niñez y Adolescencia (24hs)</a>
+      <a href="tel:144">144 · Violencia de género (24hs)</a>
+      <a href="tel:137">137 · Emergencias domésticas</a>
+      <a href="tel:147">147 · Atención al vecino</a>
+    </div>
+    <div class="col">
+      <strong>Servicios GCBA</strong>
+      <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+      <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">Ciudadanía Porteña</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familias · Buenos Aires Ciudad</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color: #1a1a2e; background: #f7f6f3; font-size: 16px; line-height: 1.5; }
+a { color: #2f54b8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── HEADER GCBA ──────────────────────────────────── */
+#gcba-top {
+  background: #0d1829;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 32px;
+}
+.ba-logo {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0; cursor: pointer;
+}
+.ba-logo-box {
+  background: #2f54b8;
+  border-radius: 4px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 15px; color: #fff;
+  letter-spacing: -1px;
+}
+.ba-logo-text { color: #fff; font-size: 13px; font-weight: 600; opacity: 0.9; }
+.gcba-nav { display: flex; gap: 0; }
+.gcba-nav a {
+  color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 500;
+  padding: 0 14px; height: 56px; display: flex; align-items: center;
+  border-bottom: 3px solid transparent; transition: all 0.15s;
+}
+.gcba-nav a:hover { color: #fff; border-bottom-color: #fff; text-decoration: none; }
+.gcba-nav a.active { color: #fff; border-bottom-color: #f0a500; }
+.gcba-nav-right { margin-left: auto; }
+.btn-ingresar {
+  border: 1.5px solid rgba(255,255,255,0.4); border-radius: 4px;
+  color: rgba(255,255,255,0.85) !important; font-size: 13px !important;
+  padding: 6px 16px !important; height: auto !important; border-bottom: none !important;
+}
+.btn-ingresar:hover { background: rgba(255,255,255,0.1) !important; text-decoration: none !important; }
+
+/* ── URGENCIAS ──────────────────────────────────── */
+#urgencias-bar {
+  background: #fff5f5;
+  border-bottom: 1px solid #fecdd3;
+  padding: 7px 24px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 12px;
+}
+.urg-label { font-weight: 800; color: #be123c; text-transform: uppercase; letter-spacing: 0.4px; }
+.urg-link {
+  background: #fff; border: 1px solid #fecdd3; border-radius: 3px;
+  padding: 3px 10px; font-size: 12px; font-weight: 700; color: #be123c;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.urg-link:hover { background: #fff0f3; text-decoration: none; }
+
+/* ── HERO ───────────────────────────────────────── */
+#hero {
+  background: #0d1829;
+  color: white;
+  overflow: hidden;
+}
+.hero-split {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 400px;
+}
+.hero-left {
+  padding: 52px 48px 52px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.hero-left h1 { font-size: 38px; font-weight: 900; line-height: 1.15; }
+.hero-left h1 em { color: #f0a500; font-style: normal; }
+.hero-left p { font-size: 16px; opacity: 0.82; max-width: 440px; }
+.hero-right {
+  position: relative;
+  overflow: hidden;
+  background: #1a3a8f;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.75;
+  display: block;
+}
+.hero-right-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(47,84,184,0.6) 0%, rgba(13,24,41,0.3) 100%);
+}
+.hero-right-label {
+  position: absolute;
+  bottom: 24px; left: 24px;
+  background: rgba(240,165,0,0.92);
+  color: #1a1a2e;
+  font-size: 13px; font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+.search-bar { display: flex; gap: 0; max-width: 520px; }
+.search-bar input {
+  flex: 1; padding: 14px 18px; border: none; border-radius: 4px 0 0 4px;
+  font-size: 15px; color: #1a1a2e; outline: none;
+}
+.search-bar button {
+  background: #2f54b8; color: white; border: none;
+  padding: 14px 22px; font-size: 15px; font-weight: 700;
+  border-radius: 0 4px 4px 0; cursor: pointer; white-space: nowrap;
+}
+.search-bar button:hover { background: #1e3fa3; }
+@media(max-width: 768px) {
+  .hero-split { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 36px 20px; }
+}
+
+/* ── BREADCRUMB ─────────────────────────────────── */
+#breadcrumb {
+  padding: 10px 24px;
+  background: #f5f6f8;
+  border-bottom: 1px solid #e5e7ea;
+  font-size: 13px; color: #666;
+  display: none;
+}
+#breadcrumb a { color: #2f54b8; }
+#breadcrumb span { margin: 0 6px; }
+
+/* ── STAGE GRID (Home) ──────────────────────────── */
+#view-home { display: block; }
+.home-section { max-width: 1100px; margin: 0 auto; padding: 48px 24px 56px; }
+.home-section h2 { font-size: 26px; font-weight: 800; margin-bottom: 6px; color: #1a1a2e; }
+.home-section > p { font-size: 16px; color: #666; margin-bottom: 32px; }
+.stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media(max-width: 900px) { .stage-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 560px) { .stage-grid { grid-template-columns: 1fr; } }
+
+.stage-card {
+  border-radius: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card-bg, #f0f4ff);
+  border: 2px solid rgba(0,0,0,0.04);
+}
+.stage-card:hover {
+  box-shadow: 0 10px 32px rgba(0,0,0,0.13);
+  transform: translateY(-4px);
+}
+.stage-card-content {
+  padding: 24px 24px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.stage-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: white;
+  width: fit-content;
+  margin-bottom: 6px;
+}
+.stage-card h3 { font-size: 22px; font-weight: 900; color: #1a1a2e; line-height: 1.2; }
+.stage-card .range { font-size: 12px; color: #777; font-weight: 500; }
+.stage-card .desc { font-size: 14px; color: #444; line-height: 1.65; flex: 1; }
+.stage-card .cta {
+  font-size: 14px; font-weight: 700; color: #1a1a2e;
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 14px;
+}
+.stage-card .cta::after { content: ' →'; }
+.stage-card-photo {
+  height: 210px;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #c8d5f0;
+  flex-shrink: 0;
+}
+
+/* ── STAGE VIEW ─────────────────────────────────── */
+#view-stage { display: none; }
+.stage-header {
+  background: #f5f6f8; border-bottom: 1px solid #dde2ea;
+  padding: 28px 24px 0;
+}
+.stage-header .inner { max-width: 960px; margin: 0 auto; }
+.stage-header h2 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+.stage-header > .inner > p { font-size: 16px; color: #555; padding-bottom: 20px; }
+
+/* MÁS CONSULTADO */
+.mas-consultado { padding: 28px 24px; border-bottom: 1px solid #eee; }
+.mas-consultado .inner { max-width: 960px; margin: 0 auto; }
+.mas-consultado h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+.popular-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.popular-card {
+  background: #f0f4ff; border: 1px solid #c7d4f5;
+  border-radius: 4px; padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; transition: background 0.15s;
+  font-size: 15px; font-weight: 600; color: #1a2e6b;
+}
+.popular-card:hover { background: #dce6ff; }
+.popular-card .arr { font-size: 18px; color: #2f54b8; }
+
+/* EN ESTA SECCIÓN */
+.en-seccion { padding: 28px 24px 40px; }
+.en-seccion .inner { max-width: 960px; margin: 0 auto; }
+.en-seccion h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.seccion-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px 32px; }
+.seccion-col h4 { font-size: 15px; font-weight: 700; color: #1a1a2e; padding-bottom: 10px; border-bottom: 2px solid #dde2ea; margin-bottom: 12px; }
+.seccion-col ul { list-style: none; }
+.seccion-col ul li { padding: 5px 0; border-bottom: 1px solid #f0f2f5; }
+.seccion-col ul li:last-child { border-bottom: none; }
+.seccion-col ul li a {
+  font-size: 14px; color: #2f54b8;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 2px 0;
+}
+.seccion-col ul li a::after { content: '›'; color: #b0bcd8; font-size: 16px; flex-shrink: 0; transition: color 0.15s; }
+.seccion-col ul li a:hover { text-decoration: underline; }
+.seccion-col ul li a:hover::after { color: #2f54b8; }
+.view-all { font-size: 13px; font-weight: 700; color: #2f54b8; margin-top: 10px; display: inline-block; }
+
+/* ── ARTICLE VIEW ───────────────────────────────── */
+#view-article { display: none; }
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 32px 24px 60px; }
+.article-wrap h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.25; }
+.article-meta { font-size: 13px; color: #888; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.article-body h3 { font-size: 18px; font-weight: 700; margin: 24px 0 8px; }
+.article-body p { font-size: 15px; color: #333; margin-bottom: 14px; line-height: 1.65; }
+.article-body ul { padding-left: 20px; margin-bottom: 14px; }
+.article-body ul li { font-size: 15px; color: #333; margin-bottom: 6px; line-height: 1.55; }
+.article-body .callout {
+  background: #f0f4ff; border-left: 4px solid #2f54b8;
+  border-radius: 0 4px 4px 0; padding: 14px 18px; margin: 20px 0;
+  font-size: 14px; color: #1a2e6b; line-height: 1.6;
+}
+.article-body .callout strong { display: block; margin-bottom: 4px; }
+.article-body .callout-warn {
+  background: #fff8e6; border-left: 4px solid #f0a500;
+  border-radius: 0 4px 4px 0; padding: 14px 18px; margin: 20px 0;
+  font-size: 14px; color: #7a4500; line-height: 1.6;
+}
+.btn-primary {
+  display: inline-block; background: #2f54b8; color: #fff;
+  padding: 11px 22px; border-radius: 4px; font-size: 14px;
+  font-weight: 700; margin: 8px 8px 8px 0; cursor: pointer;
+}
+.btn-primary:hover { background: #1e3fa3; text-decoration: none; color: #fff; }
+.btn-secondary {
+  display: inline-block; border: 2px solid #2f54b8; color: #2f54b8;
+  padding: 10px 20px; border-radius: 4px; font-size: 14px;
+  font-weight: 700; margin: 8px 8px 8px 0;
+}
+.btn-secondary:hover { background: #f0f4ff; text-decoration: none; }
+.related-section { margin-top: 32px; padding-top: 24px; border-top: 2px solid #eee; }
+.related-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+.related-links { display: flex; flex-direction: column; gap: 8px; }
+.related-link {
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid #dde2ea; border-radius: 4px; padding: 12px 16px;
+  cursor: pointer; font-size: 14px; font-weight: 600; color: #2f54b8;
+  transition: background 0.15s;
+}
+.related-link:hover { background: #f5f6f8; text-decoration: none; }
+
+/* ── FOOTER ─────────────────────────────────────── */
+#footer {
+  background: #0d1829; color: rgba(255,255,255,0.7);
+  padding: 32px 24px; font-size: 13px; margin-top: auto;
+}
+#footer .inner { max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+#footer .col strong { color: #fff; display: block; margin-bottom: 8px; font-size: 14px; }
+#footer .col a { color: rgba(255,255,255,0.65); display: block; margin-bottom: 5px; font-size: 13px; }
+#footer .col a:hover { color: #fff; }
+.footer-brand { font-size: 18px; font-weight: 800; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- HEADER GCBA -->
+<header id="gcba-top">
+  <div class="ba-logo" onclick="goHome()">
+    <div class="ba-logo-box">BA</div>
+    <span class="ba-logo-text">Buenos Aires Ciudad</span>
+  </div>
+  <nav class="gcba-nav">
+    <a href="#" onclick="goHome();return false;" class="active">Familias</a>
+    <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
+    <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
+    <a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a>
+  </nav>
+  <nav class="gcba-nav gcba-nav-right">
+    <a href="https://buenosaires.gob.ar" target="_blank" class="btn-ingresar">buenosaires.gob.ar</a>
+  </nav>
+</header>
+
+<!-- URGENCIAS -->
+<div id="urgencias-bar">
+  <span class="urg-label">🚨 Urgencias</span>
+  <a href="tel:102" class="urg-link">📞 102 Niñez (24hs)</a>
+  <a href="tel:144" class="urg-link">📞 144 Violencia de género (24hs)</a>
+  <a href="tel:137" class="urg-link">📞 137 Emergencias domésticas</a>
+  <a href="tel:147" class="urg-link">📞 147 Atención al vecino</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-split">
+    <div class="hero-left">
+      <h1>Todo lo que necesitás para<br><em>tu familia</em><br>en Buenos Aires</h1>
+      <p>Del embarazo a los 18 años — salud, educación, apoyo económico y actividades gratuitas para familias porteñas.</p>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Ej: jardín maternal, vacunas, Ciudadanía Porteña..." oninput="doSearch(this.value)" onkeydown="if(event.key==='Enter')doSearch(this.value)">
+        <button onclick="doSearch(document.getElementById('search-input').value)">Buscar</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1609220136736-443140ad8642?auto=format&fit=crop&w=800&q=75" alt="Familia en Buenos Aires" loading="lazy">
+      <div class="hero-right-overlay"></div>
+      <div class="hero-right-label">25 Estaciones Saludables · 45 CeSAC · 73 CPI</div>
+    </div>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+  <a href="#" onclick="goHome();return false;">Inicio</a>
+  <span id="bc-stage-sep" style="display:none">›</span>
+  <a href="#" id="bc-stage" onclick="bcStage();return false;" style="display:none"></a>
+  <span id="bc-art-sep" style="display:none">›</span>
+  <span id="bc-article" style="display:none"></span>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: HOME -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-home">
+  <div class="home-section">
+    <h2>¿En qué etapa está tu familia?</h2>
+    <p>Seleccioná el momento de vida de tu hijo para ver todos los servicios gratuitos de la Ciudad que te corresponden.</p>
+    <div class="stage-grid" id="stage-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: STAGE -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-stage">
+  <div class="stage-header">
+    <div class="inner">
+      <h2 id="stage-title"></h2>
+      <p id="stage-subtitle"></p>
+    </div>
+  </div>
+  <div class="mas-consultado">
+    <div class="inner">
+      <h3>Lo más consultado</h3>
+      <div class="popular-grid" id="popular-grid"></div>
+    </div>
+  </div>
+  <div class="en-seccion">
+    <div class="inner">
+      <h3>En esta sección</h3>
+      <div class="seccion-cols" id="seccion-cols"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: ARTICLE -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-article">
+  <div class="article-wrap">
+    <h2 id="art-title"></h2>
+    <div class="article-meta" id="art-meta"></div>
+    <div class="article-body" id="art-body"></div>
+    <div class="related-section" id="art-related"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="inner">
+    <div class="col">
+      <div class="footer-brand">🏙️ Familias Buenos Aires</div>
+      <div style="margin-top:8px;font-size:12px;opacity:0.6">Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo MVP — 2025</div>
+    </div>
+    <div class="col">
+      <strong>Líneas de emergencia</strong>
+      <a href="tel:102">102 — Niñez (24hs, gratis)</a>
+      <a href="tel:144">144 — Violencia de género (24hs)</a>
+      <a href="tel:137">137 — Emergencias domésticas</a>
+      <a href="tel:147">147 — Atención al vecino</a>
+    </div>
+    <div class="col">
+      <strong>Servicios del GCBA</strong>
+      <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud GCBA</a>
+      <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación GCBA</a>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">Ciudadanía Porteña</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+
+const STAGES = [
+  {
+    id: 'embarazo', icon: '🤰', name: 'Embarazo',
+    range: 'Antes del nacimiento',
+    desc: 'Control prenatal, maternidades, apoyo económico y preparación para el nacimiento.',
+    subtitle: 'Atención médica gratuita, apoyo para la gestación y ayuda económica para embarazadas porteñas.',
+    popular: ['control-prenatal','ciudadania-portena','maternidades'],
+    cols: [
+      { title: 'Salud', items: ['control-prenatal','maternidades','vacuna-rsv','programa-sumar'] },
+      { title: 'Apoyo económico', items: ['ciudadania-portena','ticket-social'] },
+      { title: 'Apoyo familiar', items: ['crianza-360','red-primeros-meses','linea-144'] },
+    ]
+  },
+  {
+    id: 'bebe', icon: '👶', name: 'Bebé 0 a 1 año',
+    range: '0 a 12 meses',
+    desc: 'Inscripción de nacimiento, vacunas, controles, jardines maternales y ayuda para el primer año.',
+    subtitle: 'Los primeros días, trámites del nacimiento, salud del bebé y acceso a cuidado infantil.',
+    popular: ['inscripcion-nacimiento','vacunacion','jardines-maternales'],
+    cols: [
+      { title: 'Primeros trámites', items: ['inscripcion-nacimiento','dni-recien-nacido'] },
+      { title: 'Salud del bebé', items: ['vacunacion','control-nino-sano','lactancia'] },
+      { title: 'Cuidado y educación', items: ['jardines-maternales','centros-primera-infancia','juegotecas'] },
+      { title: 'Apoyo económico', items: ['ciudadania-portena','ticket-social'] },
+    ]
+  },
+  {
+    id: 'uno', icon: '🧒', name: '1 a 3 años',
+    range: '12 meses a 3 años',
+    desc: 'Jardines maternales, CPI, estimulación temprana, vacunas y ayuda económica.',
+    subtitle: 'Opciones de cuidado y educación inicial, estimulación del desarrollo y servicios de salud.',
+    popular: ['jardines-maternales','centros-primera-infancia','ciudadania-portena'],
+    cols: [
+      { title: 'Educación y cuidado', items: ['jardines-maternales','centros-primera-infancia','centros-educacion-temprana','juegotecas'] },
+      { title: 'Salud', items: ['vacunacion','control-nino-sano'] },
+      { title: 'Apoyo económico', items: ['ciudadania-portena','ticket-social'] },
+    ]
+  },
+  {
+    id: 'tres', icon: '👦', name: '3 a 6 años',
+    range: '3 a 6 años',
+    desc: 'Jardín de infantes, inscripción escolar, alimentación, actividades y salud preescolar.',
+    subtitle: 'Educación inicial, cuidado, salud del preescolar y actividades gratuitas en la Ciudad.',
+    popular: ['jardin-infantes','inscripcion-escolar','ciudadania-portena'],
+    cols: [
+      { title: 'Salud y desarrollo', items: ['control-nino-sano','vacunacion','salud-dental','lenguaje-comunicacion'] },
+      { title: 'Educación y cuidado', items: ['jardin-infantes','centros-primera-infancia','alimentacion-escolar','aprendizaje-juego'] },
+      { title: 'Qué hacer', items: ['actividades-ciudad','juegotecas','vacaciones-escolares'] },
+      { title: 'Ayuda económica', items: ['ciudadania-portena','ticket-social'] },
+      { title: 'Necesidades especiales', items: ['cud-discapacidad'] },
+    ]
+  },
+  {
+    id: 'seis', icon: '🧑', name: '6 a 18 años',
+    range: '6 a 18 años',
+    desc: 'Inscripción escolar, alimentación, actividades culturales, vacunas y derechos de niñez.',
+    subtitle: 'Escuela pública, actividades recreativas y culturales, vacunas y apoyo para adolescentes.',
+    popular: ['inscripcion-escolar','vacaciones-escolares','ciudadania-portena'],
+    cols: [
+      { title: 'Escuela', items: ['inscripcion-escolar','alimentacion-escolar'] },
+      { title: 'Salud', items: ['vacunacion','control-nino-sano'] },
+      { title: 'Actividades', items: ['vacaciones-escolares','actividades-ciudad','ba-chicos'] },
+      { title: 'Apoyo económico', items: ['ciudadania-portena','ticket-social'] },
+      { title: 'Derechos y protección', items: ['linea-102','linea-144'] },
+    ]
+  },
+];
+
+// ── ARTÍCULOS ──────────────────────────────────────────────────
+const ARTICLES = {
+  'control-prenatal': {
+    title: 'Control prenatal gratuito',
+    meta: 'Ministerio de Salud GCBA · Embarazo',
+    body: `
+      <p>Todas las embarazadas que viven en la Ciudad de Buenos Aires tienen derecho a un seguimiento médico completo y gratuito, con o sin obra social.</p>
+      <h3>¿Qué incluye?</h3>
+      <ul>
+        <li>Controles mensuales de presión, peso y crecimiento fetal</li>
+        <li>Análisis de laboratorio completos</li>
+        <li>Ecografías obstétricas</li>
+        <li>Suplementos de hierro y ácido fólico</li>
+        <li>Vacunación (doble bacteriana, gripe, RSV)</li>
+        <li>Atención odontológica</li>
+      </ul>
+      <h3>¿Dónde hacerlo?</h3>
+      <p>En cualquiera de los <strong>45 CeSAC (Centros de Salud y Acción Comunitaria)</strong> o en los hospitales públicos de la Ciudad. No necesitás turno previo para el primer contacto.</p>
+      <div class="callout">
+        <strong>¿Cuándo empezar?</strong>
+        Lo ideal es hacer el primer control antes de las 12 semanas de embarazo. Cuanto antes empieces, mejor para vos y tu bebé.
+      </div>
+      <h3>¿Qué llevar?</h3>
+      <ul>
+        <li>DNI</li>
+        <li>Cualquier estudio previo o informe médico que tengas</li>
+        <li>Si tenés obra social, podés usarla o elegir la atención pública</li>
+      </ul>
+      <h3>Programa SUMAR</h3>
+      <p>Si no tenés obra social, el <strong>Programa SUMAR</strong> te da cobertura completa: todos los controles, análisis, ecografías y atención del parto, sin costo.</p>
+      <a href="https://buenosaires.gob.ar/salud/programasdesalud/salud-materno-infantil" target="_blank" class="btn-primary">Ver centros de salud →</a>
+      <a href="https://buenosaires.gob.ar/salud/programasdesalud/programa-sumar" target="_blank" class="btn-secondary">Programa SUMAR</a>
+    `,
+    related: ['maternidades','vacuna-rsv','ciudadania-portena']
+  },
+  'maternidades': {
+    title: 'Maternidades públicas de la Ciudad',
+    meta: 'Ministerio de Salud GCBA · Embarazo · Bebé',
+    body: `
+      <p>Buenos Aires tiene <strong>12 maternidades públicas y gratuitas</strong> distribuidas en toda la Ciudad. Podés atenderte en cualquiera, sin importar el barrio donde vivís.</p>
+      <h3>¿Qué ofrecen?</h3>
+      <ul>
+        <li>Atención del parto normal y cesárea</li>
+        <li>Sala de partos humanizados</li>
+        <li>Control de puerperio (los días después del parto)</li>
+        <li>Internación conjunta madre-bebé</li>
+        <li>Consejería en lactancia</li>
+        <li>Inicio del DNI del bebé antes de salir</li>
+      </ul>
+      <h3>¿Cómo elegir una maternidad?</h3>
+      <p>Podés ir a la maternidad que te quede más cómoda. Se recomienda hacer una visita durante el embarazo para conocer el lugar. Algunas tienen guardia de urgencias obstétricas las 24hs.</p>
+      <div class="callout-warn">
+        <strong>Ante una urgencia obstétrica</strong> podés ir a cualquier guardia de hospital público sin turno. No esperés.
+      </div>
+      <h3>Principales maternidades</h3>
+      <ul>
+        <li><strong>Hospital Álvarez</strong> — Av. Aranguren 2701, Flores</li>
+        <li><strong>Hospital Argerich</strong> — Pi y Margall 750, La Boca</li>
+        <li><strong>Hospital Durand</strong> — Av. Díaz Vélez 5044, Caballito</li>
+        <li><strong>Hospital Fernández</strong> — Av. Cerviño 3356, Palermo</li>
+        <li><strong>Hospital Ramos Mejía</strong> — General Urquiza 609, Balvanera</li>
+        <li><strong>Hospital Rivadavia</strong> — Av. Las Heras 2670, Recoleta</li>
+        <li>Y 6 más en distintos barrios</li>
+      </ul>
+      <a href="https://buenosaires.gob.ar/salud/programasdesalud/red-de-atencion-materno-infantil" target="_blank" class="btn-primary">Ver todas las maternidades →</a>
+    `,
+    related: ['control-prenatal','lactancia','inscripcion-nacimiento']
+  },
+  'vacuna-rsv': {
+    title: 'Vacuna contra el RSV en el embarazo',
+    meta: 'Ministerio de Salud GCBA · Embarazo',
+    body: `
+      <p>El virus sincicial respiratorio (RSV) puede causar bronquiolitis grave en bebés pequeños. Vacunarte durante el embarazo protege a tu bebé desde el nacimiento hasta los primeros meses de vida.</p>
+      <h3>¿Cuándo aplicarla?</h3>
+      <p>La vacuna se aplica entre la <strong>semana 32 y 36 del embarazo</strong>. Es importante hacerlo en ese momento para que el bebé nazca con la protección.</p>
+      <h3>¿Es gratuita?</h3>
+      <p>Sí. La vacuna RSV está incluida en el Calendario Nacional de Vacunación. No tiene costo y no necesitás receta ni turno.</p>
+      <h3>¿Dónde aplicarla?</h3>
+      <p>En cualquier CeSAC, hospital o centro de salud público de la Ciudad.</p>
+      <div class="callout">
+        <strong>También te corresponden otras vacunas en el embarazo:</strong> doble bacteriana (tos convulsa y tétanos), gripe anual, y COVID-19. Preguntale al médico cuáles te faltan.
+      </div>
+      <a href="https://buenosaires.gob.ar/salud/vacunas" target="_blank" class="btn-primary">Ver calendario de vacunación →</a>
+    `,
+    related: ['control-prenatal','vacunacion']
+  },
+  'programa-sumar': {
+    title: 'Programa SUMAR',
+    meta: 'Ministerio de Salud GCBA · Embarazo · Bebé · Niñez',
+    body: `
+      <p>El Programa SUMAR da cobertura de salud completa y gratuita a personas sin obra social: embarazadas, niños y niñas hasta 18 años, y mujeres hasta 64 años.</p>
+      <h3>¿Qué cubre?</h3>
+      <ul>
+        <li>Controles prenatales</li>
+        <li>Atención del parto</li>
+        <li>Control de niño sano</li>
+        <li>Vacunas</li>
+        <li>Medicamentos esenciales</li>
+        <li>Atención odontológica</li>
+        <li>Estudios diagnósticos</li>
+      </ul>
+      <h3>¿Quién puede inscribirse?</h3>
+      <p>Personas que no tienen obra social ni prepaga. No importa si estás en situación irregular o no tenés domicilio fijo.</p>
+      <a href="https://buenosaires.gob.ar/salud/programasdesalud/programa-sumar" target="_blank" class="btn-primary">Inscribirse al SUMAR →</a>
+    `,
+    related: ['control-prenatal','ciudadania-portena']
+  },
+  'ciudadania-portena': {
+    title: 'Ciudadanía Porteña',
+    meta: 'Min. Desarrollo Humano · Todas las etapas',
+    body: `
+      <p>Ciudadanía Porteña es el principal programa de asistencia alimentaria del Gobierno de la Ciudad. Se entrega a través de una <strong>tarjeta magnética</strong> con crédito mensual para comprar alimentos en comercios adheridos.</p>
+      <h3>¿A quién está dirigido?</h3>
+      <ul>
+        <li>Familias con hijos menores de 18 años en situación de vulnerabilidad</li>
+        <li>Embarazadas sin ingresos suficientes</li>
+        <li>Personas mayores o con discapacidad en situación de vulnerabilidad</li>
+      </ul>
+      <h3>¿Cuánto crédito se recibe?</h3>
+      <p>El monto varía según la composición familiar. Se actualiza periódicamente. Podés consultarlo en el momento de la inscripción.</p>
+      <h3>¿Cómo inscribirse?</h3>
+      <ol style="padding-left:18px;font-size:15px;color:#333;line-height:1.7">
+        <li>Acercate a la Sede Comunal o Centro de Gestión y Participación (CGP) de tu zona</li>
+        <li>Llevá DNI de todos los integrantes del hogar</li>
+        <li>Un trabajador social evaluará la situación</li>
+        <li>Si cumplís los requisitos, la tarjeta se entrega en días</li>
+      </ol>
+      <div class="callout">
+        <strong>Red Primeros Meses:</strong> si tenés un bebé de 0 a 1 año o estás embarazada, podés acceder a la Red Primeros Meses dentro del programa, que suma seguimiento y apoyo adicional.
+      </div>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['ticket-social','red-primeros-meses']
+  },
+  'ticket-social': {
+    title: 'Ticket Social',
+    meta: 'Min. Desarrollo Humano · Todas las etapas',
+    body: `
+      <p>El Ticket Social es una ayuda económica para familias en situación de inseguridad alimentaria que aún no califican para Ciudadanía Porteña o están en lista de espera.</p>
+      <h3>¿Qué es?</h3>
+      <p>Se entrega como crédito en una tarjeta del Banco Ciudad para comprar alimentos en comercios adheridos. Puede ser temporal mientras se procesa otra solicitud.</p>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ticket-social" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['ciudadania-portena']
+  },
+  'crianza-360': {
+    title: 'Crianza 360',
+    meta: 'Min. Desarrollo Humano · Embarazo · Bebé',
+    body: `
+      <p>Crianza 360 es un programa de talleres y acompañamiento para familias que están esperando un bebé o que tienen niños pequeños. El objetivo es acompañar los primeros meses de vida en familia.</p>
+      <h3>¿Qué incluye?</h3>
+      <ul>
+        <li>Talleres de preparación para el parto y la llegada del bebé</li>
+        <li>Grupos de crianza con otros papás y mamás</li>
+        <li>Acompañamiento sobre lactancia, sueño y desarrollo temprano</li>
+        <li>Orientación sobre cómo estimular a tu bebé</li>
+      </ul>
+      <p>Los talleres son gratuitos y se realizan en diferentes puntos de la Ciudad.</p>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat" target="_blank" class="btn-primary">Ver talleres disponibles →</a>
+    `,
+    related: ['red-primeros-meses','ciudadania-portena']
+  },
+  'red-primeros-meses': {
+    title: 'Red Primeros Meses',
+    meta: 'Min. Desarrollo Humano · Embarazo · Bebé 0-1',
+    body: `
+      <p>La Red Primeros Meses es un componente del programa Ciudadanía Porteña que ofrece seguimiento continuo durante el embarazo y el primer año de vida del bebé.</p>
+      <h3>¿Qué ofrece?</h3>
+      <ul>
+        <li>Acompañamiento personalizado por un referente familiar</li>
+        <li>Seguimiento del desarrollo del bebé</li>
+        <li>Orientación sobre estimulación temprana</li>
+        <li>Conexión con servicios de salud, educación y asistencia</li>
+      </ul>
+      <div class="callout">
+        <strong>Requisito:</strong> estar inscripta en Ciudadanía Porteña. Si todavía no lo estás, el primer paso es la inscripción al programa principal.
+      </div>
+      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank" class="btn-primary">Inscribirse →</a>
+    `,
+    related: ['ciudadania-portena','crianza-360']
+  },
+  'linea-144': {
+    title: 'Línea 144 — Violencia de género',
+    meta: 'Vicejefatura de Gobierno · Todas las etapas',
+    body: `
+      <p>La línea 144 es la línea nacional de atención a mujeres en situación de violencia. Está disponible las 24 horas, los 365 días del año. Es gratuita y confidencial.</p>
+      <h3>¿Cuándo llamar?</h3>
+      <ul>
+        <li>Si estás en una situación de violencia física, psicológica o económica</li>
+        <li>Si tenés miedo de tu pareja o ex pareja</li>
+        <li>Si querés asesoramiento sobre qué hacer</li>
+        <li>Si estás acompañando a alguien que necesita ayuda</li>
+      </ul>
+      <h3>Otras opciones</h3>
+      <ul>
+        <li><strong>WhatsApp 11 2771-6463</strong> (si no podés hablar)</li>
+        <li><strong>Email infoviolencia@mingeneros.gob.ar</strong></li>
+        <li><strong>Línea 137</strong> — para emergencias, mandan un equipo a tu casa</li>
+      </ul>
+      <h3>Centros Integrales de la Mujer (CIM)</h3>
+      <p>La Ciudad cuenta con Centros Integrales de la Mujer que ofrecen asesoramiento legal, psicológico y social de forma gratuita y confidencial.</p>
+      <a href="tel:144" class="btn-primary">Llamar al 144</a>
+    `,
+    related: ['linea-102']
+  },
+  'inscripcion-nacimiento': {
+    title: 'Inscripción de nacimiento',
+    meta: 'Registro Civil GCBA · Bebé 0-1 año',
+    body: `
+      <p>Cuando nace tu bebé, tenés que inscribirlo en el Registro Civil para que quede legalmente registrado. Este trámite es obligatorio y gratuito.</p>
+      <h3>¿Cuándo hacerlo?</h3>
+      <p>Tenés hasta <strong>40 días desde el nacimiento</strong> para inscribir a tu bebé. Si el plazo vence, se puede hacer igual pero con un proceso diferente.</p>
+      <h3>¿Dónde?</h3>
+      <ul>
+        <li><strong>En el hospital</strong> — muchas maternidades tienen una oficina del Registro Civil adentro. Es la forma más práctica.</li>
+        <li><strong>En la Sede Comunal</strong> de tu barrio, sin turno previo</li>
+        <li><strong>En cualquier Registro Civil</strong> de la Ciudad</li>
+      </ul>
+      <h3>¿Qué llevar?</h3>
+      <ul>
+        <li>DNI de la madre y el padre (o datos del padre si no está presente)</li>
+        <li>Certificado médico de nacimiento (lo entrega el hospital)</li>
+        <li>Libreta de matrimonio si los padres están casados</li>
+      </ul>
+      <div class="callout">
+        <strong>DNI del bebé:</strong> en el mismo momento de la inscripción podés iniciar el trámite del primer DNI de tu hijo. No tiene costo adicional.
+      </div>
+      <a href="https://buenosaires.gob.ar/tramites/inscripcion-del-nacimiento" target="_blank" class="btn-primary">Ver requisitos completos →</a>
+    `,
+    related: ['dni-recien-nacido','maternidades']
+  },
+  'dni-recien-nacido': {
+    title: 'DNI del recién nacido',
+    meta: 'RENAPER / GCBA · Bebé 0-1 año',
+    body: `
+      <p>El DNI es el primer documento de identidad de tu bebé. Se puede iniciar el trámite en el momento de la inscripción de nacimiento, antes de salir del hospital.</p>
+      <h3>¿Cómo se tramita?</h3>
+      <p>Al inscribir el nacimiento en el hospital o Registro Civil, podés pedir la aplicación para el DNI en el mismo acto. El documento llega al domicilio por correo en aproximadamente 15 días.</p>
+      <h3>¿Tiene costo?</h3>
+      <p>El primer DNI de los menores de 8 años es gratuito.</p>
+      <a href="https://buenosaires.gob.ar/tramites/inscripcion-del-nacimiento" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['inscripcion-nacimiento']
+  },
+  'vacunacion': {
+    title: 'Vacunación gratuita para niños',
+    meta: 'Ministerio de Salud GCBA · Todas las etapas',
+    body: `
+      <p>Todas las vacunas del Calendario Nacional de Vacunación son <strong>gratuitas y obligatorias</strong>. No necesitás turno previo ni receta médica.</p>
+      <h3>Vacunas principales por edad</h3>
+      <ul>
+        <li><strong>Al nacer:</strong> BCG (tuberculosis), Hepatitis B</li>
+        <li><strong>2 meses:</strong> Pentavalente, Antipoliomielítica, Neumocócica, Rotavirus, Meningococo</li>
+        <li><strong>4 meses:</strong> Refuerzos</li>
+        <li><strong>6 meses:</strong> Gripe (anual)</li>
+        <li><strong>12 meses:</strong> SRP (sarampión, rubéola, paperas), Varicela, Hepatitis A</li>
+        <li><strong>15 meses:</strong> Meningocócica, Neumocócica</li>
+        <li><strong>18 meses:</strong> Refuerzos Pentavalente, DPT, Antipolio</li>
+        <li><strong>5-6 años:</strong> DPT + Sabin, SRP</li>
+        <li><strong>11 años:</strong> VPH, doble bacteriana, Meningocócica</li>
+      </ul>
+      <div class="callout">
+        <strong>¿Vacunas atrasadas?</strong> No importa. Podés ponerte al día con el calendario en cualquier momento, gratis. El equipo de salud del CeSAC te orienta.
+      </div>
+      <h3>¿Dónde vacunar?</h3>
+      <p>En cualquiera de los 45 CeSAC, hospitales y centros de salud de la Ciudad. También en escuelas durante campañas.</p>
+      <a href="https://buenosaires.gob.ar/salud/vacunas" target="_blank" class="btn-primary">Ver puntos de vacunación →</a>
+    `,
+    related: ['control-nino-sano','vacuna-rsv']
+  },
+  'control-nino-sano': {
+    title: 'Control de niño sano',
+    meta: 'Ministerio de Salud GCBA · Bebé · Niñez',
+    body: `
+      <p>El control de niño sano es una consulta médica periódica para seguir el crecimiento y desarrollo de tu hijo. Es gratuito en todos los centros de salud públicos de la Ciudad.</p>
+      <h3>¿Qué evalúa?</h3>
+      <ul>
+        <li>Peso, talla y perímetro cefálico</li>
+        <li>Desarrollo motor (se para, camina, corre según la edad)</li>
+        <li>Lenguaje y comunicación</li>
+        <li>Estado de vacunación</li>
+        <li>Visión y audición</li>
+        <li>Salud dental</li>
+      </ul>
+      <h3>¿Con qué frecuencia?</h3>
+      <p>En los primeros 2 años, lo ideal es un control mensual o bimestral. A partir de los 2 años, al menos una vez por año.</p>
+      <h3>¿Dónde?</h3>
+      <p>Sin turno previo en cualquier CeSAC. También podés ir al servicio de pediatría de los hospitales públicos.</p>
+      <a href="https://buenosaires.gob.ar/salud/donde-atenderse" target="_blank" class="btn-primary">Encontrá tu CeSAC →</a>
+    `,
+    related: ['vacunacion','salud-dental']
+  },
+  'lactancia': {
+    title: 'Apoyo para la lactancia materna',
+    meta: 'Ministerio de Salud GCBA · Bebé 0-1',
+    body: `
+      <p>La leche materna es el alimento ideal para los bebés durante los primeros meses. Si tenés dudas o dificultades, el sistema público ofrece apoyo gratuito.</p>
+      <h3>¿Dónde pedir ayuda?</h3>
+      <ul>
+        <li><strong>En la maternidad</strong> — antes de irte a tu casa con el bebé, podés consultar con el equipo de lactancia</li>
+        <li><strong>En el CeSAC de tu barrio</strong> — hay consejeras de lactancia en la mayoría de los centros</li>
+        <li><strong>Grupos de lactancia</strong> — en algunos barrios hay grupos de apoyo entre mamás</li>
+      </ul>
+      <div class="callout">
+        <strong>Si no podés o no querés dar pecho,</strong> está bien. El equipo médico puede orientarte sobre la alimentación con fórmula adecuada para tu bebé.
+      </div>
+      <a href="https://buenosaires.gob.ar/salud/programasdesalud/red-de-atencion-materno-infantil" target="_blank" class="btn-primary">Consultar en tu maternidad →</a>
+    `,
+    related: ['control-nino-sano','maternidades']
+  },
+  'jardines-maternales': {
+    title: 'Jardines maternales y escuelas infantiles',
+    meta: 'Ministerio de Educación GCBA · Bebé · 1-3 años',
+    body: `
+      <p>Buenos Aires tiene jardines maternales y escuelas infantiles de gestión estatal para niños desde los 45 días de vida. Son <strong>gratuitos</strong> e incluyen comida.</p>
+      <h3>¿Quiénes pueden acceder?</h3>
+      <p>Niños de 45 días a 5 años que viven en la Ciudad de Buenos Aires. No hace falta obra social ni un nivel mínimo de ingresos.</p>
+      <h3>¿Qué incluye?</h3>
+      <ul>
+        <li>Atención pedagógica con docentes especializados</li>
+        <li>Desayuno y almuerzo incluidos</li>
+        <li>Merienda en el turno tarde</li>
+        <li>Actividades de estimulación temprana</li>
+      </ul>
+      <h3>¿Cuándo inscribirse?</h3>
+      <p>La inscripción para el año siguiente se realiza en <strong>diciembre o enero</strong>. Se hace online a través del portal de inscripciones del GCBA.</p>
+      <div class="callout-warn">
+        <strong>Cupos limitados:</strong> los jardines maternales tienen alta demanda. Inscribite lo antes posible cuando abran las inscripciones.
+      </div>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank" class="btn-primary">Inscribirse online →</a>
+      <a href="https://buenosaires.gob.ar/educacion/familias/alimentacion-saludable/jardines-maternales-y-escuelas-infantiles" target="_blank" class="btn-secondary">Más información</a>
+    `,
+    related: ['centros-primera-infancia','jardin-infantes']
+  },
+  'centros-primera-infancia': {
+    title: 'Centros de Primera Infancia (CPI)',
+    meta: 'Min. Desarrollo Humano · Bebé · 1-4 años',
+    body: `
+      <p>Los Centros de Primera Infancia (CPI) son espacios de cuidado integral para niños de 45 días a 4 años, especialmente en zonas vulnerables de la Ciudad. Son completamente <strong>gratuitos</strong>.</p>
+      <h3>¿Qué los diferencia de un jardín maternal?</h3>
+      <ul>
+        <li>Están ubicados en los barrios con mayor necesidad</li>
+        <li>Ofrecen turnos de 4, 6 y 8 horas (y algunos turno nocturno)</li>
+        <li>Tienen equipos interdisciplinarios: docentes, trabajadores sociales, nutricionistas</li>
+        <li>Incluyen todas las comidas del turno</li>
+        <li>Acompañan también a las familias, no solo a los niños</li>
+      </ul>
+      <h3>¿Cuántos hay?</h3>
+      <p>Hay <strong>73 CPI</strong> en toda la Ciudad, distribuidos en los 15 barrios.</p>
+      <h3>¿Cómo acceder?</h3>
+      <p>Podés anotarte en el CPI más cercano a tu domicilio. Si hay lista de espera, te avisan cuando se libera un lugar.</p>
+      <a href="https://buenosaires.gob.ar/centros-de-primera-infancia" target="_blank" class="btn-primary">Encontrá un CPI →</a>
+    `,
+    related: ['jardines-maternales','ciudadania-portena']
+  },
+  'juegotecas': {
+    title: 'Juegotecas barriales',
+    meta: 'Min. Desarrollo Humano · Bebé · 0-12 años',
+    body: `
+      <p>Las juegotecas barriales son espacios públicos de juego libre para niños de 0 a 12 años y sus familias. Son gratuitas y están distribuidas en los barrios de la Ciudad.</p>
+      <h3>¿Qué ofrecen?</h3>
+      <ul>
+        <li>Juego libre con materiales didácticos y creativos</li>
+        <li>Estimulación temprana para bebés</li>
+        <li>Actividades con las familias</li>
+        <li>Espacio seguro y cuidado por personal especializado</li>
+      </ul>
+      <p>No necesitás inscribirse: podés ir directamente en los horarios de apertura.</p>
+      <a href="https://buenosaires.gob.ar/desarrollo-infantil/juegotecas-barriales" target="_blank" class="btn-primary">Ver juegotecas →</a>
+    `,
+    related: ['centros-primera-infancia','actividades-ciudad']
+  },
+  'centros-educacion-temprana': {
+    title: 'Centros de Educación Temprana (CET)',
+    meta: 'Ministerio de Educación GCBA · 45 días–3 años',
+    body: `
+      <p>Los Centros de Educación Temprana son espacios donde los bebés y niños pequeños realizan actividades de estimulación y aprendizaje <strong>junto con sus mamás, papás o cuidadores</strong>.</p>
+      <h3>¿Cómo funcionan?</h3>
+      <p>A diferencia del jardín maternal, en los CET el adulto está presente. Es una experiencia compartida entre el niño y la familia. Se realizan actividades de movimiento, música, exploración y juego.</p>
+      <h3>¿Dónde funcionan?</h3>
+      <p>En plazas, centros comunitarios y sedes barriales de toda la Ciudad.</p>
+      <a href="https://buenosaires.gob.ar/gcoba_historico/centros-de-educacion-temprana" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['jardines-maternales','juegotecas']
+  },
+  'jardin-infantes': {
+    title: 'Jardín de infantes (3, 4 y 5 años)',
+    meta: 'Ministerio de Educación GCBA · 3-6 años',
+    body: `
+      <p>El jardín de infantes es la primera etapa de la escuela. En Buenos Aires es obligatorio a partir de los 4 años (sala de 4), pero también hay sala de 3 en muchos establecimientos. Es gratuito.</p>
+      <h3>¿Cuándo inscribirse?</h3>
+      <p>La inscripción se realiza en <strong>noviembre o enero</strong> para el año siguiente. Se hace completamente online, sin necesidad de ir al establecimiento.</p>
+      <h3>¿Qué documentos se necesitan?</h3>
+      <ul>
+        <li>DNI del niño</li>
+        <li>DNI de un adulto responsable</li>
+        <li>Constancia de domicilio en CABA</li>
+      </ul>
+      <h3>¿Incluye comida?</h3>
+      <p>Sí. Todas las escuelas públicas de Buenos Aires ofrecen desayuno y almuerzo gratuitos.</p>
+      <div class="callout">
+        <strong>¿Querés una escuela específica?</strong> Las inscripciones se hacen por zona. Podés indicar preferencias, pero la asignación depende de los cupos disponibles.
+      </div>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank" class="btn-primary">Inscribirse online →</a>
+    `,
+    related: ['inscripcion-escolar','alimentacion-escolar','centros-primera-infancia']
+  },
+  'inscripcion-escolar': {
+    title: 'Inscripción escolar online',
+    meta: 'Ministerio de Educación GCBA · 3-18 años',
+    body: `
+      <p>La inscripción a jardín de infantes, primaria y secundaria pública en Buenos Aires se hace <strong>completamente online</strong>, sin hacer fila.</p>
+      <h3>¿Cuándo?</h3>
+      <ul>
+        <li><strong>Diciembre–enero:</strong> inscripción para el año siguiente</li>
+        <li>Si llegás tarde, podés hacerlo igualmente hasta que haya cupos</li>
+      </ul>
+      <h3>¿Qué necesitás?</h3>
+      <ul>
+        <li>DNI del alumno</li>
+        <li>DNI de un adulto responsable</li>
+        <li>Constancia de domicilio en CABA</li>
+        <li>Boletín del año anterior (para secundaria)</li>
+      </ul>
+      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank" class="btn-primary">Ir al portal de inscripción →</a>
+    `,
+    related: ['jardin-infantes','alimentacion-escolar']
+  },
+  'alimentacion-escolar': {
+    title: 'Alimentación escolar gratuita',
+    meta: 'Ministerio de Educación GCBA · 3-18 años',
+    body: `
+      <p>Todos los alumnos de escuelas públicas de Buenos Aires reciben <strong>desayuno y almuerzo gratuitos</strong>. En los turnos tarde, también merienda.</p>
+      <h3>¿Quién lo recibe?</h3>
+      <p>Todos los alumnos inscriptos en escuelas de gestión estatal de la Ciudad, automáticamente. No hace falta solicitarlo.</p>
+      <h3>¿Qué incluye el menú?</h3>
+      <p>Los menús son elaborados por nutricionistas del GCBA y cambian semanalmente. Incluyen proteínas, verduras, frutas y lácteos. Hay adaptaciones para alergias e intolerancias si se informa al establecimiento.</p>
+      <a href="https://buenosaires.gob.ar/educacion" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['jardin-infantes','inscripcion-escolar']
+  },
+  'salud-dental': {
+    title: 'Salud dental y oral en la infancia',
+    meta: 'Ministerio de Salud GCBA · 3-18 años',
+    body: `
+      <p>El cuidado dental desde pequeños es clave para la salud general. Buenos Aires ofrece atención odontológica gratuita para niños en sus centros de salud.</p>
+      <h3>¿Cuándo llevar a un niño al dentista?</h3>
+      <p>La primera visita se recomienda alrededor del año, cuando salen los primeros dientes. Después, una vez al año como mínimo.</p>
+      <h3>Consejos para la higiene dental</h3>
+      <ul>
+        <li><strong>Antes del año:</strong> limpiar las encías con una gasa húmeda</li>
+        <li><strong>Al salir los primeros dientes:</strong> cepillar con cepillo chico y una pequeña cantidad de pasta fluorada</li>
+        <li><strong>De 3 a 6 años:</strong> el niño puede cepillarse solo, pero el adulto debe revisar y ayudar</li>
+        <li><strong>Evitar:</strong> dormir con mamadera con leche o jugo</li>
+      </ul>
+      <h3>¿Dónde atenderse?</h3>
+      <p>Los CeSAC y hospitales públicos tienen servicio de odontología pediátrica gratuita.</p>
+      <a href="https://buenosaires.gob.ar/salud/donde-atenderse" target="_blank" class="btn-primary">Encontrá un CeSAC →</a>
+    `,
+    related: ['control-nino-sano','vacunacion']
+  },
+  'lenguaje-comunicacion': {
+    title: 'Lenguaje y comunicación en la primera infancia',
+    meta: 'Ministerio de Salud GCBA · 0-6 años',
+    body: `
+      <p>El desarrollo del lenguaje empieza desde el nacimiento. Hablarle, cantarle y leerle a tu hijo desde bebé es una de las cosas más importantes que podés hacer por su desarrollo.</p>
+      <h3>Hitos del lenguaje por edad</h3>
+      <ul>
+        <li><strong>0–6 meses:</strong> gorjeos, sonrisas, responde a voces conocidas</li>
+        <li><strong>6–12 meses:</strong> balbuceos, "mamá", "papá" sin significado preciso</li>
+        <li><strong>12–18 meses:</strong> primeras palabras con significado (5 a 10 palabras)</li>
+        <li><strong>2 años:</strong> frases de 2 palabras, vocabulario de 50+ palabras</li>
+        <li><strong>3 años:</strong> frases completas, se entiende lo que dice</li>
+        <li><strong>4–5 años:</strong> cuenta historias, hace preguntas, habla con claridad</li>
+      </ul>
+      <h3>¿Qué podés hacer en casa?</h3>
+      <ul>
+        <li>Hablarle durante las actividades cotidianas (baño, comida, paseo)</li>
+        <li>Leerle libros desde bebé</li>
+        <li>Cantar canciones y rimas</li>
+        <li>Responder a sus intentos de comunicación, aunque no sean claros</li>
+        <li>Minimizar el tiempo de pantallas antes de los 2 años</li>
+      </ul>
+      <div class="callout-warn">
+        <strong>¿Cuándo preocuparse?</strong> Si a los 12 meses no balbucea, a los 18 no dice palabras o a los 2 años no hace frases de 2 palabras, consultá con el pediatra. La detección temprana es clave.
+      </div>
+      <a href="https://buenosaires.gob.ar/salud/donde-atenderse" target="_blank" class="btn-primary">Consultar con el pediatra →</a>
+    `,
+    related: ['control-nino-sano','aprendizaje-juego']
+  },
+  'aprendizaje-juego': {
+    title: 'Aprendizaje a través del juego',
+    meta: 'Ministerio de Educación GCBA · 1-6 años',
+    body: `
+      <p>El juego es la forma principal en que los niños pequeños aprenden. No necesitás juguetes caros: la interacción y la exploración son lo más valioso.</p>
+      <h3>¿Por qué es tan importante el juego?</h3>
+      <ul>
+        <li>Desarrolla el pensamiento y la resolución de problemas</li>
+        <li>Ejercita el lenguaje y la comunicación</li>
+        <li>Fortalece la relación entre padres e hijos</li>
+        <li>Estimula la creatividad y la imaginación</li>
+        <li>Desarrolla habilidades sociales con otros niños</li>
+      </ul>
+      <h3>Ideas por edad</h3>
+      <ul>
+        <li><strong>Bebés (0-12 meses):</strong> móviles, canciones, objetos de distintas texturas, caras y expresiones</li>
+        <li><strong>1-2 años:</strong> juego de encaje, bloques, apilar, imitar acciones cotidianas</li>
+        <li><strong>2-4 años:</strong> juego simbólico (hacer "como si"), dibujo libre, plastilina, cuentos</li>
+        <li><strong>4-6 años:</strong> juegos de mesa simples, construcción, dramatización, juego al aire libre</li>
+      </ul>
+      <a href="https://buenosaires.gob.ar/desarrollo-infantil/juegotecas-barriales" target="_blank" class="btn-primary">Ver juegotecas barriales →</a>
+    `,
+    related: ['juegotecas','centros-educacion-temprana']
+  },
+  'actividades-ciudad': {
+    title: 'Actividades gratuitas para familias en la Ciudad',
+    meta: 'Ministerio de Cultura GCBA · Todas las etapas',
+    body: `
+      <p>Buenos Aires ofrece una gran variedad de actividades culturales y recreativas gratuitas o muy económicas para familias con niños.</p>
+      <h3>Museos y centros culturales</h3>
+      <ul>
+        <li>Museo de los Niños (Abasto)</li>
+        <li>Planetario Galileo Galilei (Palermo)</li>
+        <li>Museo Nacional de Bellas Artes (Recoleta) — gratis</li>
+        <li>Centro Cultural Kirchner — muchas actividades gratis</li>
+        <li>MALBA — días de acceso económico</li>
+      </ul>
+      <h3>Espacios al aire libre</h3>
+      <ul>
+        <li>Bosques de Palermo — juegos, lago, rosedal</li>
+        <li>Parque de la Ciudad — área de juegos y espacios verdes</li>
+        <li>Parque Centenario — feria los fines de semana</li>
+        <li>Parque Chacabuco — actividades deportivas y recreativas</li>
+      </ul>
+      <h3>Programas culturales</h3>
+      <ul>
+        <li><strong>BA Chicos</strong> — actividades para niños en situación de vulnerabilidad</li>
+        <li><strong>Teatros del barrio</strong> — obras para niños a precios económicos</li>
+        <li><strong>Bibliotecas públicas</strong> — lectura, cuentacuentos, talleres gratis</li>
+      </ul>
+      <a href="https://buenosaires.gob.ar/cultura" target="_blank" class="btn-primary">Ver toda la agenda →</a>
+    `,
+    related: ['juegotecas','vacaciones-escolares']
+  },
+  'vacaciones-escolares': {
+    title: 'Vacaciones de invierno y verano',
+    meta: 'Varios ministerios GCBA · 3-18 años',
+    body: `
+      <p>Durante los recesos escolares de invierno (julio) y verano (enero–febrero), la Ciudad organiza actividades gratuitas para niños y jóvenes.</p>
+      <h3>¿Qué se ofrece?</h3>
+      <ul>
+        <li>Colonias de vacaciones en plazas y parques</li>
+        <li>Actividades deportivas en polideportivos</li>
+        <li>Talleres en centros culturales</li>
+        <li>Obras de teatro para chicos</li>
+        <li>Visitas guiadas a museos</li>
+      </ul>
+      <h3>¿Cómo enterarse?</h3>
+      <p>Las actividades se publican en el sitio de la Ciudad y en las redes del GCBA con algunas semanas de anticipación.</p>
+      <a href="https://buenosaires.gob.ar/cultura" target="_blank" class="btn-primary">Ver actividades →</a>
+    `,
+    related: ['actividades-ciudad','ba-chicos']
+  },
+  'ba-chicos': {
+    title: 'BA Chicos',
+    meta: 'Ministerio de Cultura GCBA · 6-18 años',
+    body: `
+      <p>BA Chicos es un programa del Gobierno de la Ciudad que ofrece actividades culturales, recreativas y educativas para niños y jóvenes en situación de vulnerabilidad.</p>
+      <h3>¿Qué incluye?</h3>
+      <ul>
+        <li>Talleres de arte, música y teatro</li>
+        <li>Actividades deportivas</li>
+        <li>Acceso a espacios culturales</li>
+        <li>Campamentos y salidas educativas</li>
+      </ul>
+      <a href="https://buenosaires.gob.ar/cultura" target="_blank" class="btn-primary">Más información →</a>
+    `,
+    related: ['actividades-ciudad','ciudadania-portena']
+  },
+  'cud-discapacidad': {
+    title: 'Certificado Único de Discapacidad (CUD)',
+    meta: 'Vicejefatura de Gobierno · Todas las etapas',
+    body: `
+      <p>El Certificado Único de Discapacidad (CUD) es el documento que acredita la discapacidad de una persona en Argentina. Habilita el acceso a una serie de derechos y beneficios.</p>
+      <h3>¿Qué derechos otorga?</h3>
+      <ul>
+        <li>Cobertura de salud al 100% por obra social o PAMI</li>
+        <li>Educación especial y escuelas de integración</li>
+        <li>Transporte gratuito</li>
+        <li>Pensión no contributiva (si se cumple el requisito de ingresos)</li>
+        <li>Descuentos en actividades culturales y recreativas</li>
+      </ul>
+      <h3>¿Cómo tramitarlo?</h3>
+      <p>En la Junta Evaluadora de Discapacidad del GCBA. Hay que solicitar un turno y presentar documentación médica.</p>
+      <a href="https://buenosaires.gob.ar" target="_blank" class="btn-primary">Ver requisitos →</a>
+    `,
+    related: ['control-nino-sano']
+  },
+  'linea-102': {
+    title: 'Línea 102 — Niñez y Adolescencia',
+    meta: 'Consejo de Derechos NNyA · Todas las etapas',
+    body: `
+      <p>La línea 102 es la línea de atención para niños, niñas, adolescentes y sus familias. Está disponible las <strong>24 horas, los 365 días del año</strong>. Es gratuita y confidencial.</p>
+      <h3>¿Para qué llamar?</h3>
+      <ul>
+        <li>Si un niño o adolescente está en situación de riesgo o vulnerabilidad</li>
+        <li>Para hacer una consulta sobre derechos de los chicos</li>
+        <li>Si un niño está en situación de violencia, maltrato o abuso</li>
+        <li>Para orientación sobre cómo actuar ante una situación preocupante</li>
+        <li>Si querés información sobre adopción o acogimiento</li>
+      </ul>
+      <div class="callout">
+        <strong>La línea 102 también atiende a los propios niños y adolescentes</strong>, no solo a adultos. Si un chico necesita ayuda, puede llamar directamente.
+      </div>
+      <a href="tel:102" class="btn-primary">Llamar al 102</a>
+      <a href="https://buenosaires.gob.ar/cdnnya/linea-102" target="_blank" class="btn-secondary">Más información</a>
+    `,
+    related: ['linea-144']
+  },
+};
+
+// ================================================================
+// STATE
+// ================================================================
+let currentStage = null;
+let currentArticleId = null;
+
+// ================================================================
+// STAGE COLORS + PHOTOS
+// ================================================================
+const STAGE_STYLES = {
+  embarazo: {
+    bg: '#fce7ef', badge: '#c2185b',
+    photo: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=700&q=72'
+  },
+  bebe: {
+    bg: '#e8f5e9', badge: '#2e7d32',
+    photo: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=72'
+  },
+  uno: {
+    bg: '#fff3e0', badge: '#e65100',
+    photo: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=700&q=72'
+  },
+  tres: {
+    bg: '#e3f2fd', badge: '#1565c0',
+    photo: 'https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?auto=format&fit=crop&w=700&q=72'
+  },
+  seis: {
+    bg: '#f3e5f5', badge: '#6a1b9a',
+    photo: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=700&q=72'
+  }
+};
+
+// ================================================================
+// RENDER: HOME
+// ================================================================
+function renderHome() {
+  const grid = document.getElementById('stage-grid');
+  grid.innerHTML = '';
+  STAGES.forEach(s => {
+    const st = STAGE_STYLES[s.id] || { bg: '#f0f4ff', badge: '#2f54b8', photo: '' };
+    const card = document.createElement('div');
+    card.className = 'stage-card';
+    card.style.setProperty('--card-bg', st.bg);
+    card.innerHTML = `
+      <div class="stage-card-content">
+        <span class="stage-badge" style="background:${st.badge}">${s.name}</span>
+        <h3>${s.name}</h3>
+        <div class="range">${s.range}</div>
+        <div class="desc">${s.desc}</div>
+        <div class="cta">Ver servicios</div>
+      </div>
+      <div class="stage-card-photo" style="background-image:url('${st.photo}')"></div>
+    `;
+    card.addEventListener('click', () => showStage(s.id));
+    grid.appendChild(card);
+  });
+}
+
+// ================================================================
+// RENDER: STAGE
+// ================================================================
+function showStage(stageId) {
+  currentStage = stageId;
+  const s = STAGES.find(x => x.id === stageId);
+
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-stage').style.display = 'block';
+  document.getElementById('view-article').style.display = 'none';
+
+  document.getElementById('stage-title').textContent = s.name;
+  document.getElementById('stage-subtitle').textContent = s.subtitle;
+
+  // Color accent bar per stage
+  const st = STAGE_STYLES[s.id] || {};
+  const hdr = document.querySelector('.stage-header');
+  hdr.style.borderTop = `4px solid ${st.badge || '#2f54b8'}`;
+  hdr.style.background = st.bg || '#f5f6f8';
+
+  // Breadcrumb
+  showBreadcrumb('stage', s.name);
+
+  // Popular
+  const pg = document.getElementById('popular-grid');
+  pg.innerHTML = '';
+  s.popular.forEach(artId => {
+    const art = ARTICLES[artId];
+    if (!art) return;
+    const card = document.createElement('div');
+    card.className = 'popular-card';
+    card.innerHTML = `<span>${art.title}</span><span class="arr">›</span>`;
+    card.addEventListener('click', () => showArticle(artId));
+    pg.appendChild(card);
+  });
+
+  // Cols
+  const sc = document.getElementById('seccion-cols');
+  sc.innerHTML = '';
+  s.cols.forEach(col => {
+    const div = document.createElement('div');
+    div.className = 'seccion-col';
+    div.innerHTML = `<h4>${col.title}</h4><ul>${col.items.map(id => {
+      const art = ARTICLES[id];
+      if (!art) return '';
+      return `<li><a href="#" onclick="showArticle('${id}');return false;">${art.title}</a></li>`;
+    }).join('')}</ul>`;
+    sc.appendChild(div);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+// RENDER: ARTICLE
+// ================================================================
+function showArticle(artId) {
+  currentArticleId = artId;
+  const art = ARTICLES[artId];
+  if (!art) return;
+
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-stage').style.display = 'none';
+  document.getElementById('view-article').style.display = 'block';
+
+  document.getElementById('art-title').textContent = art.title;
+  document.getElementById('art-meta').textContent = art.meta;
+  document.getElementById('art-body').innerHTML = art.body;
+
+  // Related
+  const relEl = document.getElementById('art-related');
+  if (art.related && art.related.length) {
+    relEl.innerHTML = '<h4>También te puede interesar</h4><div class="related-links">' +
+      art.related.map(id => {
+        const rel = ARTICLES[id];
+        if (!rel) return '';
+        return `<a href="#" class="related-link" onclick="showArticle('${id}');return false;">${rel.title} <span>›</span></a>`;
+      }).join('') +
+      '</div>';
+  } else { relEl.innerHTML = ''; }
+
+  // Breadcrumb
+  const stageName = currentStage ? STAGES.find(s => s.id === currentStage)?.name : '';
+  showBreadcrumb('article', stageName, art.title);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+// BREADCRUMB
+// ================================================================
+function showBreadcrumb(level, stageName, artName) {
+  document.getElementById('breadcrumb').style.display = 'block';
+  const bcStage = document.getElementById('bc-stage');
+  const bcArt = document.getElementById('bc-article');
+  const sep1 = document.getElementById('bc-stage-sep');
+  const sep2 = document.getElementById('bc-art-sep');
+
+  if (level === 'stage') {
+    bcStage.textContent = stageName; bcStage.style.display = 'inline';
+    sep1.style.display = 'inline'; sep2.style.display = 'none'; bcArt.style.display = 'none';
+  } else if (level === 'article') {
+    bcStage.textContent = stageName; bcStage.style.display = stageName ? 'inline' : 'none';
+    sep1.style.display = stageName ? 'inline' : 'none';
+    sep2.style.display = 'inline'; bcArt.textContent = artName; bcArt.style.display = 'inline';
+  }
+}
+
+function bcStage() { if (currentStage) showStage(currentStage); }
+
+function goHome() {
+  document.getElementById('view-home').style.display = 'block';
+  document.getElementById('view-stage').style.display = 'none';
+  document.getElementById('view-article').style.display = 'none';
+  document.getElementById('breadcrumb').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+// SEARCH
+// ================================================================
+function doSearch(val) {
+  const q = val.toLowerCase().trim();
+  if (!q) return;
+  const matches = Object.entries(ARTICLES).filter(([id, art]) =>
+    art.title.toLowerCase().includes(q) ||
+    (art.body && art.body.toLowerCase().includes(q))
+  );
+  if (matches.length === 1) {
+    showArticle(matches[0][0]);
+  } else if (matches.length > 1) {
+    // Show first match for now
+    showArticle(matches[0][0]);
+  }
+}
+
+// ================================================================
+// INIT
+// ================================================================
+renderHome();
+</script>
+</body>
+</html>
