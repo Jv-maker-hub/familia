@@ -25,12 +25,12 @@ a:hover { text-decoration: underline; }
 .breadcrumb span { margin: 0 6px; opacity: 0.4; }
 .stage-hero { background: #1565c0; color: white; overflow: hidden; position: relative; }
 .stage-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 340px; max-width: 1160px; margin: 0 auto; padding: 0 24px; align-items: center; gap: 48px; position: relative; z-index: 2; }
-.stage-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1526634332515-d56c5fd16991?auto=format&fit=crop&w=1400&q=70'); background-size: cover; background-position: center; opacity: 0.18; }
+.stage-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1526634332515-d56c5fd16991?auto=format&fit=crop&w=1400&q=70'); background-size: cover; background-position: center top; opacity: 0.18; }
 .stage-hero-left { padding: 52px 0; }
 .stage-hero-badge { display: inline-block; background: rgba(255,255,255,0.22); border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 5px 16px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
 .stage-hero-left h1 { font-size: 46px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 14px; }
 .stage-hero-left p { font-size: 17px; opacity: 0.85; line-height: 1.65; max-width: 480px; }
-.stage-hero-img { height: 340px; background-image: url('https://images.unsplash.com/photo-1526634332515-d56c5fd16991?auto=format&fit=crop&w=500&q=72'); background-size: cover; background-position: center; border-radius: 12px 12px 0 0; align-self: flex-end; }
+.stage-hero-img { height: 340px; background-image: url('https://images.unsplash.com/photo-1526634332515-d56c5fd16991?auto=format&fit=crop&w=500&q=72'); background-size: cover; background-position: center top; border-radius: 12px 12px 0 0; align-self: flex-end; }
 .quick-links { background: #fff; border-bottom: 1px solid #eee; padding: 0 32px; display: flex; gap: 0; overflow-x: auto; }
 .quick-link-item { padding: 16px 22px; font-size: 14px; font-weight: 600; color: #555; border-bottom: 3px solid transparent; white-space: nowrap; text-decoration: none; transition: all 0.15s; }
 .quick-link-item:hover { color: #1565c0; text-decoration: none; }
@@ -45,24 +45,26 @@ a:hover { text-decoration: underline; }
 .service-title { font-size: 15px; font-weight: 800; color: #1a1a2e; line-height: 1.3; }
 .service-desc { font-size: 13px; color: #666; line-height: 1.6; }
 .service-link { font-size: 13px; font-weight: 700; color: #1565c0; margin-top: 6px; }
+.info-block { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
+.info-block h3 { font-size: 16px; font-weight: 800; color: #1a1a2e; margin-bottom: 10px; }
+.info-block ul { padding-left: 18px; color: #555; font-size: 14px; line-height: 2; }
 .sidebar { display: flex; flex-direction: column; gap: 20px; }
 .sidebar-card { background: #fff; border: 1.5px solid #ece8e4; border-radius: 12px; padding: 22px; }
-.sidebar-card.accent { background: #e3f2fd; border-color: #90caf9; }
+.sidebar-card.accent { background: #e3f2fd; border-color: #f4a3ba; }
 .sidebar-card h4 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 14px; }
 .sidebar-card.accent h4 { color: #1565c0; }
 .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 14px; font-weight: 600; color: #1a1a2e; text-decoration: none; transition: color 0.15s; }
 .sidebar-link:last-child { border-bottom: none; padding-bottom: 0; }
 .sidebar-link:hover { color: #1565c0; text-decoration: none; }
 .sidebar-link-icon { font-size: 20px; flex-shrink: 0; }
-.sidebar-alert { background: #e3f2fd; border: 1.5px solid #90caf9; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #1565c0; line-height: 1.6; }
-.telefono-num { font-size: 22px; font-weight: 900; color: #1565c0; }
+.sidebar-alert { background: #fff3cd; border: 1.5px solid #f0c040; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #856404; line-height: 1.6; }
 .telefono-item { display: flex; flex-direction: column; margin-bottom: 12px; }
+.telefono-num { font-size: 22px; font-weight: 900; color: #1565c0; }
 .telefono-label { font-size: 13px; color: #666; }
 .stage-nav { background: #fff; border-top: 1px solid #eee; padding: 32px 24px; }
 .stage-nav-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
 .stage-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 10px; background: #f5f3f0; border: 1.5px solid #e8e4df; text-decoration: none; color: #1a1a2e; transition: all 0.15s; flex: 1; max-width: 260px; }
-.stage-nav-btn:hover { background: #e3f2fd; border-color: #90caf9; text-decoration: none; }
-.stage-nav-btn.next { margin-left: auto; }
+.stage-nav-btn:hover { background: #e3f2fd; border-color: #f4a3ba; text-decoration: none; }
 .stage-nav-btn-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #999; font-weight: 700; margin-bottom: 2px; }
 .stage-nav-btn-title { font-size: 15px; font-weight: 800; }
 .stage-nav-btn-icon { font-size: 28px; }
@@ -76,216 +78,117 @@ a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-
 <header id="header">
   <a class="ba-logo" href="index.html"><div class="ba-logo-box">BA</div><span class="ba-logo-text">Buenos Aires Ciudad</span></a>
-  <nav class="gcba-nav">
-    <a href="index.html">Familias</a>
-    <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
-    <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
-    <a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a>
-  </nav>
+  <nav class="gcba-nav"><a href="index.html">Familias</a><a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a><a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a><a href="https://buenosaires.gob.ar/tramites" target="_blank">Trámites</a></nav>
   <nav class="gcba-nav gcba-nav-right"><a href="https://buenosaires.gob.ar" target="_blank" class="btn-gcba-site">buenosaires.gob.ar ↗</a></nav>
 </header>
-
 <div class="breadcrumb"><a href="index.html">Familias</a><span>›</span>3 a 6 años</div>
-
 <section class="stage-hero">
   <div class="stage-hero-bg"></div>
   <div class="stage-hero-inner">
     <div class="stage-hero-left">
       <div class="stage-hero-badge">🧒 3 a 6 años</div>
-      <h1>3 a 6<br>años</h1>
+      <h1>3 a 6 años</h1>
       <p>Jardín de infantes obligatorio, inscripción escolar, salud dental, deporte y actividades gratuitas en plazas y parques de toda la Ciudad.</p>
     </div>
     <div class="stage-hero-img"></div>
   </div>
 </section>
-
 <div class="quick-links">
-  <a class="quick-link-item active" href="#educacion">Jardín e inscripción</a>
-  <a class="quick-link-item" href="#salud">Salud</a>
-  <a class="quick-link-item" href="#deporte">Deporte y recreación</a>
+  <a class="quick-link-item active" href="#salud">Salud y controles</a>
   <a class="quick-link-item" href="#economia">Apoyo económico</a>
+  <a class="quick-link-item" href="#maternidades">Maternidades</a>
+  <a class="quick-link-item" href="#tramites">Trámites</a>
 </div>
-
 <div class="main-wrap">
   <div class="content">
-
-    <div class="section-block" id="educacion">
-      <h2>🏫 Jardín de infantes e inscripción escolar</h2>
-      <div class="service-cards">
-        <a class="service-card" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
-          <div class="service-icon">✏️</div>
-          <div class="service-title">Jardín de infantes (sala 3 y 4)</div>
-          <div class="service-desc">Desde los 3 años. Obligatorio a partir de los 4. Inscripción en noviembre para el año siguiente. Online y presencial.</div>
-          <div class="service-link">Inscribirse →</div>
-        </a>
-        <a class="service-card" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
-          <div class="service-icon">🏫</div>
-          <div class="service-title">Sala de 5 años (preescolar)</div>
-          <div class="service-desc">Obligatoria. Prepara para el ingreso a la escuela primaria. Inscripción anticipada por portal oficial de CABA.</div>
-          <div class="service-link">Inscribirse →</div>
-        </a>
-        <a class="service-card" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
-          <div class="service-icon">📖</div>
-          <div class="service-title">Ingreso a 1.er grado</div>
-          <div class="service-desc">Inscripción para primer grado de escuela primaria. Portal de inscripciones de CABA. Turno mañana o tarde.</div>
-          <div class="service-link">Inscribirse →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/educacion/centros-de-primera-infancia" target="_blank">
-          <div class="service-icon">🌱</div>
-          <div class="service-title">CPI hasta los 4 años</div>
-          <div class="service-desc">Los Centros de Primera Infancia atienden hasta los 4 años con jornada completa, alimentación y estimulación.</div>
-          <div class="service-link">Ver CPI →</div>
-        </a>
-      </div>
-    </div>
-
     <div class="section-block" id="salud">
-      <h2>🩺 Salud</h2>
+      <h2>🏥 Salud y controles prenatales</h2>
       <div class="service-cards">
-        <a class="service-card" href="https://buenosaires.gob.ar/salud/odontologia-infantil" target="_blank">
-          <div class="service-icon">🦷</div>
-          <div class="service-title">Salud dental gratuita</div>
-          <div class="service-desc">Odontología pediátrica en hospitales y CESAC. Control anual, selladores y flúor gratuitos para todos los menores.</div>
-          <div class="service-link">Pedir turno →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
-          <div class="service-icon">💉</div>
-          <div class="service-title">Vacunas 3 a 6 años</div>
-          <div class="service-desc">Triple viral, Varicela refuerzo, Antigripal anual. Obligatorias y gratuitas en vacunatorios de CABA.</div>
-          <div class="service-link">Ver calendario →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/salud/control-nino-sano" target="_blank">
-          <div class="service-icon">👁️</div>
-          <div class="service-title">Control visual y auditivo</div>
-          <div class="service-desc">Screening visual y auditivo gratuito antes del ingreso a la escuela. En hospitales y centros de salud de CABA.</div>
-          <div class="service-link">Consultar →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/salud/salud-mental-infancia" target="_blank">
-          <div class="service-icon">💜</div>
-          <div class="service-title">Salud mental infantil</div>
-          <div class="service-desc">Atención psicológica gratuita para niños en hospitales públicos. Sin lista de espera para casos urgentes.</div>
-          <div class="service-link">Ver atención →</div>
-        </a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/control-del-embarazo" target="_blank"><div class="service-icon">🩺</div><div class="service-title">Control prenatal gratuito</div><div class="service-desc">Turnos en centros de salud y hospitales públicos. Al menos 5 controles recomendados durante el embarazo.</div><div class="service-link">Pedir turno →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/vacunas-embarazo" target="_blank"><div class="service-icon">💉</div><div class="service-title">Vacunas en el embarazo</div><div class="service-desc">Triple bacteriana acelular, antigripal y COVID-19. Todas gratuitas en hospitales y vacunatorios de CABA.</div><div class="service-link">Ver calendario →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/ecografias" target="_blank"><div class="service-icon">🔬</div><div class="service-title">Ecografías y estudios</div><div class="service-desc">Ecografías obstétricas, análisis de laboratorio y monitoreo fetal gratuitos en hospitales públicos de CABA.</div><div class="service-link">Ver info →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/parto-respetado" target="_blank"><div class="service-icon">🌸</div><div class="service-title">Parto respetado</div><div class="service-desc">Derecho al acompañante elegido, plan de parto y decisiones informadas. Ley Nº 25.929 en todas las maternidades públicas.</div><div class="service-link">Conocer mis derechos →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/preparacion-parto" target="_blank"><div class="service-icon">📚</div><div class="service-title">Preparación para el parto</div><div class="service-desc">Cursos de preparto presenciales y virtuales en hospitales públicos. Incluyen lactancia, cuidados del bebé y bienestar.</div><div class="service-link">Ver cursos →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/salud-mental-embarazo" target="_blank"><div class="service-icon">💜</div><div class="service-title">Salud mental perinatal</div><div class="service-desc">Acompañamiento psicológico gratuito durante el embarazo y posparto en hospitales públicos de CABA.</div><div class="service-link">Consultar →</div></a>
       </div>
     </div>
-
-    <div class="section-block" id="deporte">
-      <h2>⚽ Deporte y recreación gratuita</h2>
-      <div class="service-cards">
-        <a class="service-card" href="https://buenosaires.gob.ar/deportes/clubes-barrio" target="_blank">
-          <div class="service-icon">⚽</div>
-          <div class="service-title">Clubes de Barrio</div>
-          <div class="service-desc">Subsidio para clubes que ofrecen actividades deportivas gratuitas o a bajo costo para niños de toda la Ciudad.</div>
-          <div class="service-link">Ver clubes →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/deportes/actividades-fisicas" target="_blank">
-          <div class="service-icon">🏃</div>
-          <div class="service-title">Actividades en plazas</div>
-          <div class="service-desc">Clases de deportes y actividad física gratuitas en plazas y parques. Fútbol, natación, atletismo y más.</div>
-          <div class="service-link">Ver agenda →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/cultura/centros-culturales" target="_blank">
-          <div class="service-icon">🎨</div>
-          <div class="service-title">Talleres culturales</div>
-          <div class="service-desc">Talleres de teatro, música, dibujo y danza en centros culturales barriales. Gratuitos o con cuota mínima.</div>
-          <div class="service-link">Ver talleres →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/turismo/parques" target="_blank">
-          <div class="service-icon">🌳</div>
-          <div class="service-title">Parques y ecoparques</div>
-          <div class="service-desc">Actividades familiares en Palermo, Tres de Febrero y otros parques. Visitas al EcoParque gratis para menores.</div>
-          <div class="service-link">Ver actividades →</div>
-        </a>
-      </div>
-    </div>
-
     <div class="section-block" id="economia">
       <h2>💳 Apoyo económico</h2>
       <div class="service-cards">
-        <a class="service-card" href="https://www.anses.gob.ar/asignacion-universal" target="_blank">
-          <div class="service-icon">💳</div>
-          <div class="service-title">Asignación Universal por Hijo</div>
-          <div class="service-desc">Mensual para familias sin empleo formal. Requiere certificado de escolaridad y controles de salud al día.</div>
-          <div class="service-link">Ver en ANSES →</div>
-        </a>
-        <a class="service-card" href="https://buenosaires.gob.ar/educacion/becas-escolares" target="_blank">
-          <div class="service-icon">📚</div>
-          <div class="service-title">Útiles y libros gratuitos</div>
-          <div class="service-desc">Entrega de útiles escolares y libros gratuitos para alumnos de escuelas públicas. Se gestiona en la escuela.</div>
-          <div class="service-link">Ver programa →</div>
-        </a>
+        <a class="service-card" href="https://www.anses.gob.ar/asignacion-universal" target="_blank"><div class="service-icon">👶</div><div class="service-title">Asignación por Embarazo (ANSES)</div><div class="service-desc">Para embarazadas de 12 semanas o más sin empleo formal o en empleo informal.</div><div class="service-link">Ver en ANSES →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank"><div class="service-icon">💳</div><div class="service-title">Ciudadanía Porteña</div><div class="service-desc">Subsidio mensual en tarjeta para compra de alimentos. Para embarazadas en situación vulnerable.</div><div class="service-link">Inscribirse →</div></a>
+        <a class="service-card" href="https://www.anses.gob.ar/licencia-maternidad" target="_blank"><div class="service-icon">🏠</div><div class="service-title">Licencia por maternidad</div><div class="service-desc">90 días de licencia paga para empleadas en relación de dependencia. Se tramita por ANSES a partir de la semana 34.</div><div class="service-link">Ver en ANSES →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/leche-maternidad" target="_blank"><div class="service-icon">🥛</div><div class="service-title">Leche y alimentos GCBA</div><div class="service-desc">Entrega gratuita de leche en polvo y alimentos para embarazadas en situación vulnerable en hospitales públicos.</div><div class="service-link">Ver en hospitales →</div></a>
+      </div>
+    </div>
+    <div class="section-block" id="maternidades">
+      <h2>🏥 Maternidades públicas de CABA</h2>
+      <div class="info-block">
+        <h3>🏨 Maternidades de referencia</h3>
+        <ul>
+          <li><strong>Maternidad Sardá</strong> — Esteban de Luca 2151, Parque Patricios</li>
+          <li><strong>Hospital Álvarez</strong> — Aranguren 2701, Flores</li>
+          <li><strong>Hospital Pirovano</strong> — Monroe 3555, Coghlan</li>
+          <li><strong>Hospital Rivadavia</strong> — Av. Las Heras 2670, Recoleta</li>
+          <li><strong>Hospital Durand</strong> — Av. Díaz Vélez 5044, Caballito</li>
+          <li><strong>Hospital Ramos Mejía</strong> — Urquiza 609, Balvanera</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-block" id="tramites">
+      <h2>📋 Trámites durante el embarazo</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://www.argentina.gob.ar/tramites/nacimiento" target="_blank"><div class="service-icon">📄</div><div class="service-title">Pre-inscripción de nacimiento</div><div class="service-desc">Podés pre-inscribir al bebé antes de nacer en el Registro Civil. Ahorra tiempo después del parto.</div><div class="service-link">Pre-inscribir →</div></a>
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/plan-nacer" target="_blank"><div class="service-icon">🌟</div><div class="service-title">SUMAR / Plan Nacer</div><div class="service-desc">Cobertura de salud nacional para embarazadas sin obra social. Se inscribe en el hospital o CESAC más cercano.</div><div class="service-link">Inscribirse →</div></a>
+      </div>
+    </div>
+
+    <!-- BLOQUE DISCAPACIDAD -->
+    <div class="section-block" style="background:#f9f2ff;border-radius:14px;padding:28px;border:1.5px solid #c084fc">
+      <h2 style="border-bottom-color:#c084fc">♿ ¿Tu bebé tiene o puede tener una discapacidad?</h2>
+      <div class="service-cards">
+        <a class="service-card" href="https://buenosaires.gob.ar/salud/estimulacion-temprana" target="_blank"><div class="service-icon">🧠</div><div class="service-title">Diagnóstico y estimulación temprana</div><div class="service-desc">Detección precoz y atención temprana en hospitales públicos de CABA. Mientras antes, mejor.</div><div class="service-link" style="color:#6b21a8">Ver centros →</div></a>
+        <a class="service-card" href="discapacidad.html"><div class="service-icon">♿</div><div class="service-title">Servicios para familias con discapacidad</div><div class="service-desc">CUD, PAFAMI, terapias cubiertas, educación especial y todos los beneficios disponibles en CABA.</div><div class="service-link" style="color:#6b21a8">Ver todo →</div></a>
       </div>
     </div>
 
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-card accent">
-      <h4>📅 Fechas clave</h4>
-      <a class="sidebar-link" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
-        <span class="sidebar-link-icon">📝</span> Inscripción jardín: noviembre
-      </a>
-      <a class="sidebar-link" href="https://inscripciones.buenosaires.gob.ar" target="_blank">
-        <span class="sidebar-link-icon">📝</span> Inscripción 1.er grado: noviembre
-      </a>
-      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/calendario-vacunacion" target="_blank">
-        <span class="sidebar-link-icon">💉</span> Vacuna antigripal: marzo-abril
-      </a>
-      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/odontologia-infantil" target="_blank">
-        <span class="sidebar-link-icon">🦷</span> Control dental: antes de marzo
-      </a>
-    </div>
-    <div class="sidebar-alert">
-      ℹ️ <strong>Sala de 4 obligatoria:</strong> A partir de 2024, la sala de 4 años es obligatoria en CABA. Inscribí a tu hijo a tiempo.
+      <h4>📅 Checklist del embarazo</h4>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/control-del-embarazo" target="_blank"><span class="sidebar-link-icon">✅</span> 1.er control prenatal</a>
+      <a class="sidebar-link" href="https://www.anses.gob.ar/asignacion-universal" target="_blank"><span class="sidebar-link-icon">✅</span> Asignación por Embarazo (ANSES)</a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/vacunas-embarazo" target="_blank"><span class="sidebar-link-icon">✅</span> Vacuna triple bacteriana (sem. 28)</a>
+      <a class="sidebar-link" href="https://buenosaires.gob.ar/salud/preparacion-parto" target="_blank"><span class="sidebar-link-icon">✅</span> Curso de preparto</a>
+      <a class="sidebar-link" href="https://www.argentina.gob.ar/tramites/nacimiento" target="_blank"><span class="sidebar-link-icon">✅</span> Pre-inscripción del bebé</a>
     </div>
     <div class="sidebar-card">
-      <h4>📞 Contacto</h4>
-      <div class="telefono-item"><span class="telefono-num">147</span><span class="telefono-label">Atención al vecino</span></div>
-      <div class="telefono-item" style="margin-bottom:0"><span class="telefono-num">0800-444-0865</span><span class="telefono-label">Ministerio de Educación CABA</span></div>
+      <h4>📞 Líneas de ayuda</h4>
+      <div class="telefono-item"><span class="telefono-num">147</span><span class="telefono-label">Atención al vecino (24hs)</span></div>
+      <div class="telefono-item" style="margin-bottom:0"><span class="telefono-num">0800-222-3444</span><span class="telefono-label">ANSES (gratuito)</span></div>
     </div>
+    <div class="sidebar-alert">💡 <strong>¿Sin obra social?</strong> Podés atenderte gratis en cualquier hospital o CESAC público de CABA.</div>
     <div class="sidebar-card">
       <h4>📍 Estaciones Familiares</h4>
-      <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6">Orientación gratuita sobre inscripción escolar y actividades para chicos.</p>
+      <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6">Orientación gratuita en parques y plazas para familias.</p>
       <a href="plan_family_hubs_caba.html" style="display:block;background:#1565c0;color:#fff;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:800;text-decoration:none">Ver mapa →</a>
     </div>
   </aside>
 </div>
-
 <div class="stage-nav">
   <div class="stage-nav-inner">
-    <a href="uno-tres.html" class="stage-nav-btn">
-      <span class="stage-nav-btn-icon">←</span>
-      <div><div class="stage-nav-btn-label">Etapa anterior</div><div class="stage-nav-btn-title">1 a 3 años</div></div>
-    </a>
-    <a href="seis-dieciocho.html" class="stage-nav-btn next">
-      <div><div class="stage-nav-btn-label">Siguiente etapa</div><div class="stage-nav-btn-title">6 a 18 años</div></div>
-      <span class="stage-nav-btn-icon">→</span>
-    </a>
+    <a href="uno-tres.html" class="stage-nav-btn"><span class="stage-nav-btn-icon">←</span><div><div class="stage-nav-btn-label">Etapa anterior</div><div class="stage-nav-btn-title">1 a 3 años</div></div></a>
+    <a href="seis-dieciocho.html" class="stage-nav-btn" style="margin-left:auto"><div><div class="stage-nav-btn-label">Siguiente etapa</div><div class="stage-nav-btn-title">6 a 18 años</div></div><span class="stage-nav-btn-icon">→</span></a>
   </div>
 </div>
-
 <footer id="footer">
   <div class="footer-inner">
     <div class="col"><div class="footer-brand">Familias · Buenos Aires</div><p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025</p></div>
-    <div class="col">
-      <strong>Emergencias</strong>
-      <a href="tel:102">102 · Niñez y Adolescencia (24hs)</a>
-      <a href="tel:144">144 · Violencia de género (24hs)</a>
-      <a href="tel:137">137 · Emergencias domésticas</a>
-      <a href="tel:147">147 · Atención al vecino</a>
-    </div>
-    <div class="col">
-      <strong>Servicios GCBA</strong>
-      <a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a>
-      <a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a>
-      <a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a>
-      <a href="https://buenosaires.gob.ar/desarrollohumanoyhabitat/ciudadania-portena" target="_blank">Ciudadanía Porteña</a>
-    </div>
+    <div class="col"><strong>Emergencias</strong><a href="tel:102">102 · Niñez y Adolescencia (24hs)</a><a href="tel:144">144 · Violencia de género (24hs)</a><a href="tel:147">147 · Atención al vecino</a></div>
+    <div class="col"><strong>Servicios GCBA</strong><a href="https://buenosaires.gob.ar/salud" target="_blank">Salud</a><a href="https://buenosaires.gob.ar/educacion" target="_blank">Educación</a><a href="https://inscripciones.buenosaires.gob.ar" target="_blank">Inscripción escolar</a></div>
   </div>
 </footer>
-
 </body>
 </html>

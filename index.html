@@ -8,361 +8,142 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  color: #1a1a2e;
-  background: #faf8f5;
-  font-size: 16px;
-  line-height: 1.5;
+  color: #1a1a2e; background: #faf8f5; font-size: 16px; line-height: 1.5;
 }
 a { color: #2f54b8; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ── HEADER ─────────────────────────────────── */
 #header {
-  background: #0d1829;
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  height: 58px;
-  gap: 36px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background: #0d1829; padding: 0 32px; display: flex; align-items: center;
+  height: 58px; gap: 36px; position: sticky; top: 0; z-index: 100;
 }
-.ba-logo {
-  display: flex; align-items: center; gap: 9px;
-  flex-shrink: 0; text-decoration: none;
-}
+.ba-logo { display: flex; align-items: center; gap: 9px; flex-shrink: 0; text-decoration: none; }
 .ba-logo:hover { text-decoration: none; }
 .ba-logo-box {
-  background: #2f54b8;
-  border-radius: 4px;
-  width: 36px; height: 36px;
+  background: #2f54b8; border-radius: 4px; width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 900; font-size: 15px; color: #fff;
-  letter-spacing: -1px;
+  font-weight: 900; font-size: 15px; color: #fff; letter-spacing: -1px;
 }
 .ba-logo-text { color: #fff; font-size: 13px; font-weight: 600; opacity: 0.9; }
 .gcba-nav { display: flex; }
 .gcba-nav a {
-  color: rgba(255,255,255,0.68);
-  font-size: 13px; font-weight: 500;
-  padding: 0 14px; height: 58px;
-  display: flex; align-items: center;
-  border-bottom: 3px solid transparent;
-  transition: all 0.15s; text-decoration: none;
+  color: rgba(255,255,255,0.68); font-size: 13px; font-weight: 500;
+  padding: 0 14px; height: 58px; display: flex; align-items: center;
+  border-bottom: 3px solid transparent; transition: all 0.15s; text-decoration: none;
 }
 .gcba-nav a:hover { color: #fff; text-decoration: none; }
 .gcba-nav a.active { color: #fff; border-bottom-color: #f0a500; }
 .gcba-nav-right { margin-left: auto; }
 .btn-gcba-site {
-  border: 1.5px solid rgba(255,255,255,0.3) !important;
-  border-radius: 4px;
-  color: rgba(255,255,255,0.75) !important;
-  font-size: 13px !important;
-  padding: 6px 14px !important;
-  height: auto !important;
+  border: 1.5px solid rgba(255,255,255,0.3) !important; border-radius: 4px;
+  color: rgba(255,255,255,0.75) !important; font-size: 13px !important;
+  padding: 6px 14px !important; height: auto !important;
   border-bottom: 1.5px solid rgba(255,255,255,0.3) !important;
 }
-.btn-gcba-site:hover {
-  background: rgba(255,255,255,0.08) !important;
-  text-decoration: none !important;
-}
+.btn-gcba-site:hover { background: rgba(255,255,255,0.08) !important; text-decoration: none !important; }
 
 /* ── HERO ────────────────────────────────────── */
-#hero {
-  background: #0d1829;
-  color: white;
-  overflow: hidden;
-}
-.hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 440px;
-}
+#hero { background: #0d1829; color: white; overflow: hidden; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; min-height: 440px; }
 .hero-left {
-  padding: 60px 48px 60px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
+  padding: 60px 48px; display: flex; flex-direction: column;
+  justify-content: center; gap: 20px;
 }
-.hero-left h1 {
-  font-size: 50px;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -1.5px;
-}
-.hero-left h1 em {
-  color: #f0a500;
-  font-style: normal;
-}
-.hero-left p {
-  font-size: 17px;
-  opacity: 0.78;
-  line-height: 1.65;
-  max-width: 400px;
-}
+.hero-left h1 { font-size: 50px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; }
+.hero-left h1 em { color: #f0a500; font-style: normal; }
+.hero-left p { font-size: 17px; opacity: 0.78; line-height: 1.65; max-width: 400px; }
 .hero-search {
-  display: flex;
-  max-width: 460px;
-  margin-top: 6px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  display: flex; max-width: 460px; margin-top: 6px;
+  border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .hero-search input {
-  flex: 1;
-  padding: 16px 18px;
-  border: none;
-  font-size: 15px;
-  color: #1a1a2e;
-  outline: none;
-  background: #fff;
+  flex: 1; padding: 16px 18px; border: none; font-size: 15px;
+  color: #1a1a2e; outline: none; background: #fff;
 }
 .hero-search input::placeholder { color: #aaa; }
 .hero-search button {
-  background: #f0a500;
-  color: #1a1a2e;
-  border: none;
-  padding: 16px 22px;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s;
+  background: #f0a500; color: #1a1a2e; border: none; padding: 16px 22px;
+  font-size: 15px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: background 0.15s;
 }
 .hero-search button:hover { background: #d9940a; }
 .hero-right {
-  position: relative;
-  background: #1a3a5c;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
+  position: relative; background: #1a3a5c; overflow: hidden;
+  display: flex; align-items: flex-end;
 }
 .hero-right img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  opacity: 0.72;
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center top; opacity: 0.72;
 }
 .hero-right-overlay {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(13,24,41,0.25) 0%, rgba(13,24,41,0.55) 100%);
 }
 .hero-bubbles {
-  position: relative;
-  z-index: 2;
-  padding: 36px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
+  position: relative; z-index: 2; padding: 36px 32px;
+  display: flex; flex-direction: column; gap: 14px; width: 100%;
 }
 .bubble {
-  background: rgba(255,255,255,0.97);
-  border-radius: 16px 16px 16px 4px;
-  padding: 13px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a2e;
-  max-width: 340px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  line-height: 1.4;
+  background: rgba(255,255,255,0.97); border-radius: 16px 16px 16px 4px;
+  padding: 13px 18px; font-size: 14px; font-weight: 600; color: #1a1a2e;
+  max-width: 340px; box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  display: flex; align-items: center; gap: 10px; line-height: 1.4;
 }
 .bubble-icon { font-size: 22px; flex-shrink: 0; }
 
 /* ── ETAPAS ──────────────────────────────────── */
-.section-etapas {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 60px 24px 20px;
-}
+.section-etapas { max-width: 1160px; margin: 0 auto; padding: 60px 24px 20px; }
 .section-etapas h2 {
-  font-size: 30px;
-  font-weight: 900;
-  margin-bottom: 8px;
-  color: #1a1a2e;
-  letter-spacing: -0.5px;
+  font-size: 30px; font-weight: 900; margin-bottom: 8px;
+  color: #1a1a2e; letter-spacing: -0.5px;
 }
-.section-etapas > p {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 36px;
-  max-width: 580px;
-}
+.section-etapas > p { font-size: 16px; color: #666; margin-bottom: 36px; max-width: 580px; }
 
-/* 6-column grid → 3 cards span 2 each, last 2 span 3 each (centered) */
-.etapas-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 24px;
-}
+/* 6 cards = grid 3+3 perfecto */
+.etapas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .etapa-card {
-  grid-column: span 2;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--card-bg, #f0f0f0);
-  border: 2px solid rgba(0,0,0,0.04);
+  border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;
+  background: var(--card-bg, #f0f0f0); border: 2px solid rgba(0,0,0,0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+  text-decoration: none; color: inherit; cursor: pointer;
 }
 .etapa-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.13);
-  text-decoration: none;
+  transform: translateY(-5px); box-shadow: 0 14px 36px rgba(0,0,0,0.13); text-decoration: none;
 }
-/* Center last 2 cards on second row */
-.etapa-card:nth-child(4) { grid-column: 2 / span 2; }
-.etapa-card:nth-child(5) { grid-column: 4 / span 2; }
-
-.etapa-body {
-  padding: 28px 28px 22px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.etapa-body { padding: 28px 28px 22px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .etapa-badge {
-  display: inline-block;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  color: #fff;
-  margin-bottom: 8px;
-  width: fit-content;
+  display: inline-block; padding: 5px 14px; border-radius: 20px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.7px; text-transform: uppercase;
+  color: #fff; margin-bottom: 8px; width: fit-content;
 }
-.etapa-card h3 {
-  font-size: 24px;
-  font-weight: 900;
-  color: #1a1a2e;
-  line-height: 1.15;
-  letter-spacing: -0.3px;
-}
-.etapa-range {
-  font-size: 13px;
-  color: #888;
-  font-weight: 500;
-}
-.etapa-desc {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.65;
-  flex: 1;
-  margin-top: 4px;
-}
-.etapa-cta {
-  font-size: 14px;
-  font-weight: 800;
-  color: #1a1a2e;
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+.etapa-card h3 { font-size: 24px; font-weight: 900; color: #1a1a2e; line-height: 1.15; letter-spacing: -0.3px; }
+.etapa-range { font-size: 13px; color: #888; font-weight: 500; }
+.etapa-desc { font-size: 14px; color: #555; line-height: 1.65; flex: 1; margin-top: 4px; }
+.etapa-cta { font-size: 14px; font-weight: 800; color: #1a1a2e; margin-top: 16px; display: flex; align-items: center; gap: 4px; }
 .etapa-cta::after { content: ' →'; }
-.etapa-photo {
-  height: 210px;
-  background-size: cover;
-  background-position: center;
-  background-color: #c8d5e8;
-  flex-shrink: 0;
-}
+.etapa-photo { height: 210px; background-size: cover; background-position: center; background-color: #c8d5e8; flex-shrink: 0; }
 
 /* ── MAPA CTA ─────────────────────────────────── */
-.mapa-cta-wrap {
-  max-width: 1160px;
-  margin: 56px auto 64px;
-  padding: 0 24px;
-}
+.mapa-cta-wrap { max-width: 1160px; margin: 56px auto 64px; padding: 0 24px; }
 .mapa-cta {
-  background: #0d1829;
-  color: white;
-  border-radius: 16px;
-  padding: 44px 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  background: #0d1829; color: white; border-radius: 16px; padding: 44px 52px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
 }
-.mapa-cta h3 {
-  font-size: 24px;
-  font-weight: 900;
-  margin-bottom: 8px;
-  letter-spacing: -0.3px;
-}
-.mapa-cta p {
-  font-size: 15px;
-  opacity: 0.72;
-  max-width: 480px;
-  line-height: 1.6;
-}
+.mapa-cta h3 { font-size: 24px; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.3px; }
+.mapa-cta p { font-size: 15px; opacity: 0.72; max-width: 480px; line-height: 1.6; }
 .mapa-cta-btn {
-  background: #f0a500;
-  color: #1a1a2e;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 800;
-  white-space: nowrap;
-  flex-shrink: 0;
-  text-decoration: none;
-  transition: background 0.15s;
+  background: #f0a500; color: #1a1a2e; padding: 15px 30px; border-radius: 8px;
+  font-size: 15px; font-weight: 800; white-space: nowrap; flex-shrink: 0;
+  text-decoration: none; transition: background 0.15s;
 }
-.mapa-cta-btn:hover {
-  background: #d9940a;
-  text-decoration: none;
-  color: #1a1a2e;
-}
+.mapa-cta-btn:hover { background: #d9940a; text-decoration: none; color: #1a1a2e; }
 
 /* ── FOOTER ──────────────────────────────────── */
-#footer {
-  background: #0d1829;
-  color: rgba(255,255,255,0.6);
-  padding: 44px 32px;
-  font-size: 13px;
-}
-.footer-inner {
-  max-width: 1160px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 32px;
-}
-.footer-brand {
-  font-size: 17px;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 6px;
-}
-#footer .col strong {
-  color: #fff;
-  display: block;
-  margin-bottom: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-#footer .col a {
-  color: rgba(255,255,255,0.58);
-  display: block;
-  margin-bottom: 7px;
-}
+#footer { background: #0d1829; color: rgba(255,255,255,0.6); padding: 44px 32px; font-size: 13px; }
+.footer-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+.footer-brand { font-size: 17px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+#footer .col strong { color: #fff; display: block; margin-bottom: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+#footer .col a { color: rgba(255,255,255,0.58); display: block; margin-bottom: 7px; }
 #footer .col a:hover { color: #fff; }
 
 /* ── RESPONSIVE ──────────────────────────────── */
@@ -372,9 +153,6 @@ a:hover { text-decoration: underline; }
   .hero-left { padding: 44px 28px; }
   .hero-left h1 { font-size: 38px; }
   .etapas-grid { grid-template-columns: 1fr 1fr; }
-  .etapa-card,
-  .etapa-card:nth-child(4),
-  .etapa-card:nth-child(5) { grid-column: span 1; }
   .mapa-cta { flex-direction: column; align-items: flex-start; padding: 36px 32px; }
 }
 @media (max-width: 540px) {
@@ -416,22 +194,12 @@ a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="hero-right">
-      <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=900&q=75"
-        alt="Familia en Buenos Aires" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=900&q=75" alt="Familia en Buenos Aires" loading="lazy">
       <div class="hero-right-overlay"></div>
       <div class="hero-bubbles">
-        <div class="bubble">
-          <span class="bubble-icon">🤰</span>
-          ¿Cómo hago el control prenatal gratis en la Ciudad?
-        </div>
-        <div class="bubble">
-          <span class="bubble-icon">📋</span>
-          ¿Cuándo y cómo inscribo a mi hijo al jardín?
-        </div>
-        <div class="bubble">
-          <span class="bubble-icon">💳</span>
-          ¿Qué es la Ciudadanía Porteña y cómo la pido?
-        </div>
+        <div class="bubble"><span class="bubble-icon">🤰</span>¿Cómo hago el control prenatal gratis en la Ciudad?</div>
+        <div class="bubble"><span class="bubble-icon">📋</span>¿Cuándo y cómo inscribo a mi hijo al jardín?</div>
+        <div class="bubble"><span class="bubble-icon">💳</span>¿Qué es la Ciudadanía Porteña y cómo la pido?</div>
       </div>
     </div>
   </div>
@@ -504,6 +272,18 @@ a:hover { text-decoration: underline; }
       <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=700&q=72')"></div>
     </a>
 
+    <!-- DISCAPACIDAD -->
+    <a class="etapa-card" href="discapacidad.html" style="--card-bg:#f3e8fd">
+      <div class="etapa-body">
+        <span class="etapa-badge" style="background:#6b21a8">Discapacidad</span>
+        <h3>Familias con discapacidad</h3>
+        <div class="etapa-range">Todas las edades</div>
+        <div class="etapa-desc">CUD, PAFAMI, educación especial, terapias, transporte, beneficios y derechos para familias con hijos con discapacidad.</div>
+        <div class="etapa-cta">Ver servicios</div>
+      </div>
+      <div class="etapa-photo" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=72')"></div>
+    </a>
+
   </div>
 </div>
 
@@ -523,9 +303,7 @@ a:hover { text-decoration: underline; }
   <div class="footer-inner">
     <div class="col">
       <div class="footer-brand">Familias · Buenos Aires</div>
-      <p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">
-        Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025
-      </p>
+      <p style="font-size:12px;opacity:0.45;margin-top:4px;line-height:1.6">Gobierno de la Ciudad Autónoma de Buenos Aires<br>Prototipo — 2025</p>
     </div>
     <div class="col">
       <strong>Emergencias</strong>
@@ -550,6 +328,5 @@ function buscar(q) {
   window.open('https://buenosaires.gob.ar/buscar?q=' + encodeURIComponent(q.trim()), '_blank');
 }
 </script>
-
 </body>
 </html>
